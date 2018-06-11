@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ex2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ex2</output-path>
+    <root id="archive" name="ex2.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/README" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShip.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipAggressive.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipBasher.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipComputerControlled.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipDrunkard.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipFactory.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipHumanControlled.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipRunner.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/EX2/src/SpaceShipSpecial.java" />
+    </root>
+  </artifact>
+</component>

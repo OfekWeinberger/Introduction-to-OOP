@@ -1,0 +1,99 @@
+regevjohn
+ofekwa
+
+
+
+=============================
+=      File description     =
+=============================
+			
+			
+
+=============================
+=          Design           =
+=============================
+We decided to design our project as follows:
+The project is modular, and has five modules: the flter module, which responsible of the filters, and its
+files are in the package filter; the order module, which responsible of the orders, and its files are in the
+package order; the section module, which responsible of the sections, and its files are in the package
+section; the files module, which responsible of the files (source directory and command file), and its
+files are in the package filehandlers; the exceptions module, which responsible of the exceptions (type one
+and type two), and its files are in the package filehandlers and filesprocessing. The main method, which is
+in the file DirectoryProcessor, uses the different modules.
+The filter module is responsible of the filters. Filter is an interface, which declares on two methods - the
+method boolean filter(File file), which gets a file and returns whether the file satisfies the filter (each 
+class that implements the interface implements that method differently), and the method 
+void filter(ArrayList<File> files), which gets an ArrayList of files, and removes the files
+doesn't satisfies the filter from the ArrayList (the interface has a default implementation of the method).
+NotFilter is a class that decorates Filter (and thus implements the method filter), and enables the #NOT
+mechanism (followed the decoration design pattern learned in class). Specific filter is representd by a
+class that implements the interface Filter, and has relevant members. The FilterFactory class is a filters
+factory (follows the factory design pattern learned in class), and has a static method (createFilter) that
+gets a string represents a (legal) filter, and returns an appropriate filter. We chose that design of the
+filter module because its natural and simple design, follows the strategy design pattern and the open-close
+and single-choice principles learned in class.
+The order module is responsible of the orders. Order in an interface, which declares on two methods - the 
+method Comparator<File> comparator(), which returns a comperator of files (each class that implements the
+interface implements that method differently), and the method void order(ArrayList<File> files), which
+gets an ArrayList of files, and order the ArrayList using the comperator method (the interface has a 
+default implementation of that method). ReverseOrder is a class that decorates Order (and thus implements)
+the method comperator), and enables the #REVERSE mechanism (followed by the decoration design pattern). 
+Specific order is represented by a class that implements the interface Order, and follows the singelton
+design pattern (and thus has a private constructor, a private static recursive instance and a public static
+intance method). The OrderFactory class is a orders factory (follows the factory design pattern), and has a
+static method that gets a string represents a (legal) order, and returns an appropriate order (using the
+instance method of the appropriate class). We chose that design of the order module because its natural and
+simple, and follows design pattern and OOP principles learned in class.
+The section module is responsible of the sections. The class Section represents a section, and has Filter,
+Order and ArrayList of TypeOneExceptions (see below); It has a constructor that gets the members as 
+parameters, a method that returns the section's type one exceptions and the method 
+void filterAndOrder(ArrayList<File> files), that gets an ArrayList of files, and filter and order the files
+using the section's filter and order. The class SectionFactory is a sections factory, and has a static method
+that gets a CoupleAndExceptions object (the CoupleAndExceptions class represents a section's data) and 
+returns an appropriate section (the method uses the methods createFilter and createSection of FilterFactory
+and SectionFacroty, respectively), and a static method that gets an ArrayList of CoupleAndException's and
+returns an appropriate array of sections.
+The files module is responsible of the files (source directory and command file). The file 
+SourceDirectoryHandler handles the source directory. A SourceDirectoryHandler object has an ArrayList of
+files, and the SourceDirectoryHandler class has a constructor that gets a source directory name and construct
+a SourceDirectoryHandler object which its files are the files in the given source directory; A 
+SourceDirectoryHandler object has a method that returns a copy of its files (getFiles). The file 
+CommandFileHandler handles the command file. A CommandFileHandler object has an ArrayList of 
+CoupleAndException's, and the CommandFileHandler class has a constructor that gets a command file name and
+construct a CommandFileHandler object with the approptiate CoupleAndException's ArrayList (The constructor
+uses private methods that read the file, iterate over the sections and handle exceptions); A 
+CommandFileHandler object has a method that returns its CoupleAndException's ArrayList.
+The exceptions module is repsonsible of the exceptions (type one and type two). The exceptions hierarchy is
+as follows: The class TypeOneException represents a type one exceptions, extends Exception and has a
+constructor that gets a line and constructs a TypeOneException using super with "Warning in line " + line.
+The classes BadNameException and IllegalParameterException extends TypeOneException, and the classes
+IllegalParameterBooleanException, IllegalParameterSingleNumericException and 
+IllegalParameterMultipleNumericException extends IllegalParameterException. The classes extends 
+TypeOneException (explicitly and implicitly) doesn't add functionality, and their importance is logically.
+TypeOne exceptions are handled in the CommandFileHandler. The class TypeTwoException represents a type two
+exception, extends Exception and has a constructor that gets a message and constructs a TypeTwoException
+using super with "ERROR: " + message. The class BadFormatException extends TypeTwoException, and has a
+constructor that gets a sub-section name (FILTER or ORDER) and construts a BadFormatException using super
+with subSection + " sub-section missing". IllegalArgumentException and IOException are TypeTwoException's
+that handled separately. Type two exceptions are handled in the main method (and may be thrown by the
+methods of CommandFileHandler and DirectoryProcessor).
+We chose that design of the error handling because is intuitive and logical, and because its follows the
+modularity principle learned in class (it especially favors modular understandability). 
+
+
+
+=============================
+=  Implementation details   =
+=============================
+We decided to implement sorts using the method sord of ArrayList. The method order of Order gets an ArrayList
+of files and sorts the ArrayList using the method sort and the files comperator given by the method 
+comparator of Order. We chose to use a java's data structure for sorting because we wanted to use the method
+sort. We chose to use a version of array (array or ArrayList) because its natural and simple. We chose
+to use ArrayList because while filtering, we remove files from the array and its size changes (and array size 
+cannot be changed, while ArrayList size can).
+
+
+
+=============================
+=    Answers to questions   =
+=============================
