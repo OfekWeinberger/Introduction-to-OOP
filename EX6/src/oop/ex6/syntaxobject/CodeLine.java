@@ -12,7 +12,9 @@ public class CodeLine extends SyntaxObject{
 			String[] contents = line.split("\\(|\\)");
 			Condition condition = new Condition(contents[1], scope);
 		} else if(line.startsWith("void")){
-			String[] contents = line.split(" |");
+			line = line.substring(5, line.length());
+			String[] contents = line.split("|\\(|\\)");
+			MethodDeclaration md = new MethodDeclaration(contents[0], contents[1].split(", "), scope);
 		} else if(line.startsWith("boolean")){
 
 		} else
