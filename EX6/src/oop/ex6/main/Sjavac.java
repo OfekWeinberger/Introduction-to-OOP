@@ -2,6 +2,7 @@ package oop.ex6.main;
 
 import oop.ex6.SJavaFileHandler;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
+import oop.ex6.syntaxobject.scope.Scope;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ public class Sjavac {
 		try {
 			checkArgs(args);
 			SJavaFileHandler fh = new SJavaFileHandler(args[0]);
-			CodeUnit cu = fh.buildCodeUnit();
+			Scope cu = fh.buildCodeUnit();
 			System.out.println("0");
 		} catch (IllegalSyntaxException e) {
 			System.out.println("1");

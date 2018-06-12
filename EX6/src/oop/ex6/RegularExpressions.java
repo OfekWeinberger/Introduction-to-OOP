@@ -11,6 +11,7 @@ public class RegularExpressions {
 	public static final String STRING_REGEX;
 	public static final String LINE_REGEX;
 	public static final String CHARACTER_REGEX;
+	public static final String BOOLEAN_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
 	public static final Pattern DOUBLE_PATTERN;
@@ -19,6 +20,7 @@ public class RegularExpressions {
 	public static final Pattern STRING_PATTERN;
 	public static final Pattern LINE_PATTERN;
 	public static final Pattern CHARACTER_PATTERN;
+	public static final Pattern BOOLEAN_PATTERN;
 
 
 	static {
@@ -28,7 +30,8 @@ public class RegularExpressions {
 		 METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
 		 STRING_REGEX = "\"[^,`\\\\\"]*\"";
 		 LINE_REGEX = "[.]*[;{}]";
-		 CHARACTER_REGEX = ""; //TODO finish regex
+		 CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
+		 BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
 
 		 INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
 		 DOUBLE_PATTERN = Pattern.compile(DOUBLE_REGEX);
@@ -37,5 +40,6 @@ public class RegularExpressions {
 		 STRING_PATTERN = Pattern.compile(STRING_REGEX);
 		 LINE_PATTERN = Pattern.compile(LINE_REGEX);
 		 CHARACTER_PATTERN = Pattern.compile(CHARACTER_REGEX);
+		 BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
 	}
 }

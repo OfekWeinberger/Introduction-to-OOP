@@ -17,7 +17,7 @@ public class Condition extends SyntaxObject {
 		CONDITION_SPLITTER_REGEX = "(&&)|(\\|\\|)";
 	}
 
-	public Condition(String s, Scope unit) throws IllegalSyntaxException {
+	public Condition(String s, Scope scope) throws IllegalSyntaxException {
 		if (s == null || s.equals(""))
 			throw new IllegalSyntaxException();
 		if (s.startsWith("&&") || s.startsWith("||") || s.endsWith("&&") || s.endsWith("||"))
@@ -29,13 +29,12 @@ public class Condition extends SyntaxObject {
 				if (subCondStrings.length == 1) {
 					if (!RegularExpressions.NAME_PATTERN.matcher(subCondStrings[0]).matches())
 						throw new IllegalSyntaxException();
-					// TODO -------------------- CodeUnit's isAssignedBoolean !!
-					// if(!unit.isAssignedBoolean(subCondStrings[0]))
-					//	throw new IllegalSyntaxException();
+					if(!scope.isAssigned(Type.BOOLEAN ,subCondStrings[0]))
+						throw new IllegalSyntaxException();
 				} else {
 					ArrayList<Condition> subCondList = new ArrayList<>();
 					for (String cond : subCondStrings)
-						subCondList.add(new Condition(cond, unit));
+						subCondList.add(new Condition(cond, scope));
 				}
 			}
 		}
