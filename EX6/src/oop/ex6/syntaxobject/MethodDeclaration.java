@@ -1,4 +1,4 @@
-package oop.ex6.syntaxobject.scope;
+package oop.ex6.syntaxobject;
 
 import oop.ex6.syntaxobject.SyntaxObject;
 

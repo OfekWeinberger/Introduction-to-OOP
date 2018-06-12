@@ -34,7 +34,7 @@ public class Condition extends SyntaxObject {
 				} else {
 					ArrayList<Condition> subCondList = new ArrayList<>();
 					for (String cond : subCondStrings)
-						subCondList.add(new Condition(cond, unit));
+						subCondList.add(new Condition(cond, scope));
 				}
 			}
 		}
