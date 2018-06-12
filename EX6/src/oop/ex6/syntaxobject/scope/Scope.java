@@ -22,7 +22,6 @@ public abstract class Scope {
 	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables) {
 		this.parent = parent;
 		this.children = children;
-		;
 		this.setVariables(variables);
 	}
 
@@ -32,6 +31,10 @@ public abstract class Scope {
 
 	public ArrayList<Scope> getChildren() {
 		return children;
+	}
+
+	public void addChild(Scope child) {
+		children.add(child);
 	}
 
 	public ArrayList<Variable> getVariables() {
