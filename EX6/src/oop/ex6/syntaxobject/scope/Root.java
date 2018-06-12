@@ -20,7 +20,7 @@ public class Root extends Scope {
         return singeltone;
     }
 
-    public static void addMethod(Method method){
+    public static void addMethod(Method method) throws IllegalSyntaxException{
         if(singeltone.methodsDecleared.containsKey(method.getName())){
             throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTIN);
         }

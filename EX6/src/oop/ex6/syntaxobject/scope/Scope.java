@@ -35,6 +35,7 @@ public abstract class Scope {
 
 	public void addChild(Scope child) {
 		children.add(child);
+		child.parent = this;
 	}
 
 	public ArrayList<Variable> getVariables() {
@@ -48,7 +49,7 @@ public abstract class Scope {
 		}
 	}
 
-	public void addVariables(Variable variable){
+	public void addVariable(Variable variable){
 		this.variables.put(variable.getName(),variable);
 	}
 
