@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EX0/EX0.iml" filepath="$PROJECT_DIR$/EX0/EX0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EX1/EX1.iml" filepath="$PROJECT_DIR$/EX1/EX1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EX2/EX2.iml" filepath="$PROJECT_DIR$/EX2/EX2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EX3/EX3.iml" filepath="$PROJECT_DIR$/EX3/EX3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EX4/EX4.iml" filepath="$PROJECT_DIR$/EX4/EX4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EX5/EX5.iml" filepath="$PROJECT_DIR$/EX5/EX5.iml" />
       <module fileurl="file://$PROJECT_DIR$/EX6/EX6.iml" filepath="$PROJECT_DIR$/EX6/EX6.iml" />
       <module fileurl="file://$PROJECT_DIR$/Introduction_to_OOP.iml" filepath="$PROJECT_DIR$/Introduction_to_OOP.iml" />
     </modules>
