@@ -3,12 +3,12 @@ package oop.ex6.syntaxobject;
 public class Variable {
 
 	private Type type;
-	private String value;
+	private String name;
 	private boolean assigned;
 
-	public Variable(Type type, String value, boolean assigned) {
+	public Variable(Type type, String name, boolean assigned) {
 		this.type = type;
-		this.value = value;
+		this.name = name;
 		this.assigned = assigned;
 	}
 
@@ -16,12 +16,12 @@ public class Variable {
 		return type;
 	}
 
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
 	public void setValue(String value) {
-		this.value = value;
+		this.name = value;
 	}
 
 	public boolean isAssigned() {
