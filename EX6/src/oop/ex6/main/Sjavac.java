@@ -1,7 +1,6 @@
 package oop.ex6.main;
 
 import oop.ex6.SJavaFileHandler;
-import oop.ex6.syntaxobject.CodeUnit;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
 
 import java.io.IOException;

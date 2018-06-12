@@ -1,6 +1,7 @@
 package oop.ex6.syntaxobject;
 
 import oop.ex6.RegularExpressions;
+import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Condition extends SyntaxObject {
 		CONDITION_SPLITTER_REGEX = "(&&)|(\\|\\|)";
 	}
 
-	public Condition(String s, CodeUnit unit) throws IllegalSyntaxException {
+	public Condition(String s, Scope unit) throws IllegalSyntaxException {
 		if (s == null || s.equals(""))
 			throw new IllegalSyntaxException();
 		if (s.startsWith("&&") || s.startsWith("||") || s.endsWith("&&") || s.endsWith("||"))

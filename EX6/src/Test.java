@@ -1,4 +1,3 @@
-import oop.ex6.syntaxobject.CodeUnit;
 import oop.ex6.syntaxobject.Condition;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
 

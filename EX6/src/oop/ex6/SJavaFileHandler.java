@@ -1,6 +1,5 @@
 package oop.ex6;
 
-import oop.ex6.syntaxobject.CodeUnit;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
 
 import java.io.BufferedReader;

@@ -28,7 +28,7 @@ public class RegularExpressions {
 		 METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
 		 STRING_REGEX = "\"[^,`\\\\\"]*\"";
 		 LINE_REGEX = "[.]*[;{}]";
-		 CHARACTER_REGEX = ; //TODO finish regex
+		 CHARACTER_REGEX = ""; //TODO finish regex
 
 		 INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
 		 DOUBLE_PATTERN = Pattern.compile(DOUBLE_REGEX);
