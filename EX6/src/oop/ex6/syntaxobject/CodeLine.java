@@ -51,32 +51,28 @@ public class CodeLine extends SyntaxObject {
 							case "boolean":
 								t = Type.BOOLEAN;
 								if (!Type.BOOLEAN.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
+										varDeclaration[3])) {
 									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 								}
 								break;
 							case "int":
 								t = Type.INT;
-								if ((!Type.INT.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
+								if (!Type.INT.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3])) {
 									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 								}
 								break;
 							case "double":
 								t = Type.DOUBLE;
 								if (!Type.DOUBLE.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
+										varDeclaration[3])) {
 									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 								}
 								break;
 							case "char":
 								t = Type.CHAR;
 								if (!Type.CHAR.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
+										varDeclaration[3])) {
 									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 								}
 								break;
@@ -89,6 +85,7 @@ public class CodeLine extends SyntaxObject {
 								break;
 						}
 						Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);
+						scope.addVariable(var);
 					}
 				}
 			} else {
