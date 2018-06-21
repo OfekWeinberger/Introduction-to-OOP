@@ -7,33 +7,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Root extends Scope {
-    private static final String METHOD_OVERLOAD_EXCEPTIN = "Method overloading is not allowed";
-    private HashMap<String,Method> methodsDecleared;
-    private static Root singeltone = null;
-    private Root(){
-        super();
-        methodsDecleared = null;
-    }
+	private static final String METHOD_OVERLOAD_EXCEPTION = "Method overloading is not allowed";
+	private static Root singleton = null;
+	private HashMap<String, Method> methodsDeclared;
 
-    public static Root Instant(){
-        if(singeltone == null){
-            singeltone = new Root();
-        }
-        return singeltone;
-    }
+	private Root(String[] lines) {
+		super();
+		methodsDeclared = null;
+		//TODO first pass - get methods and variables declared
+	}
 
-    public static void addMethod(Method method) throws IllegalSyntaxException{
-        if(singeltone.methodsDecleared.containsKey(method.getName())){
-            throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTIN);
-        }
-        singeltone.methodsDecleared.put(method.getName(),method);
-    }
+	public static Root instance(String[] lines) {
+		if (singleton == null) {
+			singleton = new Root(lines);
+		}
+		return singleton;
+	}
 
-    @Override
-    public boolean isDecleared(String methodName, ArrayList<Type> params){
-        if(methodsDecleared.containsKey(methodName)){
-            return methodsDecleared.get(methodName).checkParams(params);
-        }
-        return false;
-    }
+	public static void addMethod(Method method) throws IllegalSyntaxException {
+		if (singleton.methodsDeclared.containsKey(method.getName())) {
+			throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTION);
+		}
+		singleton.methodsDeclared.put(method.getName(), method);
+	}
+
+	@Override
+	public boolean isDecleared(String methodName, ArrayList<Type> params) {
+		if (methodsDeclared.containsKey(methodName)) {
+			return methodsDeclared.get(methodName).checkParams(params);
+		}
+		return false;
+	}
 }

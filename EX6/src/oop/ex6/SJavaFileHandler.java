@@ -1,13 +1,10 @@
 package oop.ex6;
 
-import oop.ex6.syntaxobject.IllegalSyntaxException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 public class SJavaFileHandler {
 
@@ -46,21 +43,17 @@ public class SJavaFileHandler {
 		return sb.toString();
 	}
 
-	public ArrayList<String> splitCodeFileToLines(){
+	public ArrayList<String> splitCodeFileToLines() {
 		String[] lines = content.split(RegularExpressions.SPLITER_REGEX);
 		ArrayList<String> linesArray = new ArrayList<String>();
-		for(int i=0;i<lines.length;i++){
+		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines
-			if(!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()) {
+			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()) {
 				linesArray.add(lines[i]);
 			}
 		}
 		return linesArray;
 	}
-
-
-
-
 
 
 }

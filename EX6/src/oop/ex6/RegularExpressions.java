@@ -28,27 +28,27 @@ public class RegularExpressions {
 
 
 	static {
-		 INTEGER_REGEX = "([1-9]+[0-9]*)|(0)";
-		 DOUBLE_REGEX = "[0-9]+.[0-9]+";
-		 NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
-		 METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
-		 STRING_REGEX = "\"[^,`\\\\\"]*\"";
-		 LINE_REGEX = "[.]*[;{}]";
-		 CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
-		 BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
-		 SPLITER_REGEX = "(?<=[;{}\\\n])";
-		 SPACES_REGEX = "[\\s]*";
+		INTEGER_REGEX = "([1-9]+[0-9]*)|(0)";
+		DOUBLE_REGEX = "[0-9]+.[0-9]+";
+		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
+		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
+		STRING_REGEX = "\"[^,`\\\\\"]*\"";
+		LINE_REGEX = "[.]*[;{}]";
+		CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
+		BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
+		SPLITER_REGEX = "(?<=[;{}\\\n])";
+		SPACES_REGEX = "[\\s]*";
 
 
-		 INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
-		 DOUBLE_PATTERN = Pattern.compile(DOUBLE_REGEX);
-		 NAME_PATTERN = Pattern.compile(NAME_REGEX);
-		 METHOD_NAME_PATTERN = Pattern.compile(METHOD_NAME_REGEX);
-		 STRING_PATTERN = Pattern.compile(STRING_REGEX);
-		 LINE_PATTERN = Pattern.compile(LINE_REGEX);
-		 CHARACTER_PATTERN = Pattern.compile(CHARACTER_REGEX);
-		 BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
-		 SPLITER_PATTERN = Pattern.compile(SPLITER_REGEX);
-		 SPACES_PATTERN = Pattern.compile(SPACES_REGEX);
+		INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
+		DOUBLE_PATTERN = Pattern.compile(DOUBLE_REGEX);
+		NAME_PATTERN = Pattern.compile(NAME_REGEX);
+		METHOD_NAME_PATTERN = Pattern.compile(METHOD_NAME_REGEX);
+		STRING_PATTERN = Pattern.compile(STRING_REGEX);
+		LINE_PATTERN = Pattern.compile(LINE_REGEX);
+		CHARACTER_PATTERN = Pattern.compile(CHARACTER_REGEX);
+		BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
+		SPLITER_PATTERN = Pattern.compile(SPLITER_REGEX);
+		SPACES_PATTERN = Pattern.compile(SPACES_REGEX);
 	}
 }

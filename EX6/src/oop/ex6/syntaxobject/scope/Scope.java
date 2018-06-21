@@ -1,6 +1,5 @@
 package oop.ex6.syntaxobject.scope;
 
-import com.sun.deploy.security.ValidationState;
 import oop.ex6.syntaxobject.Type;
 import oop.ex6.syntaxobject.Variable;
 
@@ -11,16 +10,16 @@ public abstract class Scope {
 
 	private Scope parent;
 	private ArrayList<Scope> children;
-	private HashMap<String,Variable> variables;
+	private HashMap<String, Variable> variables;
 	private ArrayList<String> lines;
 
-	public Scope(){
+	public Scope() {
 		this.parent = null;
 		this.children = null;
 		this.variables = null;
 	}
 
-	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables,ArrayList<String> lines) {
+	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables, ArrayList<String> lines) {
 		this.parent = parent;
 		this.children = children;
 		this.setVariables(variables);
@@ -46,38 +45,37 @@ public abstract class Scope {
 	}
 
 	public void setVariables(ArrayList<Variable> variables) {
-		for(Variable var:variables){
-			this.variables.put(var.getName(),var);
+		for (Variable var : variables) {
+			this.variables.put(var.getName(), var);
 		}
 	}
 
-	public void addVariable(Variable variable){
-		this.variables.put(variable.getName(),variable);
+	public void addVariable(Variable variable) {
+		this.variables.put(variable.getName(), variable);
 	}
 
-	public boolean isAssigned(Type type, String varName){
-		if(variables.containsKey(varName)){
+	public boolean isAssigned(Type type, String varName) {
+		if (variables.containsKey(varName)) {
 			Variable var = variables.get(varName);
 			if (var.getType().equals(type)) {
 				return true;
-			}
-			else{//var has the dame name but the wrong type
+			} else {//var has the dame name but the wrong type
 				return false;
 			}
 		}
-		if(isRoot()){
+		if (isRoot()) {
 			return false;
 		}
-		return parent.isAssigned(type,varName);
+		return parent.isAssigned(type, varName);
 	}
 
-	public boolean isDecleared(String methodName, ArrayList<Type> params){
+	public boolean isDecleared(String methodName, ArrayList<Type> params) {
 		Root root = Root.Instant();
-		return root.isDecleared(methodName,params);
+		return root.isDecleared(methodName, params);
 	}
 
-	private boolean isRoot(){
-		if(parent == null){
+	private boolean isRoot() {
+		if (parent == null) {
 			return true;
 		}
 		return false;
