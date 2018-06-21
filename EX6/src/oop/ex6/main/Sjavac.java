@@ -2,6 +2,7 @@ package oop.ex6.main;
 
 import oop.ex6.SJavaFileHandler;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
+import oop.ex6.syntaxobject.Type;
 import oop.ex6.syntaxobject.scope.Scope;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ public class Sjavac {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
+
 		try {
 			checkArgs(args);
 			SJavaFileHandler fh = new SJavaFileHandler(args[0]);

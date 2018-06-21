@@ -3,6 +3,7 @@ package oop.ex6.syntaxobject;
 import oop.ex6.syntaxobject.scope.Scope;
 
 public class CodeLine extends SyntaxObject{
+	private static final String ILLEGAL_START_EXCEPTION = "The line starts with illeagal word or expretion";
 
 	public CodeLine(String line, Scope scope) throws IllegalSyntaxException {
 		if(line.startsWith("if")){
@@ -18,6 +19,6 @@ public class CodeLine extends SyntaxObject{
 		} else if(line.startsWith("boolean")){
 
 		} else
-			throw new IllegalSyntaxException();
+			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
 	}
 }

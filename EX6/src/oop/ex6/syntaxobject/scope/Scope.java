@@ -69,6 +69,11 @@ public abstract class Scope {
 		return parent.isAssigned(type,varName);
 	}
 
+	public boolean isDecleared(String methodName, ArrayList<Type> params){
+		Root root = Root.Instant();
+		return root.isDecleared(methodName,params);
+	}
+
 	private boolean isRoot(){
 		if(parent == null){
 			return true;

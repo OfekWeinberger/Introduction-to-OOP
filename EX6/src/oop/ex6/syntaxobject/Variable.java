@@ -5,11 +5,13 @@ public class Variable {
 	private Type type;
 	private String name;
 	private boolean assigned;
+	private boolean FINAL;
 
-	public Variable(Type type, String name, boolean assigned) {
+	public Variable(Type type, String name, boolean assigned, boolean FINAL) {
 		this.type = type;
 		this.name = name;
 		this.assigned = assigned;
+		this.FINAL = FINAL;
 	}
 
 	public Type getType() {
@@ -18,6 +20,10 @@ public class Variable {
 
 	public String getName() {
 		return name;
+	}
+
+	public boolean isFINAL() {
+		return FINAL;
 	}
 
 	public void setValue(String value) {

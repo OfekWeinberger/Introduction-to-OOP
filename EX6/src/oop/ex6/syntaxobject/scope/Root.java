@@ -1,7 +1,9 @@
 package oop.ex6.syntaxobject.scope;
 
 import oop.ex6.syntaxobject.IllegalSyntaxException;
+import oop.ex6.syntaxobject.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Root extends Scope {
@@ -25,5 +27,13 @@ public class Root extends Scope {
             throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTIN);
         }
         singeltone.methodsDecleared.put(method.getName(),method);
+    }
+
+    @Override
+    public boolean isDecleared(String methodName, ArrayList<Type> params){
+        if(methodsDecleared.containsKey(methodName)){
+            return methodsDecleared.get(methodName).checkParams(params);
+        }
+        return false;
     }
 }

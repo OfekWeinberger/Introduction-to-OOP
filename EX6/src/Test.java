@@ -8,16 +8,6 @@ public class Test {
 //		for(String a : array)
 //			System.out.print(a + " ");
 
-		CodeUnit cu = new CodeUnit();
-		try {
-			Condition a = new Condition("true",cu);
-			Condition b = new Condition("false", cu);
-			Condition c = new Condition("24", cu);
-			Condition d = new Condition("true&&25||false", cu);
-			Condition e = new Condition("24", cu);
-			Condition f = new Condition("true&&25||", cu);
-		} catch (IllegalSyntaxException e) {
-			e.printStackTrace();
-		}
+
 	}
 }
