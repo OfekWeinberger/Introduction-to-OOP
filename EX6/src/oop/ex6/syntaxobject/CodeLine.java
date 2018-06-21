@@ -39,58 +39,58 @@ public class CodeLine extends SyntaxObject {
 				if (lineContent.length > 1) {
 					String varType = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
 					for (String s : lineContent) {
-						varDelaration = lin
+						String[] varDeclaration = s.split(" ");
+						String varName = varDeclaration[0];
+
+						boolean isAssigned = false;
+						if (varDeclaration.length >= 3 && "=".equals(varDeclaration[2])) {
+							isAssigned = true;
+						}
+						Type t;
+						switch (varDeclaration[0]) {
+							case "boolean":
+								t = Type.BOOLEAN;
+								if (!Type.BOOLEAN.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
+								free in root*/)) {
+									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+								}
+								break;
+							case "int":
+								t = Type.INT;
+								if ((!Type.INT.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3])) || (scope instanceof Root && /*method to decide if name
+								free in root*/)) {
+									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+								}
+								break;
+							case "double":
+								t = Type.DOUBLE;
+								if (!Type.DOUBLE.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
+								free in root*/)) {
+									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+								}
+								break;
+							case "char":
+								t = Type.CHAR;
+								if (!Type.CHAR.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3]) || (scope instanceof Root && /*method to decide if name
+								free in root*/)) {
+									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+								}
+								break;
+							case "String":
+								t = Type.STRING;
+								if (!Type.STRING.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
+										varDeclaration[3])) {
+									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+								}
+								break;
+						}
+						Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);
 					}
 				}
-				String varName = lineContent[1];
-
-				boolean isAssigned = false;
-				if (lineContent.length >= 3 && "=".equals(lineContent[2])) {
-					isAssigned = true;
-				}
-				Type t;
-				switch (lineContent[0]) {
-					case "boolean":
-						t = Type.BOOLEAN;
-						if (!Type.BOOLEAN.match(lineContent[3]) && !scope.isAssigned(Type.BOOLEAN,
-								lineContent[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
-							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-						}
-						break;
-					case "int":
-						t = Type.INT;
-						if ((!Type.INT.match(lineContent[3]) && !scope.isAssigned(Type.BOOLEAN,
-								lineContent[3])) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
-							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-						}
-						break;
-					case "double":
-						t = Type.DOUBLE;
-						if (!Type.DOUBLE.match(lineContent[3]) && !scope.isAssigned(Type.BOOLEAN,
-								lineContent[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
-							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-						}
-						break;
-					case "char":
-						t = Type.CHAR;
-						if (!Type.CHAR.match(lineContent[3]) && !scope.isAssigned(Type.BOOLEAN,
-								lineContent[3]) || (scope instanceof Root && /*method to decide if name
-								free in root*/)) {
-							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-						}
-						break;
-					case "String":
-						t = Type.STRING;
-						if (!Type.STRING.match(lineContent[3]) && !scope.isAssigned(Type.BOOLEAN,
-								lineContent[3])) {
-							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-						}
-						break;
-				}
-				Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);
 			} else {
 				// check for variable assignment
 				String[] lineContent = line.split(" ");
