@@ -24,6 +24,10 @@ public class Root extends Scope {
 		return singleton;
 	}
 
+	public static Root instance(){
+		return singleton;
+	}
+
 	public static void addMethod(Method method) throws IllegalSyntaxException {
 		if (singleton.methodsDeclared.containsKey(method.getName())) {
 			throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTION);

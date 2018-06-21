@@ -1,5 +1,6 @@
 package oop.ex6.syntaxobject.scope;
 
+import oop.ex6.syntaxobject.IllegalSyntaxException;
 import oop.ex6.syntaxobject.Type;
 import oop.ex6.syntaxobject.Variable;
 
@@ -12,6 +13,7 @@ public abstract class Scope {
 	private ArrayList<Scope> children;
 	private HashMap<String, Variable> variables;
 	private ArrayList<String> lines;
+	private static final String VARIABLE_CROSS_NAME_EXCEPTION= "Two variabels in the same scope canot have the same name";
 
 	public Scope() {
 		this.parent = null;
@@ -50,7 +52,10 @@ public abstract class Scope {
 		}
 	}
 
-	public void addVariable(Variable variable) {
+	public void addVariable(Variable variable) throws IllegalSyntaxException {
+		if(this.variables.containsKey(variable.getName())){
+			throw new IllegalSyntaxException(VARIABLE_CROSS_NAME_EXCEPTION);
+		}
 		this.variables.put(variable.getName(), variable);
 	}
 
@@ -70,11 +75,11 @@ public abstract class Scope {
 	}
 
 	public boolean isDecleared(String methodName, ArrayList<Type> params) {
-		Root root = Root.Instant();
+		Root root = Root.instance();
 		return root.isDecleared(methodName, params);
 	}
 
-	private boolean isRoot() {
+	public boolean isRoot() {
 		if (parent == null) {
 			return true;
 		}
