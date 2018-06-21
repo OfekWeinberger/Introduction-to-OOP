@@ -1,5 +1,6 @@
 import oop.ex6.syntaxobject.Condition;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
+import oop.ex6.syntaxobject.Type;
 
 public class Test {
 	public static void main(String[] args){
@@ -8,6 +9,9 @@ public class Test {
 //		for(String a : array)
 //			System.out.print(a + " ");
 
+		Type a = Type.BOOLEAN;
+		Type b = Type.INT;
 
+		System.out.println(a == b);
 	}
 }
