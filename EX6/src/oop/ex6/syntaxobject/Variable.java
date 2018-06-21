@@ -5,7 +5,7 @@ public class Variable {
 	private Type type;
 	private String name;
 	private boolean assigned;
-	private boolean FINAL;
+	private final boolean FINAL;
 
 	public Variable(Type type, String name, boolean assigned, boolean FINAL) {
 		this.type = type;
