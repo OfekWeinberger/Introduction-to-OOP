@@ -12,6 +12,8 @@ public class RegularExpressions {
 	public static final String LINE_REGEX;
 	public static final String CHARACTER_REGEX;
 	public static final String BOOLEAN_REGEX;
+	public static final String SPLITER_REGEX;
+	public static final String SPACES_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
 	public static final Pattern DOUBLE_PATTERN;
@@ -21,6 +23,8 @@ public class RegularExpressions {
 	public static final Pattern LINE_PATTERN;
 	public static final Pattern CHARACTER_PATTERN;
 	public static final Pattern BOOLEAN_PATTERN;
+	public static final Pattern SPLITER_PATTERN;
+	public static final Pattern SPACES_PATTERN;
 
 
 	static {
@@ -32,6 +36,9 @@ public class RegularExpressions {
 		 LINE_REGEX = "[.]*[;{}]";
 		 CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
 		 BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
+		 SPLITER_REGEX = "(?<=[;{}\\\n])";
+		 SPACES_REGEX = "[\\s]*";
+
 
 		 INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
 		 DOUBLE_PATTERN = Pattern.compile(DOUBLE_REGEX);
@@ -41,5 +48,7 @@ public class RegularExpressions {
 		 LINE_PATTERN = Pattern.compile(LINE_REGEX);
 		 CHARACTER_PATTERN = Pattern.compile(CHARACTER_REGEX);
 		 BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
+		 SPLITER_PATTERN = Pattern.compile(SPLITER_REGEX);
+		 SPACES_PATTERN = Pattern.compile(SPACES_REGEX);
 	}
 }

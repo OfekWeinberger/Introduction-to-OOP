@@ -12,6 +12,7 @@ public abstract class Scope {
 	private Scope parent;
 	private ArrayList<Scope> children;
 	private HashMap<String,Variable> variables;
+	private ArrayList<String> lines;
 
 	public Scope(){
 		this.parent = null;
@@ -19,10 +20,11 @@ public abstract class Scope {
 		this.variables = null;
 	}
 
-	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables) {
+	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables,ArrayList<String> lines) {
 		this.parent = parent;
 		this.children = children;
 		this.setVariables(variables);
+		this.lines = lines;
 	}
 
 	public Scope getParent() {

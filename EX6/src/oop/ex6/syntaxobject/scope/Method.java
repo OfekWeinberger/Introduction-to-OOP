@@ -14,7 +14,7 @@ public class Method extends Scope {
     }
 
     public Method(String name, ArrayList<Type> params){
-        super(Root.Instant(),null,null);
+        super(Root.Instant(),null,null,null);
         this.name = name;
         this.params = params;
     }
