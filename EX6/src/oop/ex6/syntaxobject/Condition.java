@@ -34,7 +34,7 @@ public class Condition extends SyntaxObject {
 				if (subCondStrings.length == 1) {
 					if (!RegularExpressions.NAME_PATTERN.matcher(subCondStrings[0]).matches())
 						throw new IllegalSyntaxException(VARIBLE_NAME_EXCEPTION);
-					if (!scope.isAssigned(Type.BOOLEAN, subCondStrings[0]))
+					if (!scope.isVarAssigned(Type.BOOLEAN, subCondStrings[0]))
 						throw new IllegalSyntaxException(VARIABLE_TYPE_EXCEPTION);
 				} else {
 					ArrayList<Condition> subCondList = new ArrayList<>();

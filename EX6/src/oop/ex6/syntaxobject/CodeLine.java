@@ -29,7 +29,8 @@ public class CodeLine extends SyntaxObject {
 			String[] lineContent = line.split("[,;]");
 			System.out.println(lineContent[0]);
 			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" ") + 1);
-			for (int i = 1; i < lineContent.length; i++) {
+			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
+			for (int i = 0; i < lineContent.length; i++) {
 				System.out.println(lineContent[i]);
 				String[] varDeclaration = lineContent[i].split(" ");
 				Arrays.toString(varDeclaration);
@@ -41,8 +42,9 @@ public class CodeLine extends SyntaxObject {
 				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
 				}
-				if (!Type.match(varDeclaration[2], Type.getType(varType)) || !scope.isAssigned(Type
+				if (!Type.match(varDeclaration[2], Type.getType(varType)) || !scope.isVarAssigned(Type
 						.getType(varType), varDeclaration[3])) {
+					System.out.println(varDeclaration[2] + "|||" + Type.getType(varType));
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 				}
 				Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);

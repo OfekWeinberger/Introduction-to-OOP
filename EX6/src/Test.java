@@ -14,7 +14,7 @@ public class Test {
 		CodeLine cl = new CodeLine();
 		try {
 			Root r = Root.instance();
-			cl.check("int a = 5.5;", r);
+			cl.check("int a = 5;", r);
 		}
 		catch (IllegalSyntaxException e){
 			System.out.println("CAUGHT SOMETHING!!!");
