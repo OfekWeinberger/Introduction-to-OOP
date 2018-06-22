@@ -11,8 +11,8 @@ public class Root extends Scope {
 	private static Root singleton = null;
 	private HashMap<String, Method> methodsDeclared;
 
-	private Root(String[] lines) {
-		super();
+	private Root(ArrayList<String> lines) {
+		super(null,null,null,lines);
 		methodsDeclared = null;
 		//TODO first pass - get methods and variables declared
 	}
@@ -21,7 +21,7 @@ public class Root extends Scope {
 		return new ArrayList<Method>(methodsDeclared.values());
 	}
 
-	public static Root instance(String[] lines) {
+	public static Root instance(ArrayList<String> lines) {
 		if (singleton == null) {
 			singleton = new Root(lines);
 		}

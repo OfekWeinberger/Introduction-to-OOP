@@ -50,16 +50,6 @@ public abstract class Scope {
 		return vars;
 	}
 
-	public Type getVarType(String varName){
-		if(variables.containsKey(varName)){
-			return variables.get(varName).getType();
-		}
-		if(!isRoot()) {
-			return parent.getVarType(varName);
-		}
-		return null;
-	}
-
 	public void setVariables(ArrayList<Variable> variables) {
 		for (Variable var : variables) {
 			this.variables.put(var.getName(), var);
@@ -73,19 +63,46 @@ public abstract class Scope {
 		this.variables.put(variable.getName(), variable);
 	}
 
-	public boolean isAssigned(Type type, String varName) {
-		if (variables.containsKey(varName)) {
-			Variable var = variables.get(varName);
-			if (var.getType().equals(type)) {
-				return true;
-			} else {//var has the dame name but the wrong type
-				return false;
-			}
-		}
-		if (isRoot()) {
+	public boolean isVarAssigned(Type type, String varName) {
+		Variable var = getVarByName(varName);
+		if(var==null){//var is not decleared at all
 			return false;
 		}
-		return parent.isAssigned(type, varName);
+		if (var.getType().equals(type) && var.isAssigned()) {
+			return true;
+		} else {//var has the dame name but the wrong type
+			return false;
+		}
+	}
+
+	public boolean isVarDecleared(Type type,String varName){
+		Variable var = getVarByName(varName);
+		if(var==null){//var is not decleared at all
+			return false;
+		}
+		if (var.getType().equals(type)) {
+			return true;
+		} else {//var has the dame name but the wrong type
+			return false;
+		}
+	}
+
+	public Type getVarType(String varName){
+		Variable var = getVarByName(varName);
+		if(var == null){
+			return null;
+		}
+		return var.getType();
+	}
+
+	private Variable getVarByName(String varName){
+		if(variables.containsKey(varName)){
+			return variables.get(varName);
+		}
+		if(!isRoot()) {
+			return parent.getVarByName(varName);
+		}
+		return null;
 	}
 
 	public boolean isDecleared(String methodName, ArrayList<Type> params) {

@@ -9,8 +9,8 @@ public class Method extends Scope {
 	private ArrayList<Type> params;
 
 
-	public Method(String name, ArrayList<Type> params) {
-		super(Root.instance(), null, null, null);
+	public Method(String name, ArrayList<Type> params,ArrayList<String> lines) {
+		super(Root.instance(), null, null, lines);
 		this.name = name;
 		this.params = params;
 	}

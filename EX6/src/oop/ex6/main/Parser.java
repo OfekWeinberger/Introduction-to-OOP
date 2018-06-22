@@ -12,51 +12,76 @@ import java.util.Stack;
 
 public class Parser {
     private Root root;
+    private static final CodeLine varHendler;
+    static {
+        varHendler = new CodeLine();
+    }
 
 
     public Parser(Root root){
         this.root = root;
     }
 
+    public void runCheck() throws IllegalSyntaxException{
+        globalRun();
+        deepRun();
+    }
+
     public void globalRun() throws IllegalSyntaxException{
         int i = 0;
         for(;i<root.getLines().size();i++){
             if(root.getLines().get(i).endsWith("{")) {
-                CodeLine.check(root.getLines().get(i), root);//declare method
-                int counter = 1;
-                while (counter != 0) {
-                    i++;
-                    if (root.getLines().get(i).endsWith("{")) {
-                        counter++;
-                    }
-                    if (root.getLines().get(i).endsWith("}")) {
-                        counter--;
-                    }
-                }
-                i++;
+                Method method = new Method("generic",null,getScopeLines(i)); // TODO: 6/22/2018 get method name and params
+                i = skipBeyondScope(i,method);
             }
             else {
-                CodeLine.check(root.getLines().get(i), root);//declare variabale
+//                varHendler.check(root.getLines().get(i), root);//declare variabale
+                System.out.println("global line: "+i);
             }
         }
     }
 
-    public void runOverScope(Scope currentScope) throws IllegalSyntaxException{
-
+    public void runOverScope(Scope currentScope,int depth) throws IllegalSyntaxException{
+        ArrayList<String> lines = currentScope.getLines();
+        for(int i=0 ;i <lines.size();i++){
+            if(lines.get(i).endsWith("{")){
+                Scope deeperScope = new IfWhile(currentScope,getScopeLines(i));
+                runOverScope(deeperScope,depth+1);
+                i = skipBeyondScope(i,deeperScope);
+            }
+            else {
+//                varHendler.check(lines.get(i),currentScope);
+                System.out.println("code line inside scope depth: "+depth);
+            }
+        }
     }
 
-    public void deepRun() {
+    public void deepRun() throws IllegalSyntaxException {
         for (Method method:root.getMethods()) {
-            ArrayList<String> lines = method.getLines();
-            for(int i=0 ;i <lines.size();i++){
-                if(lines.get(i).endsWith("{")){
-                    Scope deeperScope = new IfWhile();
-                }
-                else {
-                    CodeLine line = new CodeLine()
-                            .check(lines.get(i),method);
-                }
+            runOverScope(method,1);
+        }
+    }
+
+    private ArrayList<String> getScopeLines(int scopeStartIndex){
+        ArrayList<String> scopeLines = new ArrayList<String>();
+        int runerIndex  = scopeStartIndex;
+        int counter = 1;
+        while (counter != 0) {
+            runerIndex++;
+            if (root.getLines().get(runerIndex).endsWith("{")) {
+                counter++;
+            }
+            if (root.getLines().get(runerIndex).endsWith("}")) {
+                counter--;
+            }
+            if(counter!=0){
+                scopeLines.add(root.getLines().get(runerIndex));
             }
         }
+        return scopeLines;
+    }
+
+    private int skipBeyondScope(int index,Scope scope){
+        return index+scope.getLines().size()+2;//skip beyond the last line the 2 is for the { and } lines
     }
 }
