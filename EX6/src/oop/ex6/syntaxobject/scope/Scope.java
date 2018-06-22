@@ -51,8 +51,10 @@ public abstract class Scope {
 	}
 
 	public void setVariables(ArrayList<Variable> variables) {
-		for (Variable var : variables) {
-			this.variables.put(var.getName(), var);
+		if(variables!=null) {
+			for (Variable var : variables) {
+				this.variables.put(var.getName(), var);
+			}
 		}
 	}
 
