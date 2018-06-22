@@ -46,43 +46,9 @@ public class CodeLine extends SyntaxObject {
 						if (varDeclaration.length >= 3 && "=".equals(varDeclaration[2])) {
 							isAssigned = true;
 						}
-						Type t;
-						switch (varDeclaration[0]) {
-							case "boolean":
-								t = Type.BOOLEAN;
-								if (!Type.BOOLEAN.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) {
-									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-								}
-								break;
-							case "int":
-								t = Type.INT;
-								if (!Type.INT.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) {
-									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-								}
-								break;
-							case "double":
-								t = Type.DOUBLE;
-								if (!Type.DOUBLE.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) {
-									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-								}
-								break;
-							case "char":
-								t = Type.CHAR;
-								if (!Type.CHAR.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) {
-									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-								}
-								break;
-							case "String":
-								t = Type.STRING;
-								if (!Type.STRING.match(varDeclaration[3]) && !scope.isAssigned(Type.BOOLEAN,
-										varDeclaration[3])) {
-									throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-								}
-								break;
+						if(!Type.match(varDeclaration[3], varDeclaration[0]) || !scope.isAssigned(Type
+										.getType(varDeclaration[0]), varDeclaration[3])){
+							throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 						}
 						Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);
 						scope.addVariable(var);
@@ -92,7 +58,8 @@ public class CodeLine extends SyntaxObject {
 				// check for variable assignment
 				String[] lineContent = line.split(" ");
 				//TODO: the function that checks if a variable is declared if
-				if (scope.isDecleared(lineContent[0]) && /*some way to if valid*/){
+				if (scope.isVarDecleared(lineContent[0]) && Type.match(lineContent[2],
+						scope.getVarType(lineContent[0]))){
 					//set variable to assigned
 				}
 				throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
