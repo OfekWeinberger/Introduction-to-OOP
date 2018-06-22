@@ -21,20 +21,24 @@ public enum Type {
 		return pattern.matcher(s).matches();
 	}
 
-	public static boolean match(String s, String type){
-		switch (type) {
-			case "boolean":
-				return BOOLEAN.match(s);
-			case "int":
-				return INT.match(s);
-			case "double":
-				return DOUBLE.match(s);
-			case "char":
-				return CHAR.match(s);
-			case "String":
-				return STRING.match(s);
-			default:
-				return false;
+	public static boolean match(String s, Type type){
+		if(type != null) {
+			switch (type) {
+				case BOOLEAN:
+					return BOOLEAN.match(s);
+				case INT:
+					return INT.match(s);
+				case DOUBLE:
+					return DOUBLE.match(s);
+				case CHAR:
+					return CHAR.match(s);
+				case STRING:
+					return STRING.match(s);
+				default:
+					return false;
+			}
+		} else {
+			return  false;
 		}
 	}
 
