@@ -17,6 +17,10 @@ public class Root extends Scope {
 		//TODO first pass - get methods and variables declared
 	}
 
+	public ArrayList<Method> getMethods(){
+		return new ArrayList<Method>(methodsDeclared.values());
+	}
+
 	public static Root instance(String[] lines) {
 		if (singleton == null) {
 			singleton = new Root(lines);

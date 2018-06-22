@@ -28,6 +28,10 @@ public abstract class Scope {
 		this.lines = lines;
 	}
 
+	public ArrayList<String> getLines() {
+		return lines;
+	}
+
 	public Scope getParent() {
 		return parent;
 	}
@@ -44,6 +48,16 @@ public abstract class Scope {
 	public ArrayList<Variable> getVariables() {
 		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
 		return vars;
+	}
+
+	public Type getVarType(String varName){
+		if(variables.containsKey(varName)){
+			return variables.get(varName).getType();
+		}
+		if(!isRoot()) {
+			return parent.getVarType(varName);
+		}
+		return null;
 	}
 
 	public void setVariables(ArrayList<Variable> variables) {
