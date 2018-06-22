@@ -53,7 +53,8 @@ public class Parser {
                     Scope deeperScope = new IfWhile();
                 }
                 else {
-                    new CodeLine().check(lines.get(i),method);
+                    CodeLine line = new CodeLine()
+                            .check(lines.get(i),method);
                 }
             }
         }
