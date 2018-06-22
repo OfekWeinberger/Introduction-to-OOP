@@ -83,7 +83,7 @@ public abstract class Scope {
 
 	public boolean isVarAssigned(Type type, String varName) {
 		Variable var = getVarByName(varName);
-		if(var==null){//var is not decleared at all
+		if(var == null){//var is not decleared at all
 			return false;
 		}
 		if (var.getType().equals(type) && var.isAssigned()) {

@@ -17,6 +17,7 @@ public class TestOfek {
 			arr.add("int a = 5;");
 			Root r = Root.instance(arr);
 			cl.check("int a = 5;", r);
+
 		}
 		catch (IllegalSyntaxException e){
 			System.out.println("CAUGHT SOMETHING!!!");
