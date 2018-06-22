@@ -11,45 +11,53 @@ public class CodeLine extends SyntaxObject {
 	private static final String ILLEGAL_START_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_NAME_EXCEPTION;
+	private static final String OVERRIDE_EXCEPTION;
+
 
 	static {
 		ILLEGAL_START_EXCEPTION = "The line starts with illegal word or expression";
 		ILLEGAL_VARIABLE_EXCEPTION = "Illegal variable written";
 		ILLEGAL_VARIABLE_NAME_EXCEPTION = "Illegal variable name";
+		OVERRIDE_EXCEPTION = "Cannot override variable from the same scope";
 	}
 
 	public void check(String line, Scope scope) throws IllegalSyntaxException {
 		// test for variable declaration
 		boolean isFinal = false;
 		if (line.startsWith("final")) {
-			line = line.substring(0, 5);
+			line = line.substring("final".length() + 1);
 			isFinal = true;
 		}
 		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") || line
 				.startsWith("char ") || line.startsWith("String ")) {
-			String[] lineContent = line.split("[,;]");
-			System.out.println(lineContent[0]);
+			String[] lineContent = line.split("(;)|(, )");
 			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" "));
 			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
 			for (int i = 0; i < lineContent.length; i++) {
-				System.out.println(lineContent[i]);
 				String[] varDeclaration = lineContent[i].split(" ");
-				Arrays.toString(varDeclaration);
 				String varName = varDeclaration[0];
-				boolean isAssigned = false;
-				if (varDeclaration.length >= 3 && "=".equals(varDeclaration[2])) {
-					isAssigned = true;
-				}
+
 				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
 				}
-				System.out.println(Type.getType(varType) + "||" + varDeclaration[2]);
-				if (!Type.match(varDeclaration[2], Type.getType(varType)) &&
-						!scope.isVarAssigned(Type.getType(varType), varDeclaration[2])) {
-					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+
+				if(varDeclaration.length == 1){
+					if(scope.isVarDeclaredHere(Type.getType(varType), varName)){
+						throw new IllegalSyntaxException(OVERRIDE_EXCEPTION + ": " + line);
+					}
+					Variable var = new Variable(Type.getType(varType), varName, false, isFinal);
+					scope.addVariable(var);
+				} else {
+					if (!"=".equals(varDeclaration[1])) {
+						throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
+					}
+					if (!Type.match(varDeclaration[2], Type.getType(varType)) &&
+							!scope.isVarAssigned(Type.getType(varType), varDeclaration[2])) {
+						throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+					}
+					Variable var = new Variable(Type.getType(varType), varName, true, isFinal);
+					scope.addVariable(var);
 				}
-				Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);
-				scope.addVariable(var);
 			}
 
 		} else {

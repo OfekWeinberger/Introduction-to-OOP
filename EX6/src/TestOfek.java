@@ -16,8 +16,8 @@ public class TestOfek {
 			ArrayList<String> arr = new ArrayList<String>();
 			arr.add("int a = 5;");
 			Root r = Root.instance(arr);
-			cl.check("int a = 5;", r);
-
+			cl.check("final double a = 0.5, b, c = 1;", r);
+			System.out.println(r.getVariables());
 		}
 		catch (IllegalSyntaxException e){
 			System.out.println("CAUGHT SOMETHING!!!");

@@ -105,7 +105,7 @@ public abstract class Scope {
 		}
 	}
 
-	public boolean isVarDeclearedHere(Type type,String varName){
+	public boolean isVarDeclaredHere(Type type,String varName){
 		Variable var = getVarByName(varName,false);
 		if(var==null){//var is not decleared at all
 			return false;

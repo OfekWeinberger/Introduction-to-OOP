@@ -29,7 +29,7 @@ public class RegularExpressions {
 
 	static {
 		INTEGER_REGEX = "([1-9]+[0-9]*)|(0)";
-		DOUBLE_REGEX = "[0-9]+.[0-9]+";
+		DOUBLE_REGEX = "([0-9]+\\.[0-9]+)|([1-9]+[0-9]*)|(0)";
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
 		STRING_REGEX = "\"[^,`\\\\\"]*\"";
