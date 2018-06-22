@@ -22,7 +22,7 @@ public class Condition extends SyntaxObject {
 		CONDITION_SPLITTER_REGEX = "(&&)|(\\|\\|)";
 	}
 
-	public Condition(String s, Scope scope) throws IllegalSyntaxException {
+	public void check(String s, Scope scope) throws IllegalSyntaxException {
 		if (s == null || s.equals(""))
 			throw new IllegalSyntaxException(EMPTY_CONDITION_EXCEPTION);
 		if (s.startsWith("&&") || s.startsWith("||") || s.endsWith("&&") || s.endsWith("||"))
@@ -39,7 +39,7 @@ public class Condition extends SyntaxObject {
 				} else {
 					ArrayList<Condition> subCondList = new ArrayList<>();
 					for (String cond : subCondStrings)
-						subCondList.add(new Condition(cond, scope));
+						check(cond, scope);
 				}
 			}
 		}

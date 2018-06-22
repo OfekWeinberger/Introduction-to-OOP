@@ -1,6 +1,6 @@
 package oop.ex6.syntaxobject;
 
-public class Variable extends SyntaxObject{
+public class Variable{
 
 	private final boolean FINAL;
 	private Type type;
