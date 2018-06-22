@@ -4,5 +4,5 @@ import oop.ex6.syntaxobject.scope.Scope;
 
 public abstract class SyntaxObject {
 
-	abstract static void check(String string, Scope scope) throws IllegalSyntaxException;
+	abstract void check(String string, Scope scope) throws IllegalSyntaxException;
 }
