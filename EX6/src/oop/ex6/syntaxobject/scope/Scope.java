@@ -98,8 +98,10 @@ public abstract class Scope {
 	}
 
 	private Variable getVarByName(String varName){
-		if(variables.containsKey(varName)){
-			return variables.get(varName);
+		if (variables != null) {
+			if (variables.containsKey(varName)) {
+				return variables.get(varName);
+			}
 		}
 		if(!isRoot()) {
 			return parent.getVarByName(varName);
