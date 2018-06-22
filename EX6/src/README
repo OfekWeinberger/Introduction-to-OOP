@@ -75,6 +75,11 @@ If we wanted to add more variables, we need to:
 3. Add them to the switch case in the CodeLine class.
 
 If we wanted to add different method types:
+We would, in the MethodDeclaration, add a return type member, and according to it, make sure there is a
+return statement in the method while scanning it's lines.
+
+If we wanted the add the method of standard java:
+
 
 ====================
 =   Question 6.3   =
