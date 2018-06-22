@@ -91,7 +91,10 @@ public class CodeLine extends SyntaxObject {
 			} else {
 				// check for variable assignment
 				String[] lineContent = line.split(" ");
-				if (//TODO: check for only declared variable in scope)
+				//TODO: the function that checks if a variable is declared if
+				if (scope.isDecleared(lineContent[0]) && /*some way to if valid*/){
+					//set variable to assigned
+				}
 				throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
 			}
 		}

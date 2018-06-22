@@ -1,13 +1,13 @@
 package oop.ex6.syntaxobject;
 
-public class Variable {
+public class Variable extends SyntaxObject{
 
 	private final boolean FINAL;
 	private Type type;
 	private String name;
 	private boolean assigned;
 
-	public Variable(Type type, String name, boolean assigned, boolean FINAL) {
+	public Variable(Type type, String name, boolean assigned, boolean FINAL) throws IllegalSyntaxException {
 		this.type = type;
 		this.name = name;
 		this.assigned = assigned;
