@@ -82,7 +82,7 @@ public abstract class Scope {
 	}
 
 	public boolean isVarAssigned(Type type, String varName) {
-		Variable var = getVarByName(varName);
+		Variable var = getVarByName(varName,true);
 		if(var == null){//var is not decleared at all
 			return false;
 		}
@@ -94,7 +94,19 @@ public abstract class Scope {
 	}
 
 	public boolean isVarDecleared(Type type,String varName){
-		Variable var = getVarByName(varName);
+		Variable var = getVarByName(varName,true);
+		if(var==null){//var is not decleared at all
+			return false;
+		}
+		if (var.getType().equals(type)) {
+			return true;
+		} else {//var has the dame name but the wrong type
+			return false;
+		}
+	}
+
+	public boolean isVarDeclearedHere(Type type,String varName){
+		Variable var = getVarByName(varName,false);
 		if(var==null){//var is not decleared at all
 			return false;
 		}
@@ -106,21 +118,23 @@ public abstract class Scope {
 	}
 
 	public Type getVarType(String varName){
-		Variable var = getVarByName(varName);
+		Variable var = getVarByName(varName,true);
 		if(var == null){
 			return null;
 		}
 		return var.getType();
 	}
 
-	private Variable getVarByName(String varName){
+	private Variable getVarByName(String varName,boolean deepSearch){
 		if (variables != null) {
 			if (variables.containsKey(varName)) {
 				return variables.get(varName);
 			}
 		}
-		if(!isRoot()) {
-			return parent.getVarByName(varName);
+		if(deepSearch) {
+			if (!isRoot()) {
+				return parent.getVarByName(varName,deepSearch);
+			}
 		}
 		return null;
 	}

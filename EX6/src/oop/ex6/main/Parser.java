@@ -82,6 +82,6 @@ public class Parser {
     }
 
     private int skipBeyondScope(int index,Scope scope){
-        return index+scope.getLines().size()+2;//skip beyond the last line the 2 is for the { and } lines
+        return index+scope.getLines().size()+1;//skip beyond the last line the 2 is for the { and } lines
     }
 }

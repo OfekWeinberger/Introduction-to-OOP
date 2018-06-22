@@ -3,6 +3,7 @@ package oop.ex6.syntaxobject.scope;
 import oop.ex6.syntaxobject.Type;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Method extends Scope {
 	private String name;
@@ -29,5 +30,14 @@ public class Method extends Scope {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		String str = name;
+		for (Type t: params){
+			str+=" ,"+t.getClass();
+		}
+		return str;
 	}
 }
