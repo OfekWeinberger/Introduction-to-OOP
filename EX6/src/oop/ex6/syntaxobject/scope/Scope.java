@@ -17,15 +17,31 @@ public abstract class Scope {
 
 	public Scope() {
 		this.parent = null;
-		this.children = null;
-		this.variables = null;
+		this.children = new ArrayList<Scope>();
+		this.variables = new HashMap<String, Variable>();
+		this.lines = new ArrayList<String>();
 	}
 
 	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables, ArrayList<String> lines) {
 		this.parent = parent;
-		this.children = children;
-		this.setVariables(variables);
-		this.lines = lines;
+		if(children == null) {
+			this.children = new ArrayList<Scope>();
+		}
+		else {
+			this.children = children;
+		}
+		if(variables == null) {
+			this.variables = new HashMap<String, Variable>();
+		}
+		else {
+			this.setVariables(variables);
+		}
+		if(lines == null) {
+			this.lines = new ArrayList<String>();
+		}
+		else {
+			this.lines = lines;
+		}
 	}
 
 	public ArrayList<String> getLines() {
