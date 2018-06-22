@@ -13,7 +13,7 @@ public class CodeLine extends SyntaxObject {
 		ILLEGAL_VARIABLE_EXCEPTION = "Illegal variable written";
 	}
 
-	public CodeLine(String line, Scope scope) throws IllegalSyntaxException {
+	public static void check(String line, Scope scope) throws IllegalSyntaxException{
 		if (line.startsWith("//")) {
 			// comment line
 		} else if (line.startsWith("if")) {
