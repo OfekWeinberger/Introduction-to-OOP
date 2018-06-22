@@ -37,4 +37,14 @@ public class Variable{
 	public void setAssigned(boolean assigned) {
 		this.assigned = assigned;
 	}
+
+	@Override
+	public String toString() {
+		return "Variable{" +
+				"FINAL=" + FINAL +
+				", type=" + type +
+				", name='" + name + '\'' +
+				", assigned=" + assigned +
+				'}';
+	}
 }

@@ -3,6 +3,7 @@ package oop.ex6.syntaxobject;
 import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CodeLine extends SyntaxObject {
@@ -28,7 +29,7 @@ public class CodeLine extends SyntaxObject {
 				.startsWith("char ") || line.startsWith("String ")) {
 			String[] lineContent = line.split("[,;]");
 			System.out.println(lineContent[0]);
-			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" ") + 1);
+			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" "));
 			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
 			for (int i = 0; i < lineContent.length; i++) {
 				System.out.println(lineContent[i]);
@@ -42,9 +43,9 @@ public class CodeLine extends SyntaxObject {
 				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
 				}
-				if (!Type.match(varDeclaration[2], Type.getType(varType)) || !scope.isVarAssigned(Type
-						.getType(varType), varDeclaration[3])) {
-					System.out.println(varDeclaration[2] + "|||" + Type.getType(varType));
+				System.out.println(Type.getType(varType) + "||" + varDeclaration[2]);
+				if (!Type.match(varDeclaration[2], Type.getType(varType)) &&
+						!scope.isVarAssigned(Type.getType(varType), varDeclaration[2])) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 				}
 				Variable var = new Variable(Type.BOOLEAN, varName, isAssigned, isFinal);

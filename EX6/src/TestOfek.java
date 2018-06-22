@@ -13,7 +13,9 @@ public class TestOfek {
 	public static void main(String[] args){
 		CodeLine cl = new CodeLine();
 		try {
-			Root r = Root.instance();
+			ArrayList<String> arr = new ArrayList<String>();
+			arr.add("int a = 5;");
+			Root r = Root.instance(arr);
 			cl.check("int a = 5;", r);
 		}
 		catch (IllegalSyntaxException e){
