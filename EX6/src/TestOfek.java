@@ -9,7 +9,7 @@ import oop.ex6.syntaxobject.scope.Scope;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Test {
+public class TestOfek {
 	public static void main(String[] args){
 		CodeLine cl = new CodeLine();
 		try {
