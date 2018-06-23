@@ -42,7 +42,7 @@ public class RegularExpressions {
 		LINE_REGEX = "[.]*[;{}]";
 		CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
 		BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
-		SPLITER_REGEX = "(?<=[;{}\\\n])";
+		SPLITER_REGEX = "(?<=[;\\{\\}\\\n])";
 		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s+";
 		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,=\\)\\}])";

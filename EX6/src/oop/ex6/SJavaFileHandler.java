@@ -39,13 +39,16 @@ public class SJavaFileHandler {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		String line;
 		while ((line = bufferedReader.readLine()) != null)
-			sb.append(line);
+			sb.append(line + "\n");
 		fileReader.close();
 		return sb.toString();
 	}
 
 	public ArrayList<String> splitCodeFileToLines() {
 		String[] lines = content.split(RegularExpressions.SPLITER_REGEX);
+		System.out.println("---");
+		System.out.println(content);
+		System.out.println("---");
 		ArrayList<String> linesArray = new ArrayList<String>();
 		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines
