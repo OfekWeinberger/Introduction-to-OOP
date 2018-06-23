@@ -12,17 +12,19 @@ public class CodeLine extends SyntaxObject {
 	private static final String ILLEGAL_VARIABLE_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_NAME_EXCEPTION;
 	private static final String OVERRIDE_EXCEPTION;
-
+	private static final String FINAL_VARIABLE_ASSIGNMENT_EXCEPTION;
 
 	static {
 		ILLEGAL_START_EXCEPTION = "The line starts with illegal word or expression";
 		ILLEGAL_VARIABLE_EXCEPTION = "Illegal variable written";
 		ILLEGAL_VARIABLE_NAME_EXCEPTION = "Illegal variable name";
 		OVERRIDE_EXCEPTION = "Cannot override variable from the same scope";
+		FINAL_VARIABLE_ASSIGNMENT_EXCEPTION = "Final variable cannot be re-assigned";
 	}
 
 	public void check(String line, Scope scope) throws IllegalSyntaxException {
 		// test for variable declaration
+		boolean passed = false;
 		boolean isFinal = false;
 		if (line.startsWith("final")) {
 			line = line.substring("final".length() + 1);
@@ -40,7 +42,6 @@ public class CodeLine extends SyntaxObject {
 				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
 				}
-
 				if(varDeclaration.length == 1){
 					if(scope.isVarDeclaredHere(Type.getType(varType), varName)){
 						throw new IllegalSyntaxException(OVERRIDE_EXCEPTION + ": " + line);
@@ -57,20 +58,25 @@ public class CodeLine extends SyntaxObject {
 					}
 					Variable var = new Variable(Type.getType(varType), varName, true, isFinal);
 					scope.addVariable(var);
+					passed = true;
 				}
 			}
 
 		} else {
 			// check for variable assignment
 			String[] lineContent = line.split(" ");
-			//TODO: the function that checks if a variable is declared if
-			if (/*scope.isVarDecleared(lineContent[0]) && */Type.match(lineContent[2], scope.getVarType
-					(lineContent[0]))) {
-				//set variable to assigned
+			if (scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]) &&
+					(scope.isVarAssigned(scope.getVarType(lineContent[0]), lineContent[2]) ||
+					Type.match(lineContent[2], scope.getVarType(lineContent[0])))) {
+				Variable var = scope.getVarByName(lineContent[0], false);
+				if(var.isFinal() && var.isAssigned())
+					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
+				var.setAssigned();
+				passed = true;
 			}
 
 		}
-		if (line.startsWith("//")) {
+		if (!line.startsWith("//") && !passed) {
 			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
 		}
 	}
@@ -81,9 +87,4 @@ if (line.startsWith("if") || line.startsWith("while")) {
 	String[] contents = line.split("\\(|\\)");
 	Condition cond = new Condition();
 	cond.check(contents[1], scope);
-} else if (line.startsWith("void")) {
-	line = line.substring(5, line.length());
-	String[] contents = line.split("|\\(|\\)");
-	MethodDeclaration md = new MethodDeclaration(contents[0], contents[1].split(", "), scope);
-}
- */
+} */

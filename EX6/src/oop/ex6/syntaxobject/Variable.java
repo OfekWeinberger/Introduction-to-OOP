@@ -22,20 +22,16 @@ public class Variable{
 		return name;
 	}
 
-	public boolean isFINAL() {
+	public boolean isFinal() {
 		return FINAL;
-	}
-
-	public void setValue(String value) {
-		this.name = value;
 	}
 
 	public boolean isAssigned() {
 		return assigned;
 	}
 
-	public void setAssigned(boolean assigned) {
-		this.assigned = assigned;
+	public void setAssigned() {
+		this.assigned = true;
 	}
 
 	@Override
