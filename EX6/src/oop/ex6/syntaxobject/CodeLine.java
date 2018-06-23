@@ -41,7 +41,7 @@ public class CodeLine {
 			assignmentHandler(line, scope);
 	}
 
-	public static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
+	private static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
 									  String
 			line) throws IllegalSyntaxException {
 		String[] varDeclaration = rawDeclaration.split("=");
