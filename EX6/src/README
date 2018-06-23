@@ -1,18 +1,61 @@
 ofekwa
 
 
+ ______  _  _             _                         _         _    _
+|  ____|(_)| |           | |                       (_)       | |  (_)
+| |__    _ | |  ___    __| |  ___  ___   ___  _ __  _  _ __  | |_  _   ___   _ __
+|  __|  | || | / _ \  / _` | / _ \/ __| / __|| '__|| || '_ \ | __|| | / _ \ | '_ \
+| |     | || ||  __/ | (_| ||  __/\__ \| (__ | |   | || |_) || |_ | || (_) || | | |
+|_|     |_||_| \___|  \__,_| \___||___/ \___||_|   |_|| .__/  \__||_| \___/ |_| |_|
+======================================================| |==========================
+                                                      |_|
 
-=============================
-=      File description     =
-=============================
+Parser.java - This class parses and scans the lines of the code one by one, creating the correct scopes, and
+    calling to the correct syntax objects (CodeLine, MethodDeclaration, Condition...) and giving them the
+    right parameters.
+Sjavac.java - This is the main class of the program, requires path of sjava file as argument.
+IfWhile.java - This class is the implementation of the if\while scope.
+Method.java - This class is the implementation of the method scope, holds the methods and the variables of the
+    root scope, but also defines it's own variable name space.
+Root.java - This class is the implementation of the root scope (global scope) that holds all it's methods and
+    also the global variables.
+Scope.java - This is the abstract father class of all scopes, implements everything any scope must have.
+CodeLine.java - This class responsible for scanning a single line of code, throwing exception if illegal.
+Condition.java - This class responsible for scanning a condition phrase, throwing exception of illegal.
+IllegalSyntaxException.java - The exception thrown whenever a part of the code finds an illegal syntax.
+MethodDeclaration.java - This class responsible for scanning a method declaration, throwing exception if
+    illegal. The class keeps the parameter and the name of the method.
+Type.java - This is an enum that defines the types available in sJava, it also implements few useful methods
+    related to the types.
+Variable.java - This class implement a variable in sJava, it doesn't save it's value but saves everything
+    related to the syntax checking: assignment status, if it is final, the type of the variable and it's name.
+RegularExpressions.java - This is a class that holds the patterns and regexes we use in the program.
+SJavaFileHandler.java - This class responsible for all the file and initial text handling in the program.
 
 
-=============================
-=          Design           =
-=============================
+ _____              _
+|  __ \            (_)
+| |  | |  ___  ___  _   __ _  _ __
+| |  | | / _ \/ __|| | / _` || '_ \
+| |__| ||  __/\__ \| || (_| || | | |
+|_____/  \___||___/|_| \__, ||_| |_|
+========================__/ |=======
+                       |___/
 
-Our main design principle was building a syntax tree: creating sort of syntax graph and while constructing
-each of the syntax object, an IllegalSyntaxException can be thrown, noting the file is illegal.
+Our main design principle was like building a syntax tree: constructing the parameters and the methods of the
+global scope then going method by method and starting to check the syntax. In case of if or while we
+immediately start to check it (opening a new scope) and do it recursively. Anywhere checking the syntax, an
+IllegalSyntaxException can be thrown, otherwise the file is legal.
+
+
+ _____                 _                           _        _   _                   _      _        _ _
+|_   _|               | |                         | |      | | (_)                 | |    | |      (_) |
+  | |  _ __ ___  _ __ | | ___ _ __ ___   ___ _ __ | |_ __ _| |_ _  ___  _ __     __| | ___| |_ __ _ _| |___
+  | | | '_ ` _ \| '_ \| |/ _ \ '_ ` _ \ / _ \ '_ \| __/ _` | __| |/ _ \| '_ \   / _` |/ _ \ __/ _` | | / __|
+ _| |_| | | | | | |_) | |  __/ | | | | |  __/ | | | || (_| | |_| | (_) | | | | | (_| |  __/ || (_| | | \__ \
+|_____|_| |_| |_| .__/|_|\___|_| |_| |_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|  \__,_|\___|\__\__,_|_|_|___/
+================| |=========================================================================================
+                |_|
 
 Our programs reads the file, and creates a list
 (ArrayList) of all the lines of the file. It is done while deleting all the unnecessary white spaces to make
@@ -21,21 +64,24 @@ generally define the name space of variables; Each scope has a collection of all
 father scope has (except for root that has only it's own variables). After passing the lines to root scope,
 it scans the lines, creating methods and variables (without scanning the lines of the methods). Then there is
 a second scan, for each of the methods. in each method the scan scans the line and if there is another scope
-block (if/while) it opens a new scope and scans it's lines.
+block (if/while) it opens a new scope and scans it's lines, so if another scope (if/while) is declared inside,
+it the program will create new scope for it, and scan it's lines before going back to the outer one.
 
 It is important to notice the scanning is made inside a parser class that scans the code lines one by one.
 When finished scanning, it goes  back to the outer scope. When the scanning of the root lines, the program
-returns a result of a valid file.
-
-=============================
-=  Implementation details   =
-=============================
+returns a result of a valid file: Anywhere in the code the IllegalSyntaxException can be thrown, with
+informative message. The exception is caught then the program knows the code is illegal according the sJava
+language specifications.
 
 
-=============================
-=    Answers to questions   =
-=============================
-
+                                            _                                _   _
+    /\                                     | |                              | | (_)
+   /  \   _ __  _____      _____ _ __ ___  | |_ ___     __ _ _   _  ___  ___| |_ _  ___  _ __  ___
+  / /\ \ | '_ \/ __\ \ /\ / / _ \ '__/ __| | __/ _ \   / _` | | | |/ _ \/ __| __| |/ _ \| '_ \/ __|
+ / ____ \| | | \__ \\ V  V /  __/ |  \__ \ | || (_) | | (_| | |_| |  __/\__ \ |_| | (_) | | | \__ \
+/_/    \_\_| |_|___/ \_/\_/ \___|_|  |___/  \__\___/   \__, |\__,_|\___||___/\__|_|\___/|_| |_|___/
+==========================================================| |======================================
+                                                          |_|
 ====================
 =   Question 6.1   =
 ====================
@@ -53,19 +99,17 @@ correct - it will find it legal.
 =   Question 6.2   =
 ====================
 
-Our object oriented design was fairly simple: There is a an abstract class called SyntaxObject, the only thing
-it requires from it's descendants to implement is a constructor that throws the IllegalSyntaxException. That
-means the every syntax object, while being constructed, can throw the exception to notify the program there is
-a syntax error - otherwise the code is legal. There are few general syntax objects: CodeLine, Condition,
-MethodDeclaration. In addition there are scopes, Scopes are objects that define the name space of
-variables; Each scope has a collection of all the variables method that his father scope has (except for
-root that has only it's own variables). The scope types are: Root, Method and IfWhile (if and while are
-combined because there is no real difference between them).
+Our object oriented design was fairly simple: There are few general syntax objects: CodeLine, Condition,
+MethodDeclaration. In addition there are scopes, Scope is an abstract class that implement everything
+that any scope must have, scopes are objects that define the name space of variables; Each scope has a
+collection of all the variables method that his father scope has (except for root that has only it's own
+variables). The scope types are: Root, Method and IfWhile (if and while are combined because there is no real
+difference between them).
 
 We thought of few partially \ totally different designs:
 ~~~~~
 ~~~~~
-~~~~~ add bullshit alternatives!!!!!!!
+~~~~~ add bullshit alternatives!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ~~~~~
 ~~~~~
 
@@ -78,11 +122,34 @@ If we wanted to add different method types:
 We would, in the MethodDeclaration, add a return type member, and according to it, make sure there is a
 return statement in the method while scanning it's lines.
 
-If we wanted the add the method of standard java:
-
+If we wanted the add the methods of standard java:
+We would need to add an array of methods with the names and the parameter that belong to the methods we want
+to add (for example: name=System.out.println and param=String). Then in case the method that is called is not
+recognized as one of the methods declared in the global scope, then check if the method call fits the name and
+ parameter of one of the methods in the "java methods" list.
 
 ====================
 =   Question 6.3   =
 ====================
+
+In our program we used many regular expressions to make our life easier, here are some of them that we find
+particularly interesting:
+
+1. BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)": This regex is the one we used in
+order to define if certain String can represent a boolean, and in addition if we can assign this value to a
+boolean. As in the s-Java specifications, this regex only matches one of the following: A boolean word
+("true" or "false"), double value or int value. "(true)|(false)" matches to a boolean word,
+"(([1-9]+[0-9]*)|(0))" matches to an int and "([0-9]+.[0-9]+)" matches to a double. The "|" between them
+represent a logical "OR" relation.
+
+2. AFTER_TRIMMER_REGEX = "(?<=[\\{;\\(,=\\)\\}])[\\s]+": This regex is helping us in a process where we want
+to remove unnecessary white-spaces from the code, helping us to scan the code more efficiently (It is easier
+to check syntax when we know better how the code should look like). This specific regex will match (for
+deletion) any white-space that has "{", "}", ";", "(", ")", "=", "," before them. We also implemented a
+similar one for any white spaces that are before any of these characters.
+
+3. METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\s]*[\\)];": This regex is helping use to find if a method
+call is legal or not. A method call consists of a method name, then "(", the parameters given to the method
+and then ");"
 
 

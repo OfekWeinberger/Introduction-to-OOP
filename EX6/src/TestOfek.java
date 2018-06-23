@@ -2,7 +2,6 @@ import oop.ex6.SJavaFileHandler;
 import oop.ex6.syntaxobject.*;
 import oop.ex6.syntaxobject.scope.Root;
 import oop.ex6.syntaxobject.scope.Scope;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
