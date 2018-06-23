@@ -46,6 +46,7 @@ public class CodeLine extends SyntaxObject {
 					if(scope.isVarDeclaredHere(Type.getType(varType), varName)){
 						throw new IllegalSyntaxException(OVERRIDE_EXCEPTION + ": " + line);
 					}
+
 					Variable var = new Variable(Type.getType(varType), varName, false, isFinal);
 					scope.addVariable(var);
 				} else {
@@ -58,13 +59,13 @@ public class CodeLine extends SyntaxObject {
 					}
 					Variable var = new Variable(Type.getType(varType), varName, true, isFinal);
 					scope.addVariable(var);
-					passed = true;
 				}
 			}
-
+			passed = true;
 		} else {
 			// check for variable assignment
 			String[] lineContent = line.split(" ");
+
 			if (scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]) &&
 					(scope.isVarAssigned(scope.getVarType(lineContent[0]), lineContent[2]) ||
 					Type.match(lineContent[2], scope.getVarType(lineContent[0])))) {
@@ -74,8 +75,8 @@ public class CodeLine extends SyntaxObject {
 				var.setAssigned();
 				passed = true;
 			}
-
 		}
+		System.out.println(passed);
 		if (!line.startsWith("//") && !passed) {
 			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
 		}

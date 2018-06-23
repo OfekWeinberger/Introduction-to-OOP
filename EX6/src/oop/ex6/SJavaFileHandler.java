@@ -56,11 +56,11 @@ public class SJavaFileHandler {
 		return linesArray;
 	}
 
-	private ArrayList<String> cleanCode(ArrayList<String> lines){
-		for (String line:lines) {
-
-		}
-	}
+//	private ArrayList<String> cleanCode(ArrayList<String> lines){
+//		for (String line:lines) {
+//
+//		}
+//	}
 
 
 }
