@@ -93,7 +93,10 @@ public class CodeLine {
 			Type varType = scope.getVarType(varName);
 			if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
 					Type.match(varAssignment, varType))) {
-				Variable var = scope.getVarByName(varName, false);
+				Variable var = scope.getVarByName(varName, true);
+				if(var==null){
+					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION);
+				}
 				if (var.isFinal() && var.isAssigned())
 					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
 				var.setAssigned();
