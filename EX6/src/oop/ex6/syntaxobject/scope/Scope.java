@@ -86,7 +86,7 @@ public abstract class Scope {
 		if(var == null){//var is not decleared at all
 			return false;
 		}
-		if (var.getType().equals(type) && var.isAssigned()) {
+		if (type.equals(var.getType()) && var.isAssigned()) {
 			return true;
 		} else {//var has the dame name but the wrong type
 			return false;
@@ -137,6 +137,10 @@ public abstract class Scope {
 			}
 		}
 		return null;
+	}
+
+	public Method getMethodByName(String methodName){
+		return Root.instance().getMethodByName(methodName);
 	}
 
 	public boolean isDecleared(String methodName, ArrayList<Type> params) {

@@ -58,4 +58,21 @@ public enum Type {
 				return null;
 		}
 	}
+
+	public boolean equals(Type other){
+		switch (this){
+			case INT:
+				return other==INT;
+			case BOOLEAN:
+				return (other==INT)||(other==DOUBLE)||(other==BOOLEAN);
+			case DOUBLE:
+				return (other==INT)||(other==DOUBLE);
+			case CHAR:
+				return other==CHAR;
+			case STRING:
+				return other==STRING;
+			default:
+				return false;
+		}
+	}
 }

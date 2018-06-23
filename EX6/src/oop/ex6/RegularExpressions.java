@@ -19,6 +19,8 @@ public class RegularExpressions {
 	public static final String AFTER_TRIMER_REGEX;
 	public static final String METHOD_CALL_REGEX;
 	public static final String METHOD_CALL_SPLITTER_REGEX;
+	public static final String PARAMS_REGEX;
+	public static final String VARIABELS_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
 	public static final Pattern DOUBLE_PATTERN;
@@ -35,6 +37,8 @@ public class RegularExpressions {
 	public static final Pattern AFTER_TRIMER_PATTERN;
 	public static final Pattern METHOD_CALL_PATTERN;
 	public static final Pattern METHOD_CALL_SPLITTER_PATTERN;
+	public static final Pattern PARAMS_PATTERN;
+	public static final Pattern VARIABELS_PATTERN;
 
 
 	static {
@@ -42,16 +46,18 @@ public class RegularExpressions {
 		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|([-]?[1-9]+[0-9]*)|(0)";
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
-		STRING_REGEX = "\"[^,`\\\\\"]*\"";
+		STRING_REGEX = "\\\"[^,`\\\\\"]*\\\"";
 		LINE_REGEX = "[.]*[;{}]";
-		CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
-		BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
-		SPLITER_REGEX = "(?<=[;\\{\\}\\\n])";
+		CHARACTER_REGEX = "\\'[^,`\\\\\"]+\\'";
+		BOOLEAN_REGEX = "(true)|(false)|(([-]?[1-9]+[0-9]*)|(0))|(([-]?[0-9]+\\.[0-9]+)|([-]?[1-9]+[0-9]*)|(0))";
+		SPLITER_REGEX = "(?<=[\\\n])";//;\{\}
 		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s+";
-		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,=\\)\\}])";
-		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}])[\\s]+";
-		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\s]*[\\)];";
+		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
+		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])[\\s]+";
+		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\\"\\\'\\-\\.\\s]*[\\)]";
+		PARAMS_REGEX = "(([\\w\\s]+,)*[\\w\\s]+)|()";
+		VARIABELS_REGEX = "(([\\w\\s\\\"\\\'\\.\\-_]+[,\\=])*[\\w\\s\\\"\\\'\\.\\-_]+)";
 		METHOD_CALL_SPLITTER_REGEX = "[,\\(\\)]";
 
 
@@ -70,5 +76,7 @@ public class RegularExpressions {
 		AFTER_TRIMER_PATTERN = Pattern.compile(AFTER_TRIMER_REGEX);
 		METHOD_CALL_PATTERN = Pattern.compile(METHOD_CALL_REGEX);
 		METHOD_CALL_SPLITTER_PATTERN = Pattern.compile(METHOD_CALL_SPLITTER_REGEX);
+		PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
+		VARIABELS_PATTERN = Pattern.compile(VARIABELS_REGEX);
 	}
 }

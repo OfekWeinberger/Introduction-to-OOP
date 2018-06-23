@@ -60,7 +60,13 @@ public class SJavaFileHandler {
 	private ArrayList<String> cleanCode(ArrayList<String> lines){
 		ArrayList<String> cleanLines = new ArrayList<String>();
 		for (String line:lines) {
-			String trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX,"");
+			String trimedLine;
+			if(line.contains("//")) {
+				trimedLine = line;
+			}
+			else {
+				trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX, "");
+			}
 			String beforeCleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX,"");
 			String cleanSpaced = beforeCleanSpaced.replaceAll(RegularExpressions.AFTER_TRIMER_REGEX,"");
 			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX," ");

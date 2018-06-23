@@ -4,6 +4,7 @@ import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Condition {
 

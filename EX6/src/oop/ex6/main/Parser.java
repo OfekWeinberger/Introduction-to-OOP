@@ -19,6 +19,7 @@ public class Parser {
     private static final String SCOPE_NOT_CLOSING_EXCEPTION = "Scope is opening but missing a } to close it";
     private static final String METHOD_NO_RETURN_EXCEPTION = "Method must end with a return line";
     private static final String CONDITION_ERROR_EXCEPTION = "Ileagal if or while condition";
+    private static final String MISSING_SEMICOLON_EXCEPTION = "all lines witch dont open scope shoulde end with ;";
     static {
         varHendler = new CodeLine();
     }
@@ -52,9 +53,12 @@ public class Parser {
                     Root.addMethod(method);
                     i = skipBeyondScope(i, method);
                 }
+                else {
+                    throw new IllegalSyntaxException(SCOPE_OPEN_EXCEPTION);
+                }
             }
             else {
-                varHendler.check(root.getLines().get(i), root);//declare variabale
+                sendToCheck(lines.get(i),root);
             }
         }
     }
@@ -81,8 +85,16 @@ public class Parser {
                 }
             }
             else {
-                varHendler.check(lines.get(i),currentScope);
+                sendToCheck(lines.get(i),currentScope);
             }
+        }
+    }
+    private void sendToCheck(String line,Scope scope)throws IllegalSyntaxException{
+        if(!line.endsWith(";")&&!line.startsWith("//")){
+            throw new IllegalSyntaxException(MISSING_SEMICOLON_EXCEPTION);
+        }
+        else {
+            varHendler.check(line.substring(0,line.length()-1), scope);
         }
     }
 
@@ -117,4 +129,5 @@ public class Parser {
     private int skipBeyondScope(int index,Scope scope){
         return index+scope.getLines().size()+1;//skip beyond the last line the 2 is for the { and } lines
     }
+
 }

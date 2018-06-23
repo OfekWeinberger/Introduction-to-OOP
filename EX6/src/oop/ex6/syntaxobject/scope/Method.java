@@ -42,6 +42,10 @@ public class Method extends Scope {
 		return true;
 	}
 
+	public ArrayList<Variable> getParams(){
+		return new ArrayList<Variable>(params);
+	}
+
 	@Override
 	public String toString() {
 		String str = name;

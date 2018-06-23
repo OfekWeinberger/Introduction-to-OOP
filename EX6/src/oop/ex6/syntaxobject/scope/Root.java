@@ -25,6 +25,11 @@ public class Root extends Scope {
 		return new ArrayList<Method>(methodsDeclared.values());
 	}
 
+	@Override
+	public Method getMethodByName(String methodName){
+		return methodsDeclared.get(methodName);
+	}
+
 	public static Root instance(ArrayList<String> lines) {
 		if (singleton == null) {
 			singleton = new Root(lines);
