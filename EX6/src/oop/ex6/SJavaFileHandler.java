@@ -57,8 +57,9 @@ public class SJavaFileHandler {
 	}
 
 	private ArrayList<String> cleanCode(ArrayList<String> lines){
+		ArrayList<String> cleanLines = new ArrayList<String>();
 		for (String line:lines) {
-
+			String trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX,"");
 		}
 	}
 

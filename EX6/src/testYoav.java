@@ -11,6 +11,9 @@ import java.util.Arrays;
 
 public class testYoav {
     public static void main(String[] args){
+        String myString = "  sadf sadf";
+        String leftRemoved = myString.replaceAll("^\\s+", "");
+        System.out.println(leftRemoved);
         try {
             SJavaFileHandler handler = new SJavaFileHandler("C:/Users/t8473619/Desktop/ex6T/502.txt");
             Root root = Root.instance(handler.splitCodeFileToLines());
