@@ -5,7 +5,7 @@ import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
 
-public class Condition extends SyntaxObject {
+public class Condition {
 
 	private static final String T;
 	private static final String F;

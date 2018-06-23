@@ -3,10 +3,7 @@ package oop.ex6.syntaxobject;
 import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class CodeLine extends SyntaxObject {
+public class CodeLine {
 
 	private static final String ILLEGAL_START_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_EXCEPTION;
@@ -22,68 +19,63 @@ public class CodeLine extends SyntaxObject {
 		FINAL_VARIABLE_ASSIGNMENT_EXCEPTION = "Final variable cannot be re-assigned";
 	}
 
-	public void check(String line, Scope scope) throws IllegalSyntaxException {
+	public static void check(String line, Scope scope) throws IllegalSyntaxException {
 		// test for variable declaration
-		boolean passed = false;
+
 		boolean isFinal = false;
 		if (line.startsWith("final")) {
 			line = line.substring("final".length() + 1);
 			isFinal = true;
 		}
-		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") || line
-				.startsWith("char ") || line.startsWith("String ")) {
+
+		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") ||
+				line.startsWith("char ") || line.startsWith("String ")) {
 			String[] lineContent = line.split("(,)|(;)");
-			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" "));
+			Type varType = Type.getType(lineContent[0].substring(0, lineContent[0].indexOf(" ")));
 			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
-			for (int i = 0; i < lineContent.length; i++) {
-				String[] varDeclaration = lineContent[i].split("=");
-				String varName = varDeclaration[0];
 
-				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
-					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
-				}
-				if(varDeclaration.length == 1){
-					if(scope.isVarDeclaredHere(Type.getType(varType), varName)){
-						throw new IllegalSyntaxException(OVERRIDE_EXCEPTION + ": " + line);
-					}
+			for (String rawDeclaration : lineContent)
+				declareVariable(isFinal, rawDeclaration, varType, scope, line);
 
-					Variable var = new Variable(Type.getType(varType), varName, false, isFinal);
-					scope.addVariable(var);
-				} else {
-					if (!Type.match(varDeclaration[1], Type.getType(varType)) &&
-							!scope.isVarAssigned(Type.getType(varType), varDeclaration[1])) {
-						throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
-					}
-					Variable var = new Variable(Type.getType(varType), varName, true, isFinal);
-					scope.addVariable(var);
-				}
-			}
-			passed = true;
+		} else if (!line.startsWith("//"))
+			assignmentHandler(line, scope);
+	}
+
+	public static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
+									  String
+			line) throws IllegalSyntaxException {
+		String[] varDeclaration = rawDeclaration.split("=");
+		String varName = varDeclaration[0];
+		if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches())
+			throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
+		if (varDeclaration.length == 1) {
+			if (scope.isVarDeclaredHere(varType, varName))
+				throw new IllegalSyntaxException(OVERRIDE_EXCEPTION + ": " + line);
+			Variable var = new Variable(varType, varName, false, isFinal);
+			scope.addVariable(var);
 		} else {
-			// check for variable assignment
-			String[] lineContent = line.split("(=)|(;)");
-			System.out.println(Arrays.toString(lineContent));
-			System.out.println(scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]));
-			if (scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]) &&
-					(scope.isVarAssigned(scope.getVarType(lineContent[0]), lineContent[1]) ||
-					Type.match(lineContent[1], scope.getVarType(lineContent[0])))) {
-				Variable var = scope.getVarByName(lineContent[0], false);
-				if(var.isFinal() && var.isAssigned())
-					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
-				var.setAssigned();
-				passed = true;
-			}
-		}
-		System.out.println(passed);
-		if (!line.startsWith("//") && !passed) {
-			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION);
+			String varAssignment = varDeclaration[1];
+			if (!Type.match(varAssignment, varType) &&
+					!scope.isVarAssigned(varType, varAssignment))
+				throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
+			Variable var = new Variable(varType, varName, true, isFinal);
+			scope.addVariable(var);
 		}
 	}
-}
 
-/*
-if (line.startsWith("if") || line.startsWith("while")) {
-	String[] contents = line.split("\\(|\\)");
-	Condition cond = new Condition();
-	cond.check(contents[1], scope);
-} */
+	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
+		// check for variable assignment
+		String[] lineContent = line.split("(=)|(;)");
+		String varName = lineContent[0];
+		String varAssignment = lineContent[1];
+		Type varType = scope.getVarType(varName);
+		if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
+				Type.match(varAssignment, varType))) {
+			Variable var = scope.getVarByName(varName, false);
+			if (var.isFinal() && var.isAssigned())
+				throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
+			var.setAssigned();
+		} else
+			throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
+	}
+}

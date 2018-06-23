@@ -12,10 +12,10 @@ public class TestOfek {
 		MethodDeclaration md = new MethodDeclaration();
 		try {
 			ArrayList<String> arr = new ArrayList<String>();
-			arr.add("void methodName(int a, double b, final String c){");
+			arr.add("void methodName(int a,double b,final String c){");
 			Root r = Root.instance(arr);
-			md.check("void methodName(int a, double b, final String c){", r);
-			System.out.println(r.getMethods());
+			md.check("void methodName(int a,double b,final String c){", r);
+			System.out.println(md.getName() + "|||" + md.getParams());
 		}
 		catch (IllegalSyntaxException e){
 			System.out.println("CAUGHT SOMETHING!!!");
