@@ -13,7 +13,7 @@ public class Root extends Scope {
 
 	private Root(ArrayList<String> lines) {
 		super(null,null,null,lines);
-		methodsDeclared = null;
+		methodsDeclared = new HashMap<String, Method>();
 		//TODO first pass - get methods and variables declared
 	}
 
