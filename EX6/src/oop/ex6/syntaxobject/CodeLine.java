@@ -32,11 +32,11 @@ public class CodeLine extends SyntaxObject {
 		}
 		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") || line
 				.startsWith("char ") || line.startsWith("String ")) {
-			String[] lineContent = line.split("(;)|(, )");
+			String[] lineContent = line.split("(,)|(;)");
 			String varType = lineContent[0].substring(0, lineContent[0].indexOf(" "));
 			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
 			for (int i = 0; i < lineContent.length; i++) {
-				String[] varDeclaration = lineContent[i].split(" ");
+				String[] varDeclaration = lineContent[i].split("=");
 				String varName = varDeclaration[0];
 
 				if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
@@ -50,11 +50,8 @@ public class CodeLine extends SyntaxObject {
 					Variable var = new Variable(Type.getType(varType), varName, false, isFinal);
 					scope.addVariable(var);
 				} else {
-					if (!"=".equals(varDeclaration[1])) {
-						throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
-					}
-					if (!Type.match(varDeclaration[2], Type.getType(varType)) &&
-							!scope.isVarAssigned(Type.getType(varType), varDeclaration[2])) {
+					if (!Type.match(varDeclaration[1], Type.getType(varType)) &&
+							!scope.isVarAssigned(Type.getType(varType), varDeclaration[1])) {
 						throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 					}
 					Variable var = new Variable(Type.getType(varType), varName, true, isFinal);
@@ -64,11 +61,12 @@ public class CodeLine extends SyntaxObject {
 			passed = true;
 		} else {
 			// check for variable assignment
-			String[] lineContent = line.split(" ");
-
+			String[] lineContent = line.split("(=)|(;)");
+			System.out.println(Arrays.toString(lineContent));
+			System.out.println(scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]));
 			if (scope.isVarDecleared(scope.getVarType(lineContent[0]), lineContent[0]) &&
-					(scope.isVarAssigned(scope.getVarType(lineContent[0]), lineContent[2]) ||
-					Type.match(lineContent[2], scope.getVarType(lineContent[0])))) {
+					(scope.isVarAssigned(scope.getVarType(lineContent[0]), lineContent[1]) ||
+					Type.match(lineContent[1], scope.getVarType(lineContent[0])))) {
 				Variable var = scope.getVarByName(lineContent[0], false);
 				if(var.isFinal() && var.isAssigned())
 					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
