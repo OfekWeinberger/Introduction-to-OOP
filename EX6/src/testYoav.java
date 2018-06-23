@@ -17,7 +17,7 @@ public class testYoav {
             printScode(root.getLines());
             Parser parser = new Parser(root);
             parser.globalRun();
-            parser.deepRun();
+//            parser.deepRun();
         }
         catch (IllegalSyntaxException e){
             System.out.println("CAUGHT SOMETHING!!!");
