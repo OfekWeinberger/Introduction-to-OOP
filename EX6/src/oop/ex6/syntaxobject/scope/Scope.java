@@ -125,7 +125,7 @@ public abstract class Scope {
 		return var.getType();
 	}
 
-	private Variable getVarByName(String varName,boolean deepSearch){
+	public Variable getVarByName(String varName,boolean deepSearch){
 		if (variables != null) {
 			if (variables.containsKey(varName)) {
 				return variables.get(varName);

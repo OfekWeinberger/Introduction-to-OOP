@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SJavaFileHandler {
 
@@ -53,6 +54,12 @@ public class SJavaFileHandler {
 			}
 		}
 		return linesArray;
+	}
+
+	private ArrayList<String> cleanCode(ArrayList<String> lines){
+		for (String line:lines) {
+
+		}
 	}
 
 
