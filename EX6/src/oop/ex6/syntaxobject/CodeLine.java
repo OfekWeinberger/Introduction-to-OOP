@@ -1,7 +1,11 @@
 package oop.ex6.syntaxobject;
 
+import com.sun.deploy.security.ValidationState;
 import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CodeLine {
 
@@ -10,6 +14,7 @@ public class CodeLine {
 	private static final String ILLEGAL_VARIABLE_NAME_EXCEPTION;
 	private static final String OVERRIDE_EXCEPTION;
 	private static final String FINAL_VARIABLE_ASSIGNMENT_EXCEPTION;
+	private static final String METHOD_NOT_DECLEARED_EXCEPTION;
 
 	static {
 		ILLEGAL_START_EXCEPTION = "The line starts with illegal word or expression";
@@ -17,6 +22,7 @@ public class CodeLine {
 		ILLEGAL_VARIABLE_NAME_EXCEPTION = "Illegal variable name";
 		OVERRIDE_EXCEPTION = "Cannot override variable from the same scope";
 		FINAL_VARIABLE_ASSIGNMENT_EXCEPTION = "Final variable cannot be re-assigned";
+		METHOD_NOT_DECLEARED_EXCEPTION = " method is not decleared";
 	}
 
 	public static void check(String line, Scope scope) throws IllegalSyntaxException {
@@ -37,7 +43,11 @@ public class CodeLine {
 			for (String rawDeclaration : lineContent)
 				declareVariable(isFinal, rawDeclaration, varType, scope, line);
 
-		} else if (!line.startsWith("//"))
+		}
+		else if(RegularExpressions.METHOD_CALL_PATTERN.matcher(line).matches()){
+			methodCallHandler(line,scope);
+		}
+		else if (!line.startsWith("//"))
 			assignmentHandler(line, scope);
 	}
 
@@ -80,5 +90,26 @@ public class CodeLine {
 				throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
 		} else
 			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION + ": " + line);
+	}
+
+	private static void methodCallHandler(String line,Scope scope) throws IllegalSyntaxException{
+		line = line.substring(0,line.length()-1);//cut the ; in the end
+		String[] lineContent = line.split(RegularExpressions.METHOD_CALL_SPLITTER_REGEX);
+		ArrayList<Type> paramsType = new ArrayList<>();
+		for(int i=1;i<lineContent.length;i++){
+			paramsType.add(scope.getVarByName(lineContent[i],true).getType());
+		}
+		String methodName = lineContent[0];
+		if(!scope.isDecleared(methodName,paramsType)){
+			String paramsStr = "(";
+			for (Type type:paramsType) {
+				paramsStr+=type.toString()+",";
+			}
+			if(paramsStr.endsWith(",")){
+				paramsStr = paramsStr.substring(0,paramsStr.length()-1);
+			}
+			paramsStr+=")";
+			throw new IllegalSyntaxException(methodName+paramsStr+METHOD_NOT_DECLEARED_EXCEPTION);
+		}
 	}
 }

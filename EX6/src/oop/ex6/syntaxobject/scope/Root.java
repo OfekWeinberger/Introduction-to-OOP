@@ -8,13 +8,17 @@ import java.util.HashMap;
 
 public class Root extends Scope {
 	private static final String METHOD_OVERLOAD_EXCEPTION = "Method overloading is not allowed";
-	private static Root singleton = null;
+	public static Root singleton = null;
 	private HashMap<String, Method> methodsDeclared;
 
-	private Root(ArrayList<String> lines) {
+	public Root(ArrayList<String> lines) {
 		super(null,null,null,lines);
 		methodsDeclared = new HashMap<String, Method>();
 		//TODO first pass - get methods and variables declared
+	}
+
+	public void reset(){
+
 	}
 
 	public ArrayList<Method> getMethods(){

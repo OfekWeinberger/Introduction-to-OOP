@@ -30,12 +30,11 @@ public class MethodDeclaration {
 			name = contents[0];
 			if (!RegularExpressions.METHOD_NAME_PATTERN.matcher(name).matches())
 				throw new IllegalSyntaxException(ILLEGAL_METHOD_NAME_EXCEPTION + ": " + line);
-			System.out.println(name);
 			String[] methodParams = contents[1].split(",");
-			System.out.println(Arrays.toString(methodParams));
-			for (String param : methodParams)
-				declareMethodParams(param, line);
-
+			if(!"".equals(methodParams[0])) {
+				for (String param : methodParams)
+					declareMethodParams(param, line);
+			}
 		}
 	}
 

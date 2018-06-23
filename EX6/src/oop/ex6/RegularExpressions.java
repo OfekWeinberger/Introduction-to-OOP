@@ -17,6 +17,8 @@ public class RegularExpressions {
 	public static final String START_TRIMER_REGEX;
 	public static final String BEFORE_TRIMER_REGEX;
 	public static final String AFTER_TRIMER_REGEX;
+	public static final String METHOD_CALL_REGEX;
+	public static final String METHOD_CALL_SPLITTER_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
 	public static final Pattern DOUBLE_PATTERN;
@@ -31,11 +33,13 @@ public class RegularExpressions {
 	public static final Pattern START_TRIMER_PATTERN;
 	public static final Pattern BEFORE_TRIMER_PATTERN;
 	public static final Pattern AFTER_TRIMER_PATTERN;
+	public static final Pattern METHOD_CALL_PATTERN;
+	public static final Pattern METHOD_CALL_SPLITTER_PATTERN;
 
 
 	static {
-		INTEGER_REGEX = "([1-9]+[0-9]*)|(0)";
-		DOUBLE_REGEX = "([0-9]+\\.[0-9]+)|([1-9]+[0-9]*)|(0)";
+		INTEGER_REGEX = "([-]?[1-9]+[0-9]*)|(0)";
+		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|([-]?[1-9]+[0-9]*)|(0)";
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
 		STRING_REGEX = "\"[^,`\\\\\"]*\"";
@@ -47,6 +51,8 @@ public class RegularExpressions {
 		START_TRIMER_REGEX = "^\\s+";
 		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,=\\)\\}])";
 		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}])[\\s]+";
+		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\s]*[\\)];";
+		METHOD_CALL_SPLITTER_REGEX = "[,\\(\\)]";
 
 
 		INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
@@ -62,5 +68,7 @@ public class RegularExpressions {
 		START_TRIMER_PATTERN = Pattern.compile(START_TRIMER_REGEX);
 		BEFORE_TRIMER_PATTERN = Pattern.compile(BEFORE_TRIMER_REGEX);
 		AFTER_TRIMER_PATTERN = Pattern.compile(AFTER_TRIMER_REGEX);
+		METHOD_CALL_PATTERN = Pattern.compile(METHOD_CALL_REGEX);
+		METHOD_CALL_SPLITTER_PATTERN = Pattern.compile(METHOD_CALL_SPLITTER_REGEX);
 	}
 }

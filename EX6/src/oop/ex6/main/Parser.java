@@ -1,6 +1,7 @@
 package oop.ex6.main;
 
 import oop.ex6.syntaxobject.CodeLine;
+import oop.ex6.syntaxobject.Condition;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
 import oop.ex6.syntaxobject.MethodDeclaration;
 import oop.ex6.syntaxobject.scope.IfWhile;
@@ -17,6 +18,7 @@ public class Parser {
     private static final String SCOPE_OPEN_EXCEPTION ="Scope open line can only start with if||while in inner scope of void in the global scope";
     private static final String SCOPE_NOT_CLOSING_EXCEPTION = "Scope is opening but missing a } to close it";
     private static final String METHOD_NO_RETURN_EXCEPTION = "Method must end with a return line";
+    private static final String CONDITION_ERROR_EXCEPTION = "Ileagal if or while condition";
     static {
         varHendler = new CodeLine();
     }
@@ -53,7 +55,6 @@ public class Parser {
             }
             else {
                 varHendler.check(root.getLines().get(i), root);//declare variabale
-                System.out.println("global line: "+i);
             }
         }
     }
@@ -63,6 +64,14 @@ public class Parser {
         for(int i=0 ;i <lines.size();i++){
             if(lines.get(i).endsWith("{")){
                 if (lines.get(i).startsWith("if") || lines.get(i).startsWith("while")) {
+                    Condition condition = new Condition();
+                    String[] condtionStr = lines.get(i).split("[\\(\\)]");
+                    if(condtionStr.length!=3){
+                        throw new IllegalSyntaxException(CONDITION_ERROR_EXCEPTION);
+                    }
+                    else {
+                        condition.check(condtionStr[1], currentScope);
+                    }
                     IfWhile deeperScope = new IfWhile(currentScope,getScopeLines(i,currentScope));
                     runOverScope(deeperScope,depth+1);
                     i = skipBeyondScope(i,deeperScope);
@@ -72,10 +81,7 @@ public class Parser {
                 }
             }
             else {
-                System.out.println(lines.get(i));
-                System.out.println("check line: "+i);
                 varHendler.check(lines.get(i),currentScope);
-                System.out.println("code line inside scope depth: "+depth);
             }
         }
     }
