@@ -49,10 +49,11 @@ public class SJavaFileHandler {
 		ArrayList<String> linesArray = new ArrayList<String>();
 		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines
-			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()) {
+			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()&&(!lines[i].isEmpty())) {
 				linesArray.add(lines[i]);
 			}
 		}
+		linesArray = cleanCode(linesArray);
 		return linesArray;
 	}
 
@@ -60,7 +61,11 @@ public class SJavaFileHandler {
 		ArrayList<String> cleanLines = new ArrayList<String>();
 		for (String line:lines) {
 			String trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX,"");
+			String cleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX,"");
+			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX," ");
+			cleanLines.add(noDouble);
 		}
+		return cleanLines;
 	}
 
 

@@ -28,7 +28,7 @@ public class RegularExpressions {
 	public static final Pattern SPLITER_PATTERN;
 	public static final Pattern SPACES_PATTERN;
 	public static final Pattern START_TRIMER_PATTERN;
-	public static final String BEFORE_TRIMER_PATTERN;
+	public static final Pattern BEFORE_TRIMER_PATTERN;
 
 
 	static {
@@ -41,9 +41,9 @@ public class RegularExpressions {
 		CHARACTER_REGEX = "\'[^,`\\\\\"]+\'";
 		BOOLEAN_REGEX = "(true)|(false)|(([1-9]+[0-9]*)|(0))|([0-9]+.[0-9]+)";
 		SPLITER_REGEX = "(?<=[;{}\\\n])";
-		SPACES_REGEX = "[\\s]*";
+		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s";
-		BEFORE_TRIMER_REGEX = "";
+		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,])";
 
 
 		INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
@@ -57,5 +57,6 @@ public class RegularExpressions {
 		SPLITER_PATTERN = Pattern.compile(SPLITER_REGEX);
 		SPACES_PATTERN = Pattern.compile(SPACES_REGEX);
 		START_TRIMER_PATTERN = Pattern.compile(START_TRIMER_REGEX);
+		BEFORE_TRIMER_PATTERN = Pattern.compile(BEFORE_TRIMER_REGEX);
 	}
 }
