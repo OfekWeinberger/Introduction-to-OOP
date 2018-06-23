@@ -66,16 +66,19 @@ public class CodeLine {
 	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
 		// check for variable assignment
 		String[] lineContent = line.split("(=)|(;)");
-		String varName = lineContent[0];
-		String varAssignment = lineContent[1];
-		Type varType = scope.getVarType(varName);
-		if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
-				Type.match(varAssignment, varType))) {
-			Variable var = scope.getVarByName(varName, false);
-			if (var.isFinal() && var.isAssigned())
+		if(lineContent.length == 2) {
+			String varName = lineContent[0];
+			String varAssignment = lineContent[1];
+			Type varType = scope.getVarType(varName);
+			if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
+					Type.match(varAssignment, varType))) {
+				Variable var = scope.getVarByName(varName, false);
+				if (var.isFinal() && var.isAssigned())
+					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
+				var.setAssigned();
+			} else
 				throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
-			var.setAssigned();
 		} else
-			throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
+			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION + ": " + line);
 	}
 }

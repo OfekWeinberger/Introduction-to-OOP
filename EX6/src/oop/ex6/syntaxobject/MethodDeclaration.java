@@ -1,5 +1,6 @@
 package oop.ex6.syntaxobject;
 
+import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
@@ -10,12 +11,14 @@ public class MethodDeclaration {
 	private ArrayList<Variable> params;
 	private String name;
 	private static final String VARIABLE_TYPE_EXCEPTION;
+	private static final String ILLEGAL_METHOD_NAME_EXCEPTION;
 
 	static {
 		VARIABLE_TYPE_EXCEPTION = "Illegal variable type";
+		ILLEGAL_METHOD_NAME_EXCEPTION = "Illegal method name";
 	}
 
-	public MethodDeclaration(){
+	public MethodDeclaration() {
 		params = new ArrayList<>();
 		name = "";
 	}
@@ -24,28 +27,31 @@ public class MethodDeclaration {
 		if (line.startsWith("void")) {
 			line = line.substring("void".length() + 1);
 			String[] contents = line.split("(\\))|(\\()");
-			System.out.println(Arrays.toString(contents));
 			name = contents[0];
+			if (!RegularExpressions.METHOD_NAME_PATTERN.matcher(name).matches())
+				throw new IllegalSyntaxException(ILLEGAL_METHOD_NAME_EXCEPTION + ": " + line);
 			System.out.println(name);
 			String[] methodParams = contents[1].split(",");
 			System.out.println(Arrays.toString(methodParams));
-			for(String param : methodParams){
-				boolean isFinal = false;
-				if (param.startsWith("final")) {
-					param = param.substring("final".length() + 1);
-					isFinal = true;
-				}
-				System.out.println("param=" + param);
-				if (param.startsWith("boolean ") || param.startsWith("int ") || param.startsWith("double ") ||
-						param.startsWith("char ") || param.startsWith("String ")) {
-					Type varType = Type.getType(param.substring(0, param.indexOf(" ")));
-					String varName = param.substring(param.indexOf(" ") + 1);
-					params.add(new Variable(varType, varName, true, isFinal));
-				} else
-					throw new IllegalSyntaxException(VARIABLE_TYPE_EXCEPTION);
-			}
+			for (String param : methodParams)
+				declareMethodParams(param, line);
 
 		}
+	}
+
+	private void declareMethodParams(String param, String line) throws IllegalSyntaxException{
+		boolean isFinal = false;
+		if (param.startsWith("final")) {
+			param = param.substring("final".length() + 1);
+			isFinal = true;
+		}
+		if (param.startsWith("boolean ") || param.startsWith("int ") || param.startsWith("double ") ||
+				param.startsWith("char ") || param.startsWith("String ")) {
+			Type varType = Type.getType(param.substring(0, param.indexOf(" ")));
+			String varName = param.substring(param.indexOf(" ") + 1);
+			params.add(new Variable(varType, varName, true, isFinal));
+		} else
+			throw new IllegalSyntaxException(VARIABLE_TYPE_EXCEPTION + ": " + line);
 	}
 
 	public ArrayList<Variable> getParams() {
