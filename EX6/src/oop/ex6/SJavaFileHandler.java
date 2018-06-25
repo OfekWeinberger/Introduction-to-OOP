@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SJavaFileHandler {
 
@@ -49,7 +48,7 @@ public class SJavaFileHandler {
 		ArrayList<String> linesArray = new ArrayList<String>();
 		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines
-			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()&&(!lines[i].isEmpty())) {
+			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches() && (!lines[i].isEmpty())) {
 				linesArray.add(lines[i]);
 			}
 		}
@@ -57,19 +56,18 @@ public class SJavaFileHandler {
 		return linesArray;
 	}
 
-	private ArrayList<String> cleanCode(ArrayList<String> lines){
+	private ArrayList<String> cleanCode(ArrayList<String> lines) {
 		ArrayList<String> cleanLines = new ArrayList<String>();
-		for (String line:lines) {
+		for (String line : lines) {
 			String trimedLine;
-			if(line.contains("//")) {
+			if (line.contains("//")) {
 				trimedLine = line;
-			}
-			else {
+			} else {
 				trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX, "");
 			}
-			String beforeCleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX,"");
-			String cleanSpaced = beforeCleanSpaced.replaceAll(RegularExpressions.AFTER_TRIMER_REGEX,"");
-			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX," ");
+			String beforeCleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX, "");
+			String cleanSpaced = beforeCleanSpaced.replaceAll(RegularExpressions.AFTER_TRIMER_REGEX, "");
+			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX, " ");
 			cleanLines.add(noDouble);
 		}
 		return cleanLines;

@@ -12,22 +12,9 @@ public class Root extends Scope {
 	private HashMap<String, Method> methodsDeclared;
 
 	public Root(ArrayList<String> lines) {
-		super(null,null,null,lines);
+		super(null, null, null, lines);
 		methodsDeclared = new HashMap<String, Method>();
 		//TODO first pass - get methods and variables declared
-	}
-
-	public void reset(){
-
-	}
-
-	public ArrayList<Method> getMethods(){
-		return new ArrayList<Method>(methodsDeclared.values());
-	}
-
-	@Override
-	public Method getMethodByName(String methodName){
-		return methodsDeclared.get(methodName);
 	}
 
 	public static Root instance(ArrayList<String> lines) {
@@ -37,7 +24,7 @@ public class Root extends Scope {
 		return singleton;
 	}
 
-	public static Root instance(){
+	public static Root instance() {
 		return singleton;
 	}
 
@@ -46,6 +33,19 @@ public class Root extends Scope {
 			throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTION);
 		}
 		singleton.methodsDeclared.put(method.getName(), method);
+	}
+
+	public void reset() {
+
+	}
+
+	public ArrayList<Method> getMethods() {
+		return new ArrayList<Method>(methodsDeclared.values());
+	}
+
+	@Override
+	public Method getMethodByName(String methodName) {
+		return methodsDeclared.get(methodName);
 	}
 
 	@Override

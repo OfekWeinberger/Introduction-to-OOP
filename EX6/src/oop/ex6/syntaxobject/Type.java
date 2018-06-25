@@ -17,12 +17,8 @@ public enum Type {
 		this.pattern = pattern;
 	}
 
-	public boolean match(String s) {
-		return pattern.matcher(s).matches();
-	}
-
-	public static boolean match(String s, Type type){
-		if(type != null) {
+	public static boolean match(String s, Type type) {
+		if (type != null) {
 			switch (type) {
 				case BOOLEAN:
 					return BOOLEAN.match(s);
@@ -38,11 +34,11 @@ public enum Type {
 					return false;
 			}
 		} else {
-			return  false;
+			return false;
 		}
 	}
 
-	public static Type getType(String name){
+	public static Type getType(String name) {
 		switch (name) {
 			case "boolean":
 				return BOOLEAN;
@@ -59,18 +55,22 @@ public enum Type {
 		}
 	}
 
-	public boolean equals(Type other){
-		switch (this){
+	public boolean match(String s) {
+		return pattern.matcher(s).matches();
+	}
+
+	public boolean equals(Type other) {
+		switch (this) {
 			case INT:
-				return other==INT;
+				return other == INT;
 			case BOOLEAN:
-				return (other==INT)||(other==DOUBLE)||(other==BOOLEAN);
+				return (other == INT) || (other == DOUBLE) || (other == BOOLEAN);
 			case DOUBLE:
-				return (other==INT)||(other==DOUBLE);
+				return (other == INT) || (other == DOUBLE);
 			case CHAR:
-				return other==CHAR;
+				return other == CHAR;
 			case STRING:
-				return other==STRING;
+				return other == STRING;
 			default:
 				return false;
 		}

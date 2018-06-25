@@ -9,11 +9,11 @@ import java.util.HashMap;
 
 public abstract class Scope {
 
+	private static final String VARIABLE_CROSS_NAME_EXCEPTION = "Two variabels in the same scope canot have the same name";
 	private Scope parent;
 	private ArrayList<Scope> children;
 	private HashMap<String, Variable> variables;
 	private ArrayList<String> lines;
-	private static final String VARIABLE_CROSS_NAME_EXCEPTION= "Two variabels in the same scope canot have the same name";
 
 	public Scope() {
 		this.parent = null;
@@ -24,22 +24,19 @@ public abstract class Scope {
 
 	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables, ArrayList<String> lines) {
 		this.parent = parent;
-		if(children == null) {
+		if (children == null) {
 			this.children = new ArrayList<Scope>();
-		}
-		else {
+		} else {
 			this.children = children;
 		}
-		if(variables == null) {
+		if (variables == null) {
 			this.variables = new HashMap<String, Variable>();
-		}
-		else {
+		} else {
 			this.setVariables(variables);
 		}
-		if(lines == null) {
+		if (lines == null) {
 			this.lines = new ArrayList<String>();
-		}
-		else {
+		} else {
 			this.lines = lines;
 		}
 	}
@@ -67,7 +64,7 @@ public abstract class Scope {
 	}
 
 	public void setVariables(ArrayList<Variable> variables) {
-		if(variables!=null) {
+		if (variables != null) {
 			for (Variable var : variables) {
 				this.variables.put(var.getName(), var);
 			}
@@ -75,15 +72,15 @@ public abstract class Scope {
 	}
 
 	public void addVariable(Variable variable) throws IllegalSyntaxException {
-		if(this.variables.containsKey(variable.getName())){
+		if (this.variables.containsKey(variable.getName())) {
 			throw new IllegalSyntaxException(VARIABLE_CROSS_NAME_EXCEPTION);
 		}
 		this.variables.put(variable.getName(), variable);
 	}
 
 	public boolean isVarAssigned(Type type, String varName) {
-		Variable var = getVarByName(varName,true);
-		if(var == null){//var is not decleared at all
+		Variable var = getVarByName(varName, true);
+		if (var == null) {//var is not decleared at all
 			return false;
 		}
 		if (type.equals(var.getType()) && var.isAssigned()) {
@@ -93,9 +90,9 @@ public abstract class Scope {
 		}
 	}
 
-	public boolean isVarDecleared(Type type,String varName){
-		Variable var = getVarByName(varName,true);
-		if(var==null){//var is not decleared at all
+	public boolean isVarDecleared(Type type, String varName) {
+		Variable var = getVarByName(varName, true);
+		if (var == null) {//var is not decleared at all
 			return false;
 		}
 		if (var.getType().equals(type)) {
@@ -105,9 +102,9 @@ public abstract class Scope {
 		}
 	}
 
-	public boolean isVarDeclaredHere(Type type,String varName){
-		Variable var = getVarByName(varName,false);
-		if(var==null){//var is not decleared at all
+	public boolean isVarDeclaredHere(Type type, String varName) {
+		Variable var = getVarByName(varName, false);
+		if (var == null) {//var is not decleared at all
 			return false;
 		}
 		if (var.getType().equals(type)) {
@@ -117,29 +114,29 @@ public abstract class Scope {
 		}
 	}
 
-	public Type getVarType(String varName){
-		Variable var = getVarByName(varName,true);
-		if(var == null){
+	public Type getVarType(String varName) {
+		Variable var = getVarByName(varName, true);
+		if (var == null) {
 			return null;
 		}
 		return var.getType();
 	}
 
-	public Variable getVarByName(String varName,boolean deepSearch){
+	public Variable getVarByName(String varName, boolean deepSearch) {
 		if (variables != null) {
 			if (variables.containsKey(varName)) {
 				return variables.get(varName);
 			}
 		}
-		if(deepSearch) {
+		if (deepSearch) {
 			if (!isRoot()) {
-				return parent.getVarByName(varName,deepSearch);
+				return parent.getVarByName(varName, deepSearch);
 			}
 		}
 		return null;
 	}
 
-	public Method getMethodByName(String methodName){
+	public Method getMethodByName(String methodName) {
 		return Root.instance().getMethodByName(methodName);
 	}
 

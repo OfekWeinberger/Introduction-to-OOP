@@ -5,7 +5,6 @@ import oop.ex6.syntaxobject.Type;
 import oop.ex6.syntaxobject.Variable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Method extends Scope {
 	private String name;
@@ -15,13 +14,12 @@ public class Method extends Scope {
 	public Method(String name, ArrayList<Variable> params, ArrayList<String> lines) throws IllegalSyntaxException {
 		super(Root.instance(), null, null, lines);
 		this.name = name;
-		if(params == null){
+		if (params == null) {
 			params = new ArrayList<Variable>();
-		}
-		else {
+		} else {
 			this.params = params;
 		}
-		for (Variable var:params){
+		for (Variable var : params) {
 			addVariable(var);
 		}
 	}
@@ -42,15 +40,15 @@ public class Method extends Scope {
 		return true;
 	}
 
-	public ArrayList<Variable> getParams(){
+	public ArrayList<Variable> getParams() {
 		return new ArrayList<Variable>(params);
 	}
 
 	@Override
 	public String toString() {
 		String str = name;
-		for (Variable var: params){
-			str+=" ,"+var.getType().getClass();
+		for (Variable var : params) {
+			str += " ," + var.getType().getClass();
 		}
 		return str;
 	}

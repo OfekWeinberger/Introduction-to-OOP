@@ -1,19 +1,19 @@
 package oop.ex6.syntaxobject;
 
-public class Variable{
+public class Variable {
 
+	private static final String CONST_EXCEPTION = "final variabel mast be initialized at decleration";
 	private final boolean FINAL;
 	private Type type;
 	private String name;
 	private boolean assigned;
-	private static final String CONST_EXCEPTION = "final variabel mast be initialized at decleration";
 
 	public Variable(Type type, String name, boolean assigned, boolean FINAL) throws IllegalSyntaxException {
 		this.type = type;
 		this.name = name;
 		this.assigned = assigned;
 		this.FINAL = FINAL;
-		if(FINAL&&!assigned){
+		if (FINAL && !assigned) {
 			throw new IllegalSyntaxException(CONST_EXCEPTION);
 		}
 	}
