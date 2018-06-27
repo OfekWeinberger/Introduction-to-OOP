@@ -6,7 +6,7 @@ import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
 
-public class CodeLine {
+public class CodeLine implements Checker{
 
 	// these are strings that hold the exception messages, and other characters or phrases we use inside.
 	private static final String ILLEGAL_START_EXCEPTION;

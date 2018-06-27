@@ -5,7 +5,7 @@ import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
 
-public class MethodDeclaration {
+public class MethodDeclaration implements Checker {
 
 	// these are some stings that we will use later, they are error messages and some are part of the
 	// s-Java specifications
