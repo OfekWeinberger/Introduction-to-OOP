@@ -23,7 +23,8 @@ public class Parser {
 
 	static {
 		varHandler = new CodeLine();
-		SCOPE_OPEN_EXCEPTION = "Scope open line can only start with if||while in inner scope of void in the global scope";
+		SCOPE_OPEN_EXCEPTION = "Scope open line can only start with if||while in inner scope of void in " +
+				"the global scope";
 		SCOPE_NOT_CLOSING_EXCEPTION = "Scope is opening but missing a } to close it";
 		METHOD_NO_RETURN_EXCEPTION = "Method must end with a return line";
 		CONDITION_ERROR_EXCEPTION = "Ileagal if or while condition";
@@ -51,7 +52,8 @@ public class Parser {
 				if (lines.get(i).startsWith("void")) {
 					MethodDeclaration declerator = new MethodDeclaration();
 					declerator.check(lines.get(i), root);
-					Method method = new Method(declerator.getName(), declerator.getParams(), getScopeLines(i, root));// TODO: 6/22/2018 get method name and params
+					Method method = new Method(declerator.getName(), declerator.getParams(),
+							getScopeLines(i, root));
 					if (method.getLines().get(method.getLines().size() - 1).equals("return;")) {
 						method.getLines().remove(method.getLines().size() - 1);
 						i++;
@@ -111,7 +113,8 @@ public class Parser {
 	}
 
 	//get the lines that a scope sould contain from the scope code lines
-	private ArrayList<String> getScopeLines(int scopeStartIndex, Scope parentScope) throws IllegalSyntaxException {
+	private ArrayList<String> getScopeLines(int scopeStartIndex, Scope parentScope)
+			throws IllegalSyntaxException {
 		ArrayList<String> scopeLines = new ArrayList<>();
 		int runerIndex = scopeStartIndex;
 		int counter = 1;
