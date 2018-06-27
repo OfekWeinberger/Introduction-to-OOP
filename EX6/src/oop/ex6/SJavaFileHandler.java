@@ -57,8 +57,6 @@ public class SJavaFileHandler {
 		return linesArray;
 	}
 
-	// clean a code from empty lines, double spaces and no nececery spaces. format the code in a
-	// way it is easy to work with
 	private ArrayList<String> cleanCode(ArrayList<String> lines){
 		ArrayList<String> cleanLines = new ArrayList<String>();
 		for (String line:lines) {

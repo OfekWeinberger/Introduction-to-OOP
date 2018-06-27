@@ -1,12 +1,10 @@
 package oop.ex6.syntaxobject;
 
-import com.sun.deploy.security.ValidationState;
 import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Method;
 import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CodeLine {
 
@@ -40,7 +38,7 @@ public class CodeLine {
 		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") ||
 				line.startsWith("char ") || line.startsWith("String ")) {
 
-			if(!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()){
+			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
 				throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION);
 			}
 			String[] lineContent = line.split("(,)");
@@ -55,16 +53,15 @@ public class CodeLine {
 				methodCallHandler(line, scope);
 			} else if (!line.startsWith("//"))
 				assignmentHandler(line, scope);
-		}
-		else if(scope.isRoot()){
+		} else if (scope.isRoot()) {
 			throw new IllegalSyntaxException(RETURN_IN_ROOT_EXCEPTION);
 		}
 
 	}
 
 	private static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
-									  String
-			line) throws IllegalSyntaxException {
+										String
+												line) throws IllegalSyntaxException {
 		String[] varDeclaration = rawDeclaration.split("=");
 		String varName = varDeclaration[0];
 		if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches())
@@ -87,14 +84,14 @@ public class CodeLine {
 	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
 		// check for variable assignment
 		String[] lineContent = line.split("(=)|(;)");
-		if(lineContent.length == 2) {
+		if (lineContent.length == 2) {
 			String varName = lineContent[0];
 			String varAssignment = lineContent[1];
 			Type varType = scope.getVarType(varName);
 			if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
 					Type.match(varAssignment, varType))) {
 				Variable var = scope.getVarByName(varName, true);
-				if(var==null){
+				if (var == null) {
 					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION);
 				}
 				if (var.isFinal() && var.isAssigned())
@@ -108,28 +105,28 @@ public class CodeLine {
 			throw new IllegalSyntaxException(ILLEGAL_START_EXCEPTION + ": " + line);
 	}
 
-	private static void methodCallHandler(String line,Scope scope) throws IllegalSyntaxException{
-		line = line.substring(0,line.length()-1);//cut the ; in the end
+	private static void methodCallHandler(String line, Scope scope) throws IllegalSyntaxException {
+		line = line.substring(0, line.length() - 1);//cut the ; in the end
 		String[] lineContent = line.split(RegularExpressions.METHOD_CALL_SPLITTER_REGEX);
 		ArrayList<Type> paramsType = new ArrayList<>();
 		Method method = scope.getMethodByName(lineContent[0]);
-		if(method==null){
+		if (method == null) {
 			throw new IllegalSyntaxException(METHOD_NOT_DECLEARED_EXCEPTION);
 		}
 		ArrayList<Variable> params = method.getParams();
-		if(lineContent.length!=params.size()+1){
+		if (lineContent.length != params.size() + 1) {
 			throw new IllegalSyntaxException(METHOD_NOT_DECLEARED_EXCEPTION);
 		}
-		for(int i=1;i<lineContent.length;i++) {
-			if(!Type.match(lineContent[i],params.get(i-1).getType())){
-				Variable param = scope.getVarByName(lineContent[i],true);
-				if(param == null){
+		for (int i = 1; i < lineContent.length; i++) {
+			if (!Type.match(lineContent[i], params.get(i - 1).getType())) {
+				Variable param = scope.getVarByName(lineContent[i], true);
+				if (param == null) {
 					throw new IllegalSyntaxException(METHOD_NOT_DECLEARED_EXCEPTION);
 				}
-				if(!param.isAssigned()){
+				if (!param.isAssigned()) {
 					throw new IllegalSyntaxException(METHOD_NOT_DECLEARED_EXCEPTION);
 				}
-				if(param.getType()!=params.get(i-1).getType()){
+				if (param.getType() != params.get(i - 1).getType()) {
 					throw new IllegalSyntaxException(METHOD_NOT_DECLEARED_EXCEPTION);
 				}
 			}

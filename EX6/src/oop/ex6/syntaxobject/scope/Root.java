@@ -11,41 +11,25 @@ public class Root extends Scope {
 	public static Root singleton = null;
 	private HashMap<String, Method> methodsDeclared;
 
-	/**
-	 * a constractor for the root scope
-	 * @param lines - all the code lines
-	 */
 	public Root(ArrayList<String> lines) {
 		super(null,null,null,lines);
 		methodsDeclared = new HashMap<String, Method>();
+		//TODO first pass - get methods and variables declared
 	}
 
 	public void reset(){
+
 	}
 
-	/**
-	 * get all the methods declared
-	 * @return an ArrayList of method object declared in the root scope
-	 */
 	public ArrayList<Method> getMethods(){
 		return new ArrayList<Method>(methodsDeclared.values());
 	}
 
-	/**
-	 * search for a method by name
-	 * @param methodName - the method name
-	 * @return the method if found null else
-	 */
 	@Override
 	public Method getMethodByName(String methodName){
 		return methodsDeclared.get(methodName);
 	}
 
-	/**
-	 * initialize an the single scope. if it is initialized return it
-	 * @param lines - the code lines
-	 * @return the single instance of this class
-	 */
 	public static Root instance(ArrayList<String> lines) {
 		if (singleton == null) {
 			singleton = new Root(lines);
@@ -53,19 +37,10 @@ public class Root extends Scope {
 		return singleton;
 	}
 
-	/**
-	 *
-	 * @return the singale instance of this class
-	 */
 	public static Root instance(){
 		return singleton;
 	}
 
-	/**
-	 * add a method
-	 * @param method - the method object to add to the list
-	 * @throws IllegalSyntaxException
-	 */
 	public static void addMethod(Method method) throws IllegalSyntaxException {
 		if (singleton.methodsDeclared.containsKey(method.getName())) {
 			throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTION);
@@ -73,12 +48,6 @@ public class Root extends Scope {
 		singleton.methodsDeclared.put(method.getName(), method);
 	}
 
-	/**
-	 * check if a specific method is declared in the root scope
-	 * @param methodName - the method name
-	 * @param params - the method signitur (params)
-	 * @return true if the method is found else false
-	 */
 	@Override
 	public boolean isDecleared(String methodName, ArrayList<Type> params) {
 		if (methodsDeclared.containsKey(methodName)) {
