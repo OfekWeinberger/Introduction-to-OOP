@@ -4,9 +4,21 @@ import java.util.regex.Pattern;
 
 public class RegularExpressions {
 
+	/**
+	 * check if a stain String is a valid int value according to sjava specification
+	 */
 	public static final String INTEGER_REGEX;
+	/**
+	 * check if a stain String is a valid double value according to sjava specification
+	 */
 	public static final String DOUBLE_REGEX;
+	/**
+	 * check if a stain String is a valid variable name according to sjava specification
+	 */
 	public static final String NAME_REGEX;
+	/**
+	 * check if a stain String is a valid method name according to sjava specification
+	 */
 	public static final String METHOD_NAME_REGEX;
 	public static final String STRING_REGEX;
 	public static final String LINE_REGEX;

@@ -44,6 +44,10 @@ public class SJavaFileHandler {
 		return sb.toString();
 	}
 
+	/**
+	 * split the line text acurding to the rules (for now by /n chars)
+	 * @return an array list of lines
+	 */
 	public ArrayList<String> splitCodeFileToLines() {
 		String[] lines = content.split(RegularExpressions.SPLITER_REGEX);
 		ArrayList<String> linesArray = new ArrayList<String>();
@@ -57,6 +61,7 @@ public class SJavaFileHandler {
 		return linesArray;
 	}
 
+	// clean code from empty lines and not nececery spaces. format the code lins so it will be easy to work with
 	private ArrayList<String> cleanCode(ArrayList<String> lines){
 		ArrayList<String> cleanLines = new ArrayList<String>();
 		for (String line:lines) {

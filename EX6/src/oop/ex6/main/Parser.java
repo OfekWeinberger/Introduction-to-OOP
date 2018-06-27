@@ -34,7 +34,8 @@ public class Parser {
         deepRun();
     }
 
-    public void globalRun() throws IllegalSyntaxException{
+    // run over the root scope. declaring methods and global variables
+    private void globalRun() throws IllegalSyntaxException{
         int i = 0;
         ArrayList<String> lines = root.getLines();
         for(;i<lines.size();i++){
@@ -63,7 +64,8 @@ public class Parser {
         }
     }
 
-    public void runOverScope(Scope currentScope,int depth) throws IllegalSyntaxException{
+    // run over a scope line in a recursive way
+    private void runOverScope(Scope currentScope,int depth) throws IllegalSyntaxException{
         ArrayList<String> lines = currentScope.getLines();
         for(int i=0 ;i <lines.size();i++){
             if(lines.get(i).endsWith("{")){
@@ -89,6 +91,8 @@ public class Parser {
             }
         }
     }
+
+    // send a line to the CodeLine to check it. making a basic sanity check on the line
     private void sendToCheck(String line,Scope scope)throws IllegalSyntaxException{
         if(!line.endsWith(";")&&!line.startsWith("//")){
             throw new IllegalSyntaxException(MISSING_SEMICOLON_EXCEPTION);
@@ -98,12 +102,14 @@ public class Parser {
         }
     }
 
-    public void deepRun() throws IllegalSyntaxException {
+    // run over all methods scopes
+    private void deepRun() throws IllegalSyntaxException {
         for (Method method:root.getMethods()) {
             runOverScope(method,1);
         }
     }
 
+    //get the lines that a scope sould contain from the scope code lines
     private ArrayList<String> getScopeLines(int scopeStartIndex,Scope parentScope) throws IllegalSyntaxException{
         ArrayList<String> scopeLines = new ArrayList<String>();
         int runerIndex  = scopeStartIndex;
@@ -126,6 +132,7 @@ public class Parser {
         return scopeLines;
     }
 
+    // return the index of the last line of a scope
     private int skipBeyondScope(int index,Scope scope){
         return index+scope.getLines().size()+1;//skip beyond the last line the 2 is for the { and } lines
     }

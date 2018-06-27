@@ -11,25 +11,42 @@ public class Root extends Scope {
 	public static Root singleton = null;
 	private HashMap<String, Method> methodsDeclared;
 
+	/**
+	 * a constractor for the root scope
+	 * @param lines - all the code lines
+	 */
 	public Root(ArrayList<String> lines) {
 		super(null,null,null,lines);
 		methodsDeclared = new HashMap<String, Method>();
-		//TODO first pass - get methods and variables declared
+	}
+	
+	public void reset(ArrayList<String> lines){
+		singleton = new Root(lines);
 	}
 
-	public void reset(){
-
-	}
-
+	/**
+	 * get all the methods declared
+	 * @return an ArrayList of method object declared in the root scope
+	 */
 	public ArrayList<Method> getMethods(){
 		return new ArrayList<Method>(methodsDeclared.values());
 	}
 
+	/**
+	 * search for a method by name
+	 * @param methodName - the method name
+	 * @return the method if found null else 
+	 */
 	@Override
 	public Method getMethodByName(String methodName){
 		return methodsDeclared.get(methodName);
 	}
 
+	/**
+	 * create an instance of the 
+	 * @param lines
+	 * @return
+	 */
 	public static Root instance(ArrayList<String> lines) {
 		if (singleton == null) {
 			singleton = new Root(lines);
