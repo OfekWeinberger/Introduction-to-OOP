@@ -20,18 +20,61 @@ public class RegularExpressions {
 	 * check if a stain String is a valid method name according to sjava specification
 	 */
 	public static final String METHOD_NAME_REGEX;
+	/**
+	 * check if a stain String is a valid String value according to sjava specification
+	 */
 	public static final String STRING_REGEX;
+	private static final String FORBIDEN_CHARS;
+	/**
+	 * check if a code line (not comment) ends with '{' ';' or '}'
+	 */
 	public static final String LINE_REGEX;
+	/**
+	 * check if a stain String is a valid char value according to sjava specification
+	 */
 	public static final String CHARACTER_REGEX;
+	/**
+	 * check if a stain String is a valid boolean value according to sjava specification
+	 */
 	public static final String BOOLEAN_REGEX;
+	/**
+	 * find the /n in the text code and tell where to split the code
+	 */
 	public static final String SPLITER_REGEX;
+	/**
+	 * all spaces types one or more times
+	 */
 	public static final String SPACES_REGEX;
+	/**
+	 * return all the spaces in the start of a line
+	 */
 	public static final String START_TRIMER_REGEX;
+	/**
+	 * mach all the spaces that appear before '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
+	 * to make it possible to delete them
+	 */
 	public static final String BEFORE_TRIMER_REGEX;
+	/**
+	 * mach all the spaces that appear after '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
+	 * to make it possible to delete them
+	 */
 	public static final String AFTER_TRIMER_REGEX;
+	/**
+	 * check if a stain String is a valid method call line according to sjava specification
+	 */
 	public static final String METHOD_CALL_REGEX;
+	/**
+	 * get all the '(' ')' and ',' in the line
+	 */
 	public static final String METHOD_CALL_SPLITTER_REGEX;
+	/**
+	 * check if a stain String matches a method (params...) part in
+	 * the method deceleration according to sjava specification
+	 */
 	public static final String PARAMS_REGEX;
+	/**
+	 * check if a stain String matches a variables deceleration according to sjava specification
+	 */
 	public static final String VARIABELS_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
@@ -55,18 +98,19 @@ public class RegularExpressions {
 
 	static {
 		INTEGER_REGEX = "([-]?[1-9]+[0-9]*)|(0)";
-		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|([-]?[1-9]+[0-9]*)|(0)";
+		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|"+INTEGER_REGEX;
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
-		STRING_REGEX = "\\\"[^,`\\\\\"]*\\\"";
+		FORBIDEN_CHARS = "[^,`\\\"]*";
+		STRING_REGEX = "\\\""+FORBIDEN_CHARS+"\\\"";
 		LINE_REGEX = "[.]*[;{}]";
-		CHARACTER_REGEX = "\\'[^,`\\\\\"]+\\'";
-		BOOLEAN_REGEX = "(true)|(false)|(([-]?[1-9]+[0-9]*)|(0))|(([-]?[0-9]+\\.[0-9]+)|([-]?[1-9]+[0-9]*)|(0))";
+		CHARACTER_REGEX = "\\\'"+FORBIDEN_CHARS+"\\\'";
+		BOOLEAN_REGEX = "(true)|(false)|"+DOUBLE_REGEX;
 		SPLITER_REGEX = "(?<=[\\\n])";//;\{\}
 		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s+";
-		BEFORE_TRIMER_REGEX = "[\\s]+(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
-		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])[\\s]+";
+		BEFORE_TRIMER_REGEX = SPACES_REGEX+"(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
+		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])"+SPACES_REGEX;
 		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\\"\\\'\\-\\.\\s]*[\\)]";
 		PARAMS_REGEX = "(([\\w\\s]+,)*[\\w\\s]+)|()";
 		VARIABELS_REGEX = "((([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))[,\\=])*(([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))";
