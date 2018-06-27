@@ -12,13 +12,16 @@ public class MethodDeclaration {
 	private static String VOID_KEYWORD;
 	private static String METHOD_BRACKET_SPLITTER_REGEX;
 	private static String PARAMETER_SPACER_CHARACTER;
+	private static String ILLEGAL_SCOPE;
 
 	static {
 		VARIABLE_TYPE_EXCEPTION = "Illegal variable type or name";
 		ILLEGAL_METHOD_NAME_EXCEPTION = "Illegal method name";
+		ILLEGAL_SCOPE = "Illegal scope for method declaration";
 		VOID_KEYWORD = "void";
 		METHOD_BRACKET_SPLITTER_REGEX = "(\\))|(\\()";
 		PARAMETER_SPACER_CHARACTER = ",";
+
 	}
 
 	private ArrayList<Variable> params;
@@ -30,6 +33,9 @@ public class MethodDeclaration {
 	}
 
 	public void check(String line, Scope scope) throws IllegalSyntaxException {
+		if(!scope.isRoot()){
+			throw new IllegalSyntaxException(ILLEGAL_SCOPE);
+		}
 		if (line.startsWith(VOID_KEYWORD)) {
 			line = line.substring(VOID_KEYWORD.length() + 1);
 			String[] contents = line.split(METHOD_BRACKET_SPLITTER_REGEX);
