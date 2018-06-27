@@ -15,7 +15,8 @@ public class testYoav {
     public static void main(String[] args){
         try {
             SJavaFileHandler handler = new SJavaFileHandler("C:/Users/t8473619/Desktop/ex6T/502.txt");
-            Root root = Root.instance(handler.splitCodeFileToLines());
+            Root.resetRoot(handler.splitCodeFileToLines());
+            Root root = Root.instance();
             printScode(root.getLines());
             Parser parser = new Parser(root);
             parser.runCheck();

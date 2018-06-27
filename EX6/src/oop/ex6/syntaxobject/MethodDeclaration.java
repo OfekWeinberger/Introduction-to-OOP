@@ -93,7 +93,7 @@ public class MethodDeclaration {
 			isFinal = true;
 		}
 		// check the declaration starts with legal variable name
-		if (line.contains(Type.SPACE_CHARACTER) && Type.getType(line.substring(0, line.indexOf
+		if (param.contains(Type.SPACE_CHARACTER) && Type.getType(param.substring(0, param.indexOf
 				(Type.SPACE_CHARACTER))) != null) {
 			Type varType = Type.getType(param.substring(0, param.indexOf(Type.SPACE_CHARACTER)));
 			String varName = param.substring(param.indexOf(Type.SPACE_CHARACTER) + 1);

@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Root extends Scope {
 
 	private static final String METHOD_OVERLOAD_EXCEPTION;
-	public static Root singleton;
+	private static Root singleton;
 	private HashMap<String, Method> methodsDeclared;
 
 	static {
@@ -22,23 +22,23 @@ public class Root extends Scope {
 	 *
 	 * @param lines all the code lines
 	 */
-	public Root(ArrayList<String> lines) {
-		super(null, null, null, lines);
+	private Root(ArrayList<String> lines) {
+		super(null, null, lines);
 		methodsDeclared = new HashMap<>();
 	}
 
-	/**
-	 * initialize an the single scope. if it is initialized return it
-	 *
-	 * @param lines the code lines
-	 * @return the single instance of this class
-	 */
-	public static Root instance(ArrayList<String> lines) {
-		if (singleton == null) {
-			singleton = new Root(lines);
-		}
-		return singleton;
-	}
+//	/**
+//	 * initialize an the single scope. if it is initialized return it
+//	 *
+//	 * @param lines the code lines
+//	 * @return the single instance of this class
+//	 */
+//	public static Root instance(ArrayList<String> lines) {
+//		if (singleton == null) {
+//			singleton = new Root(lines);
+//		}
+//		return singleton;
+//	}
 
 	/**
 	 * @return the singale instance of this class
@@ -61,7 +61,15 @@ public class Root extends Scope {
 		singleton.methodsDeclared.put(method.getName(), method);
 	}
 
-	public void reset(ArrayList<String> lines) { singleton = new Root(lines); }
+	public static void resetRoot(ArrayList<String> lines) {
+		if(singleton==null) {
+			singleton = new Root(lines);
+		}
+		else {
+			singleton.methodsDeclared = new HashMap<>();
+			singleton.resetScope(lines);
+		}
+	}
 
 	/**
 	 * get all the methods declared

@@ -11,7 +11,6 @@ public abstract class Scope {
 
 	private static final String VARIABLE_CROSS_NAME_EXCEPTION = "Two variabels in the same scope canot have the same name";
 	private Scope parent;
-	private ArrayList<Scope> children;
 	private HashMap<String, Variable> variables;
 	private ArrayList<String> lines;
 
@@ -19,10 +18,7 @@ public abstract class Scope {
 	 * default constructor for a scope object. initialize the collections.
 	 */
 	public Scope() {
-		this.parent = null;
-		this.children = new ArrayList<>();
-		this.variables = new HashMap<>();
-		this.lines = new ArrayList<>();
+		resetScope(null);
 	}
 
 	/**
@@ -33,13 +29,8 @@ public abstract class Scope {
 	 * @param variables - the variables that are decleared in this scope
 	 * @param lines     - the lines of code this scope contains
 	 */
-	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables, ArrayList<String> lines) {
+	public Scope(Scope parent, ArrayList<Variable> variables, ArrayList<String> lines) {
 		this.parent = parent;
-		if (children == null) {
-			this.children = new ArrayList<>();
-		} else {
-			this.children = children;
-		}
 		if (variables == null) {
 			this.variables = new HashMap<>();
 		} else {
@@ -61,21 +52,15 @@ public abstract class Scope {
 		return lines;
 	}
 
-	public Scope getParent() {
-		return parent;
-	}
-
-	public ArrayList<Scope> getChildren() {
-		return children;
-	}
-
-	public void addChild(Scope child) {
-		children.add(child);
-		child.parent = this;
-	}
-
-	public ArrayList<Variable> getVariables() {
-		return new ArrayList<>(variables.values());
+	protected void resetScope(ArrayList<String> lines){
+		this.parent = null;
+		this.variables = new HashMap<>();
+		if(lines!=null){
+			this.lines = lines;
+		}
+		else {
+			this.lines = new ArrayList<>();
+		}
 	}
 
 	/**

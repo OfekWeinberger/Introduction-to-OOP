@@ -21,7 +21,7 @@ public class Method extends Scope {
 	 * an IllegalSyntaxException will be thrown.
 	 */
 	public Method(String name, ArrayList<Variable> params, ArrayList<String> lines) throws IllegalSyntaxException {
-		super(Root.instance(), null, null, lines);
+		super(Root.instance(), null, lines);
 		this.name = name;
 		if (params == null) {
 			params = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Method extends Scope {
 	 * @param paramsToCheck - the variables Type in an ArrayList
 	 * @return true if match false otherwise
 	 */
-	public boolean checkParams(ArrayList<Type> paramsToCheck) {
+	boolean checkParams(ArrayList<Type> paramsToCheck) {
 		if (paramsToCheck.size() != params.size()) {
 			return false;
 		}

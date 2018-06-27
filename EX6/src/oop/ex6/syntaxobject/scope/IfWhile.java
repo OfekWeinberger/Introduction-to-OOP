@@ -10,6 +10,6 @@ public class IfWhile extends Scope {
 	 * @param lines  - the line inside the scope section
 	 */
 	public IfWhile(Scope father, ArrayList<String> lines) {
-		super(father, null, null, lines);
+		super(father, null, lines);
 	}
 }

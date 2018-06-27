@@ -12,7 +12,8 @@ public class TestOfek {
 		try {
 			ArrayList<String> arr = new ArrayList<String>();
 			arr.add("void methodName(int a,double b,final String c){");
-			Root r = Root.instance(arr);
+			Root.resetRoot(arr);
+			Root r = Root.instance();
 			md.check("void methodName(int a,double b,final String c){", r);
 			System.out.println(md.getName() + "|||" + md.getParams());
 		}
