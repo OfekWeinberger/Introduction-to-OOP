@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class Condition {
 
+	// these are some stings that we will use later, they are error messages and some are part of the
+	// s-Java specifications
 	private static final String TRUE_KEYWORD;
 	private static final String FALSE_KEYWORD;
 	private static final String AND_KEYWORD;
@@ -29,6 +31,13 @@ public class Condition {
 		VARIABLE_TYPE_EXCEPTION = "Variable in condition should be assigned boolean,int or double";
 	}
 
+	/**
+	 * This method is responsible for checking whether the given String is a legal condition.
+	 * @param s The condition string we want to check.
+	 * @param scope The scope where the statement lies.
+	 * @throws IllegalSyntaxException If the method finds an error in the code (illegal code), it will
+	 * throw an IllegalSyntaxException.
+	 */
 	public void check(String s, Scope scope) throws IllegalSyntaxException {
 		if (s == null || s.equals(Type.EMPTY_STRING))
 			throw new IllegalSyntaxException(EMPTY_CONDITION_EXCEPTION);
