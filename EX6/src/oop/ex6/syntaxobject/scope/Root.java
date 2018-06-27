@@ -61,9 +61,7 @@ public class Root extends Scope {
 		singleton.methodsDeclared.put(method.getName(), method);
 	}
 
-	public void reset(ArrayList<String> lines) {
-		singleton = new Root(lines);
-	}
+	public void reset(ArrayList<String> lines) { singleton = new Root(lines); }
 
 	/**
 	 * get all the methods declared

@@ -108,7 +108,7 @@ public class CodeLine {
 			String varName = lineContent[0];
 			String varAssignment = lineContent[1];
 			Type varType = scope.getVarType(varName);
-			if (scope.isVarDecleared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
+			if (scope.isVarDeclared(varType, varName) && (scope.isVarAssigned(varType, varAssignment) ||
 					Type.match(varAssignment, varType))) {
 				Variable var = scope.getVarByName(varName, true);
 				if (var == null) {

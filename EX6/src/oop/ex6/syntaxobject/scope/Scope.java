@@ -20,9 +20,9 @@ public abstract class Scope {
 	 */
 	public Scope() {
 		this.parent = null;
-		this.children = new ArrayList<Scope>();
-		this.variables = new HashMap<String, Variable>();
-		this.lines = new ArrayList<String>();
+		this.children = new ArrayList<>();
+		this.variables = new HashMap<>();
+		this.lines = new ArrayList<>();
 	}
 
 	/**
@@ -36,17 +36,17 @@ public abstract class Scope {
 	public Scope(Scope parent, ArrayList<Scope> children, ArrayList<Variable> variables, ArrayList<String> lines) {
 		this.parent = parent;
 		if (children == null) {
-			this.children = new ArrayList<Scope>();
+			this.children = new ArrayList<>();
 		} else {
 			this.children = children;
 		}
 		if (variables == null) {
-			this.variables = new HashMap<String, Variable>();
+			this.variables = new HashMap<>();
 		} else {
 			this.setVariables(variables);
 		}
 		if (lines == null) {
-			this.lines = new ArrayList<String>();
+			this.lines = new ArrayList<>();
 		} else {
 			this.lines = lines;
 		}
@@ -75,14 +75,13 @@ public abstract class Scope {
 	}
 
 	public ArrayList<Variable> getVariables() {
-		ArrayList<Variable> vars = new ArrayList<Variable>(variables.values());
-		return vars;
+		return new ArrayList<>(variables.values());
 	}
 
 	/**
-	 * add a list of variebles to the variabels list
+	 * add a list of variables to the variables list
 	 *
-	 * @param variables - the variables to add
+	 * @param variables the variables to add
 	 */
 	public void setVariables(ArrayList<Variable> variables) {
 		if (variables != null) {
@@ -95,8 +94,9 @@ public abstract class Scope {
 	/**
 	 * add a singal variable to the variable list
 	 *
-	 * @param variable - the variable to add
-	 * @throws IllegalSyntaxException
+	 * @param variable the variable to add
+	 * @throws IllegalSyntaxException The exception that is thrown anywhere if the program finds a syntax
+	 *                                error.
 	 */
 	public void addVariable(Variable variable) throws IllegalSyntaxException {
 		if (this.variables.containsKey(variable.getName())) {
@@ -108,65 +108,59 @@ public abstract class Scope {
 	/**
 	 * check if there is a variable assigned with a specific type and name
 	 *
-	 * @param type    - the type of the variable
-	 * @param varName - the variable name
+	 * @param type    the type of the variable
+	 * @param varName the variable name
 	 * @return true if there is a variable assigned somewhere up the scopes tree else false
 	 */
 	public boolean isVarAssigned(Type type, String varName) {
 		Variable var = getVarByName(varName, true);
-		if (var == null) {//var is not decleared at all
+		if (var == null) {
+			//var is not declared at all
 			return false;
 		}
-		if (type.equals(var.getType()) && var.isAssigned()) {
-			return true;
-		} else {//var has the dame name but the wrong type
-			return false;
-		}
+		//false if var has the same name but the wrong type
+		return type.equals(var.getType()) && var.isAssigned();
 	}
 
 	/**
-	 * check if there is a variable decleared with a specific type and name
+	 * check if there is a variable declared with a specific type and name
 	 *
-	 * @param type    - the type of the variable
-	 * @param varName - the variable name
-	 * @return true if there is a variable decleared somewhere up the scopes tree else false
+	 * @param type    the type of the variable
+	 * @param varName the variable name
+	 * @return true if there is a variable declared somewhere up the scopes tree else false
 	 */
-	public boolean isVarDecleared(Type type, String varName) {
+	public boolean isVarDeclared(Type type, String varName) {
 		Variable var = getVarByName(varName, true);
-		if (var == null) {//var is not decleared at all
+		if (var == null) {
+			//var is not declared at all
 			return false;
 		}
-		if (var.getType().equals(type)) {
-			return true;
-		} else {//var has the dame name but the wrong type
-			return false;
-		}
+		//return false if var has the same name but the wrong type
+		return var.getType().equals(type);
 	}
 
 	/**
-	 * check if there is a variable decleared with a specific type and name
+	 * check if there is a variable declared with a specific type and name
 	 *
-	 * @param type    - the type of the variable
-	 * @param varName - the variable name
-	 * @return true if there is a variable decleared sin this specific scope else false
+	 * @param type    the type of the variable
+	 * @param varName the variable name
+	 * @return true if there is a variable declared sin this specific scope else false
 	 */
 	public boolean isVarDeclaredHere(Type type, String varName) {
 		Variable var = getVarByName(varName, false);
-		if (var == null) {//var is not decleared at all
+		if (var == null) {
+			//var is not declared at all
 			return false;
 		}
-		if (var.getType().equals(type)) {
-			return true;
-		} else {//var has the dame name but the wrong type
-			return false;
-		}
+		//return false if var has the same name but the wrong type
+		return var.getType().equals(type);
 	}
 
 
 	/**
 	 * get a variable type by its name
 	 *
-	 * @param varName - the variable name
+	 * @param varName the variable name
 	 * @return the type of the variable null if the variable is null
 	 */
 	public Type getVarType(String varName) {
@@ -181,8 +175,8 @@ public abstract class Scope {
 	/**
 	 * search for a variable by its name.
 	 *
-	 * @param varName    - the variable name
-	 * @param deepSearch - if to search up the scope tree or not
+	 * @param varName    the variable name
+	 * @param deepSearch if to search up the scope tree or not
 	 * @return the most deep Variable in the scope tree with that name if found else null.
 	 */
 	public Variable getVarByName(String varName, boolean deepSearch) {
@@ -193,7 +187,7 @@ public abstract class Scope {
 		}
 		if (deepSearch) {
 			if (!isRoot()) {
-				return parent.getVarByName(varName, deepSearch);
+				return parent.getVarByName(varName, true);
 			}
 		}
 		return null;
@@ -218,12 +212,9 @@ public abstract class Scope {
 	/**
 	 * check if the scope is the root scope
 	 *
-	 * @return - if the scope have no parent scope
+	 * @return if the scope have no parent scope
 	 */
 	public boolean isRoot() {
-		if (parent == null) {
-			return true;
-		}
-		return false;
+		return parent == null;
 	}
 }
