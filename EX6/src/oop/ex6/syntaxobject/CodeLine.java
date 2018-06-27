@@ -99,7 +99,9 @@ public class CodeLine {
 				}
 				if (var.isFinal() && var.isAssigned())
 					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
-				var.setAssigned();
+				if(scope.getVarByName(varName,false)!=null) {
+					var.setAssigned();
+				}
 			} else
 				throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
 		} else

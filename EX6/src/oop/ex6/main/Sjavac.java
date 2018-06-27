@@ -18,8 +18,7 @@ public class Sjavac {
 			Root root = new Root(handler.splitCodeFileToLines());
 			Root.singleton = root;
 			Parser parser = new Parser(root);
-			parser.globalRun();
-			parser.deepRun();
+			parser.runCheck();
 			System.out.println("0");
 		} catch (IllegalSyntaxException e) {
 			System.out.println("1");

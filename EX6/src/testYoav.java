@@ -18,8 +18,7 @@ public class testYoav {
             Root root = Root.instance(handler.splitCodeFileToLines());
             printScode(root.getLines());
             Parser parser = new Parser(root);
-            parser.globalRun();
-            parser.deepRun();
+            parser.runCheck();
 //            //deep run
 //            ArrayList<Variable> params = new ArrayList<>();
 //            params.add(new Variable(Type.INT,"a",true,false));
