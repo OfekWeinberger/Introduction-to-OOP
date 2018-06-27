@@ -16,6 +16,7 @@ public class CodeLine {
 	private static final String FINAL_VARIABLE_ASSIGNMENT_EXCEPTION;
 	private static final String METHOD_NOT_DECLARED_EXCEPTION;
 	private static final String RETURN_IN_ROOT_EXCEPTION;
+	private static final String FINAL_MODIFIER;
 
 	static {
 		ILLEGAL_START_EXCEPTION = "The line starts with illegal word or expression";
@@ -25,6 +26,7 @@ public class CodeLine {
 		FINAL_VARIABLE_ASSIGNMENT_EXCEPTION = "Final variable cannot be re-assigned";
 		METHOD_NOT_DECLARED_EXCEPTION = " method is not declared";
 		RETURN_IN_ROOT_EXCEPTION = "return can be only in methods";
+		FINAL_MODIFIER = "final";
 	}
 
 	/**
@@ -39,14 +41,13 @@ public class CodeLine {
 
 		//check if the we are talking about a final variable
 		boolean isFinal = false;
-		if (line.startsWith("final")) {
-			line = line.substring("final".length() + 1);
+		if (line.startsWith(FINAL_MODIFIER)) {
+			line = line.substring(FINAL_MODIFIER.length() + 1);
 			isFinal = true;
 		}
 
 		// check for variable declaration
-		if (line.startsWith("boolean ") || line.startsWith("int ") || line.startsWith("double ") ||
-				line.startsWith("char ") || line.startsWith("String ")) {
+		if (Type.getType(line.substring(0, line.indexOf(' '))) != null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
 			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
