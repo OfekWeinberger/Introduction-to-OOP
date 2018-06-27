@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SJavaFileHandler {
 
@@ -49,7 +48,7 @@ public class SJavaFileHandler {
 	 * @return an array list of lines
 	 */
 	public ArrayList<String> splitCodeFileToLines() {
-		String[] lines = content.split(RegularExpressions.SPLITER_REGEX);
+		String[] lines = content.split(RegularExpressions.SPLITTER_REGEX);
 		ArrayList<String> linesArray = new ArrayList<String>();
 		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines

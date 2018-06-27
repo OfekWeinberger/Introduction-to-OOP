@@ -59,7 +59,7 @@ public class CodeLine {
 				Type.getType(line.substring(0, line.indexOf(Type.SPACE_CHARACTER))) != null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
-			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
+			if (!RegularExpressions.VARIABLES_PATTERN.matcher(line).matches()) {
 				throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 			}
 
