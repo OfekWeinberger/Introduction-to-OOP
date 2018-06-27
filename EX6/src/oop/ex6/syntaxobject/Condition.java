@@ -16,7 +16,6 @@ public class Condition {
 	private static final String EMPTY_CONDITION_EXCEPTION;
 	private static final String VARIABLE_NAME_EXCEPTION;
 	private static final String VARIABLE_TYPE_EXCEPTION;
-	private static final String EMPTY_STRING;
 
 	static {
 		TRUE_KEYWORD = "true";
@@ -28,11 +27,10 @@ public class Condition {
 		EMPTY_CONDITION_EXCEPTION = "Condition can't be empty";
 		VARIABLE_NAME_EXCEPTION = "Variable name in condition is incorrect";
 		VARIABLE_TYPE_EXCEPTION = "Variable in condition should be assigned boolean,int or double";
-		EMPTY_STRING = "";
 	}
 
 	public void check(String s, Scope scope) throws IllegalSyntaxException {
-		if (s == null || s.equals(EMPTY_STRING))
+		if (s == null || s.equals(Type.EMPTY_STRING))
 			throw new IllegalSyntaxException(EMPTY_CONDITION_EXCEPTION);
 		if (s.startsWith(AND_KEYWORD) || s.startsWith(OR_KEYWORD) || s.endsWith(AND_KEYWORD) ||
 				s.endsWith(OR_KEYWORD))

@@ -16,8 +16,6 @@ public class CodeLine {
 	private static final String FINAL_VARIABLE_ASSIGNMENT_EXCEPTION;
 	private static final String METHOD_NOT_DECLARED_EXCEPTION;
 	private static final String RETURN_IN_ROOT_EXCEPTION;
-	private static final String FINAL_MODIFIER;
-	private static final String SPACE_CHARACTER;
 	private static final String COMMA_CHARACTER;
 	private static final String EQUALITY_CHARACTER;
 	private static final String COMMENT_PREFIX;
@@ -32,8 +30,6 @@ public class CodeLine {
 		FINAL_VARIABLE_ASSIGNMENT_EXCEPTION = "Final variable cannot be re-assigned";
 		METHOD_NOT_DECLARED_EXCEPTION = " method is not declared";
 		RETURN_IN_ROOT_EXCEPTION = "return can be only in methods";
-		FINAL_MODIFIER = "final";
-		SPACE_CHARACTER = " ";
 		COMMA_CHARACTER = ",";
 		COMMENT_PREFIX = "//";
 		RETURN_STATEMENT = "return";
@@ -53,14 +49,14 @@ public class CodeLine {
 
 		//check if the we are talking about a final variable
 		boolean isFinal = false;
-		if (line.startsWith(FINAL_MODIFIER)) {
-			line = line.substring(FINAL_MODIFIER.length() + 1);
+		if (line.startsWith(Type.FINAL_MODIFIER)) {
+			line = line.substring(Type.FINAL_MODIFIER.length() + 1);
 			isFinal = true;
 		}
 
 		// check for variable declaration
-		if (line.contains(SPACE_CHARACTER) &&
-				Type.getType(line.substring(0, line.indexOf(SPACE_CHARACTER))) !=	null) {
+		if (line.contains(Type.SPACE_CHARACTER) &&
+				Type.getType(line.substring(0, line.indexOf(Type.SPACE_CHARACTER))) != null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
 			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
@@ -69,8 +65,9 @@ public class CodeLine {
 
 			// split the line using comma, get the type of the declared variable
 			String[] lineContent = line.split(COMMA_CHARACTER);
-			Type varType = Type.getType(lineContent[0].substring(0, lineContent[0].indexOf(SPACE_CHARACTER)));
-			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(SPACE_CHARACTER) + 1);
+			Type varType = Type.getType(lineContent[0].substring(0, lineContent[0].indexOf
+					(Type.SPACE_CHARACTER)));
+			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(Type.SPACE_CHARACTER) + 1);
 
 			// for each of the declarations - declare a variable (declaration are separated with comma)
 			for (String rawDeclaration : lineContent)

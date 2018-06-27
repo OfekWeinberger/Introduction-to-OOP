@@ -9,10 +9,16 @@ public class MethodDeclaration {
 
 	private static final String VARIABLE_TYPE_EXCEPTION;
 	private static final String ILLEGAL_METHOD_NAME_EXCEPTION;
+	private static String VOID_KEYWORD;
+	private static String METHOD_BRACKET_SPLITTER_REGEX;
+	private static String PARAMETER_SPACER_CHARACTER;
 
 	static {
 		VARIABLE_TYPE_EXCEPTION = "Illegal variable type or name";
 		ILLEGAL_METHOD_NAME_EXCEPTION = "Illegal method name";
+		VOID_KEYWORD = "void";
+		METHOD_BRACKET_SPLITTER_REGEX = "(\\))|(\\()";
+		PARAMETER_SPACER_CHARACTER = ",";
 	}
 
 	private ArrayList<Variable> params;
@@ -24,9 +30,9 @@ public class MethodDeclaration {
 	}
 
 	public void check(String line, Scope scope) throws IllegalSyntaxException {
-		if (line.startsWith("void")) {
-			line = line.substring("void".length() + 1);
-			String[] contents = line.split("(\\))|(\\()");
+		if (line.startsWith(VOID_KEYWORD)) {
+			line = line.substring(VOID_KEYWORD.length() + 1);
+			String[] contents = line.split(METHOD_BRACKET_SPLITTER_REGEX);
 			if (contents.length != 3) {
 				throw new IllegalSyntaxException(ILLEGAL_METHOD_NAME_EXCEPTION + ": " + line);
 			}
@@ -36,8 +42,8 @@ public class MethodDeclaration {
 			if (!RegularExpressions.PARAMS_PATTERN.matcher(contents[1]).matches()) {
 				throw new IllegalSyntaxException(VARIABLE_TYPE_EXCEPTION + ": " + line);
 			}
-			String[] methodParams = contents[1].split(",");
-			if (!"".equals(methodParams[0])) {
+			String[] methodParams = contents[1].split(PARAMETER_SPACER_CHARACTER);
+			if (!Type.EMPTY_STRING.equals(methodParams[0])) {
 				for (String param : methodParams)
 					declareMethodParams(param, line);
 			}
@@ -46,14 +52,14 @@ public class MethodDeclaration {
 
 	private void declareMethodParams(String param, String line) throws IllegalSyntaxException {
 		boolean isFinal = false;
-		if (param.startsWith("final")) {
-			param = param.substring("final".length() + 1);
+		if (param.startsWith(Type.FINAL_MODIFIER)) {
+			param = param.substring(Type.FINAL_MODIFIER.length() + 1);
 			isFinal = true;
 		}
-		if (param.startsWith("boolean ") || param.startsWith("int ") || param.startsWith("double ") ||
-				param.startsWith("char ") || param.startsWith("String ")) {
-			Type varType = Type.getType(param.substring(0, param.indexOf(" ")));
-			String varName = param.substring(param.indexOf(" ") + 1);
+		if (line.contains(Type.SPACE_CHARACTER) && Type.getType(line.substring(0, line.indexOf
+				(Type.SPACE_CHARACTER))) != null) {
+			Type varType = Type.getType(param.substring(0, param.indexOf(Type.SPACE_CHARACTER)));
+			String varName = param.substring(param.indexOf(Type.SPACE_CHARACTER) + 1);
 			if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches()) {
 				throw new IllegalSyntaxException(VARIABLE_TYPE_EXCEPTION + ": " + line);
 			}

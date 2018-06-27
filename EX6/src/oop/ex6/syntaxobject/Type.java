@@ -5,6 +5,9 @@ import oop.ex6.RegularExpressions;
 import java.util.regex.Pattern;
 
 public enum Type {
+
+
+
 	INT(RegularExpressions.INTEGER_PATTERN),
 	DOUBLE(RegularExpressions.DOUBLE_PATTERN),
 	BOOLEAN(RegularExpressions.BOOLEAN_PATTERN),
@@ -12,6 +15,18 @@ public enum Type {
 	CHAR(RegularExpressions.CHARACTER_PATTERN);
 
 	private Pattern pattern;
+
+	public static final String FINAL_MODIFIER;
+	public static final String SPACE_CHARACTER;
+	public static final String EMPTY_STRING;
+
+
+
+	static {
+		FINAL_MODIFIER = "final";
+		SPACE_CHARACTER = " ";
+		EMPTY_STRING = "";
+	}
 
 	Type(Pattern pattern) {
 		this.pattern = pattern;
