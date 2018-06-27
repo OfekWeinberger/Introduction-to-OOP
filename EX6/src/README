@@ -112,11 +112,13 @@ variables). The scope types are: Root, Method and IfWhile (if and while are comb
 difference between them).
 
 We thought of few partially \ totally different designs:
-~~~~~
-~~~~~
-~~~~~ add bullshit alternatives!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-~~~~~
-~~~~~
+1) using a dictionary (hashmap) of strings and variables to hold the variables in the program. The strings are starting
+with the depth where the variable was decleared and after that the name of the variable. we chose to not implement this
+idea because it is not modular and all the program will need to access it. It breakes continuity of the code and breaks
+single responsibility principle because it handles all the variables of all scopes and not only the relevant ones.
+2) making an object of each line. we chose not to use this idea because it uses a lot of memory and waste runtime for
+long codes. instead we create classes that know to check different type of lines and so we can modulate the checks with
+those dynamical checkers.
 
 If we wanted to add more variables, we need to:
 1. Add them to the type enum.
