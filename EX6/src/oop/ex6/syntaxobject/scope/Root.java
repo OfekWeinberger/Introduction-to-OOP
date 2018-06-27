@@ -7,44 +7,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Root extends Scope {
-	private static final String METHOD_OVERLOAD_EXCEPTION = "Method overloading is not allowed";
-	public static Root singleton = null;
+
+	private static final String METHOD_OVERLOAD_EXCEPTION;
+	public static Root singleton;
 	private HashMap<String, Method> methodsDeclared;
 
+	static {
+		METHOD_OVERLOAD_EXCEPTION = "Method overloading is not allowed";
+		singleton = null;
+	}
+
 	/**
-	 * a constractor for the root scope
-	 * @param lines - all the code lines
+	 * a constructor for the root scope
+	 *
+	 * @param lines all the code lines
 	 */
 	public Root(ArrayList<String> lines) {
-		super(null,null,null,lines);
-		methodsDeclared = new HashMap<String, Method>();
-	}
-
-	public void reset(ArrayList<String> lines){
-		singleton = new Root(lines);
-	}
-
-	/**
-	 * get all the methods declared
-	 * @return an ArrayList of method object declared in the root scope
-	 */
-	public ArrayList<Method> getMethods(){
-		return new ArrayList<Method>(methodsDeclared.values());
-	}
-
-	/**
-	 * search for a method by name
-	 * @param methodName - the method name
-	 * @return the method if found null else
-	 */
-	@Override
-	public Method getMethodByName(String methodName){
-		return methodsDeclared.get(methodName);
+		super(null, null, null, lines);
+		methodsDeclared = new HashMap<>();
 	}
 
 	/**
 	 * initialize an the single scope. if it is initialized return it
-	 * @param lines - the code lines
+	 *
+	 * @param lines the code lines
 	 * @return the single instance of this class
 	 */
 	public static Root instance(ArrayList<String> lines) {
@@ -55,17 +41,18 @@ public class Root extends Scope {
 	}
 
 	/**
-	 *
 	 * @return the singale instance of this class
 	 */
-	public static Root instance(){
+	public static Root instance() {
 		return singleton;
 	}
 
 	/**
 	 * add a method
-	 * @param method - the method object to add to the list
-	 * @throws IllegalSyntaxException
+	 *
+	 * @param method the method object to add to the list
+	 * @throws IllegalSyntaxException If in the addition of a method, a syntax error is found, the
+	 * exception with be thrown.
 	 */
 	public static void addMethod(Method method) throws IllegalSyntaxException {
 		if (singleton.methodsDeclared.containsKey(method.getName())) {
@@ -74,17 +61,39 @@ public class Root extends Scope {
 		singleton.methodsDeclared.put(method.getName(), method);
 	}
 
+	public void reset(ArrayList<String> lines) {
+		singleton = new Root(lines);
+	}
+
+	/**
+	 * get all the methods declared
+	 *
+	 * @return an ArrayList of method object declared in the root scope
+	 */
+	public ArrayList<Method> getMethods() {
+		return new ArrayList<>(methodsDeclared.values());
+	}
+
+	/**
+	 * search for a method by name
+	 *
+	 * @param methodName - the method name
+	 * @return the method if found null else
+	 */
+	@Override
+	public Method getMethodByName(String methodName) {
+		return methodsDeclared.get(methodName);
+	}
+
 	/**
 	 * check if a specific method is declared in the root scope
+	 *
 	 * @param methodName - the method name
-	 * @param params - the method signitur (params)
+	 * @param params     - the method signitur (params)
 	 * @return true if the method is found else false
 	 */
 	@Override
-	public boolean isDecleared(String methodName, ArrayList<Type> params) {
-		if (methodsDeclared.containsKey(methodName)) {
-			return methodsDeclared.get(methodName).checkParams(params);
-		}
-		return false;
+	public boolean isDeclared(String methodName, ArrayList<Type> params) {
+		return methodsDeclared.containsKey(methodName) && methodsDeclared.get(methodName).checkParams(params);
 	}
 }

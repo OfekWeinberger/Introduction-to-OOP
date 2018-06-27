@@ -8,7 +8,10 @@ import java.io.IOException;
 
 public class Sjavac {
 
-	@SuppressWarnings("unused")
+	/**
+	 * The main method of the program.
+	 * @param args single arg is required, the path (relative or absolute) of the sJava file.
+	 */
 	public static void main(String[] args) {
 
 		try {

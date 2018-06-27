@@ -10,18 +10,24 @@ import oop.ex6.syntaxobject.scope.Root;
 import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Parser {
+
     private Root root;
-    private static final CodeLine varHendler;
-    private static final String SCOPE_OPEN_EXCEPTION ="Scope open line can only start with if||while in inner scope of void in the global scope";
-    private static final String SCOPE_NOT_CLOSING_EXCEPTION = "Scope is opening but missing a } to close it";
-    private static final String METHOD_NO_RETURN_EXCEPTION = "Method must end with a return line";
-    private static final String CONDITION_ERROR_EXCEPTION = "Ileagal if or while condition";
-    private static final String MISSING_SEMICOLON_EXCEPTION = "all lines witch dont open scope shoulde end with ;";
+    private static final CodeLine varHandler;
+    private static final String SCOPE_OPEN_EXCEPTION;
+    private static final String SCOPE_NOT_CLOSING_EXCEPTION;
+    private static final String METHOD_NO_RETURN_EXCEPTION;
+    private static final String CONDITION_ERROR_EXCEPTION;
+    private static final String MISSING_SEMICOLON_EXCEPTION;
+
     static {
-        varHendler = new CodeLine();
+        varHandler = new CodeLine();
+        SCOPE_OPEN_EXCEPTION ="Scope open line can only start with if||while in inner scope of void in the global scope";
+        SCOPE_NOT_CLOSING_EXCEPTION = "Scope is opening but missing a } to close it";
+        METHOD_NO_RETURN_EXCEPTION = "Method must end with a return line";
+        CONDITION_ERROR_EXCEPTION = "Ileagal if or while condition";
+        MISSING_SEMICOLON_EXCEPTION = "all lines witch dont open scope shoulde end with ;";
     }
 
 
@@ -98,7 +104,7 @@ public class Parser {
             throw new IllegalSyntaxException(MISSING_SEMICOLON_EXCEPTION);
         }
         else {
-            varHendler.check(line.substring(0,line.length()-1), scope);
+            varHandler.check(line.substring(0,line.length()-1), scope);
         }
     }
 
