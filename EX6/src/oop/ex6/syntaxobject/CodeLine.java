@@ -59,8 +59,8 @@ public class CodeLine {
 				Type.getType(line.substring(0, line.indexOf(Type.SPACE_CHARACTER))) != null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
-			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
-				throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION);
+			if (!RegularExpressions.VARIABLES_PATTERN.matcher(line).matches()) {
+				throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 			}
 
 			// split the line using comma, get the type of the declared variable
@@ -83,7 +83,7 @@ public class CodeLine {
 		} else if (scope.isRoot()) {
 			// if line was a return statement, we must make sure it was not in the root scope because that
 			// is impossible.
-			throw new IllegalSyntaxException(RETURN_IN_ROOT_EXCEPTION);
+			throw new IllegalSyntaxException(RETURN_IN_ROOT_EXCEPTION + ": " + line);
 		}
 
 	}
@@ -125,7 +125,7 @@ public class CodeLine {
 					Type.match(varAssignment, varType))) {
 				Variable var = scope.getVarByName(varName, true);
 				if (var == null) {
-					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION);
+					throw new IllegalSyntaxException(ILLEGAL_VARIABLE_EXCEPTION + ": " + line);
 				}
 				if (var.isFinal() && var.isAssigned())
 					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
@@ -144,23 +144,23 @@ public class CodeLine {
 		String[] lineContent = line.split(RegularExpressions.METHOD_CALL_SPLITTER_REGEX);
 		Method method = scope.getMethodByName(lineContent[0]);
 		if (method == null) {
-			throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION);
+			throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION + ": " + line);
 		}
 		ArrayList<Variable> params = method.getParams();
 		if (lineContent.length != params.size() + 1) {
-			throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION);
+			throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION + ": " + line);
 		}
 		for (int i = 1; i < lineContent.length; i++) {
 			if (!Type.match(lineContent[i], params.get(i - 1).getType())) {
 				Variable param = scope.getVarByName(lineContent[i], true);
 				if (param == null) {
-					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION);
+					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION + ": " + line);
 				}
 				if (!param.isAssigned()) {
-					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION);
+					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION + ": " + line);
 				}
 				if (param.getType() != params.get(i - 1).getType()) {
-					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION);
+					throw new IllegalSyntaxException(METHOD_NOT_DECLARED_EXCEPTION + ": " + line);
 				}
 			}
 		}

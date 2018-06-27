@@ -127,9 +127,9 @@ public enum Type {
 	}
 
 	/**
-	 *
-	 * @param other
-	 * @return
+	 * A default implementation for equals for any of the types.
+	 * @param other The other type we want to check if is the same (not commutative).
+	 * @return True if this variable can be assigned with the other.
 	 */
 	public boolean equals(Type other) {
 		switch (this) {

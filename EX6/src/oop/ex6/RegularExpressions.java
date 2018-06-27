@@ -7,40 +7,40 @@ public class RegularExpressions {
 	/**
 	 * check if a stain String is a valid int value according to sjava specification
 	 */
-	public static final String INTEGER_REGEX;
+	private static final String INTEGER_REGEX;
 	/**
 	 * check if a stain String is a valid double value according to sjava specification
 	 */
-	public static final String DOUBLE_REGEX;
+	private static final String DOUBLE_REGEX;
 	/**
 	 * check if a stain String is a valid variable name according to sjava specification
 	 */
-	public static final String NAME_REGEX;
+	private static final String NAME_REGEX;
 	/**
 	 * check if a stain String is a valid method name according to sjava specification
 	 */
-	public static final String METHOD_NAME_REGEX;
+	private static final String METHOD_NAME_REGEX;
 	/**
 	 * check if a stain String is a valid String value according to sjava specification
 	 */
-	public static final String STRING_REGEX;
-	private static final String FORBIDEN_CHARS;
+	private static final String STRING_REGEX;
+	private static final String FORBIDDEN_CHARS;
 	/**
 	 * check if a code line (not comment) ends with '{' ';' or '}'
 	 */
-	public static final String LINE_REGEX;
+	private static final String LINE_REGEX;
 	/**
 	 * check if a stain String is a valid char value according to sjava specification
 	 */
-	public static final String CHARACTER_REGEX;
+	private static final String CHARACTER_REGEX;
 	/**
 	 * check if a stain String is a valid boolean value according to sjava specification
 	 */
-	public static final String BOOLEAN_REGEX;
+	private static final String BOOLEAN_REGEX;
 	/**
 	 * find the /n in the text code and tell where to split the code
 	 */
-	public static final String SPLITER_REGEX;
+	public static final String SPLITTER_REGEX;
 	/**
 	 * all spaces types one or more times
 	 */
@@ -62,7 +62,7 @@ public class RegularExpressions {
 	/**
 	 * check if a stain String is a valid method call line according to sjava specification
 	 */
-	public static final String METHOD_CALL_REGEX;
+	private static final String METHOD_CALL_REGEX;
 	/**
 	 * get all the '(' ')' and ',' in the line
 	 */
@@ -71,11 +71,11 @@ public class RegularExpressions {
 	 * check if a stain String matches a method (params...) part in
 	 * the method deceleration according to sjava specification
 	 */
-	public static final String PARAMS_REGEX;
+	private static final String PARAMS_REGEX;
 	/**
 	 * check if a stain String matches a variables deceleration according to sjava specification
 	 */
-	public static final String VARIABELS_REGEX;
+	private static final String VARIABLES_REGEX;
 
 	public static final Pattern INTEGER_PATTERN;
 	public static final Pattern DOUBLE_PATTERN;
@@ -85,15 +85,15 @@ public class RegularExpressions {
 	public static final Pattern LINE_PATTERN;
 	public static final Pattern CHARACTER_PATTERN;
 	public static final Pattern BOOLEAN_PATTERN;
-	public static final Pattern SPLITER_PATTERN;
+	public static final Pattern SPLITTER_PATTERN;
 	public static final Pattern SPACES_PATTERN;
-	public static final Pattern START_TRIMER_PATTERN;
-	public static final Pattern BEFORE_TRIMER_PATTERN;
-	public static final Pattern AFTER_TRIMER_PATTERN;
+	public static final Pattern START_TRIMMER_PATTERN;
+	public static final Pattern BEFORE_TRIMMER_PATTERN;
+	public static final Pattern AFTER_TRIMMER_PATTERN;
 	public static final Pattern METHOD_CALL_PATTERN;
 	public static final Pattern METHOD_CALL_SPLITTER_PATTERN;
 	public static final Pattern PARAMS_PATTERN;
-	public static final Pattern VARIABELS_PATTERN;
+	public static final Pattern VARIABLES_PATTERN;
 
 
 	static {
@@ -101,19 +101,19 @@ public class RegularExpressions {
 		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|"+INTEGER_REGEX;
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
-		FORBIDEN_CHARS = "[^,`\\\"]*";
-		STRING_REGEX = "\\\""+FORBIDEN_CHARS+"\\\"";
+		FORBIDDEN_CHARS = "[^,`\\\"]*";
+		STRING_REGEX = "\\\""+ FORBIDDEN_CHARS +"\\\"";
 		LINE_REGEX = "[.]*[;{}]";
-		CHARACTER_REGEX = "\\\'"+FORBIDEN_CHARS+"\\\'";
+		CHARACTER_REGEX = "\\\'"+ FORBIDDEN_CHARS +"\\\'";
 		BOOLEAN_REGEX = "(true)|(false)|"+DOUBLE_REGEX;
-		SPLITER_REGEX = "(?<=[\\\n])";//;\{\}
+		SPLITTER_REGEX = "(?<=[\\\n])";//;\{\}
 		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s+";
 		BEFORE_TRIMER_REGEX = SPACES_REGEX+"(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
 		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])"+SPACES_REGEX;
 		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\\"\\\'\\-\\.\\s]*[\\)]";
 		PARAMS_REGEX = "(([\\w\\s]+,)*[\\w\\s]+)|()";
-		VARIABELS_REGEX = "((([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))[,\\=])*(([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))";
+		VARIABLES_REGEX = "((([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))[,\\=])*(([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))";
 		METHOD_CALL_SPLITTER_REGEX = "[,\\(\\)]";
 
 
@@ -125,14 +125,14 @@ public class RegularExpressions {
 		LINE_PATTERN = Pattern.compile(LINE_REGEX);
 		CHARACTER_PATTERN = Pattern.compile(CHARACTER_REGEX);
 		BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
-		SPLITER_PATTERN = Pattern.compile(SPLITER_REGEX);
+		SPLITTER_PATTERN = Pattern.compile(SPLITTER_REGEX);
 		SPACES_PATTERN = Pattern.compile(SPACES_REGEX);
-		START_TRIMER_PATTERN = Pattern.compile(START_TRIMER_REGEX);
-		BEFORE_TRIMER_PATTERN = Pattern.compile(BEFORE_TRIMER_REGEX);
-		AFTER_TRIMER_PATTERN = Pattern.compile(AFTER_TRIMER_REGEX);
+		START_TRIMMER_PATTERN = Pattern.compile(START_TRIMER_REGEX);
+		BEFORE_TRIMMER_PATTERN = Pattern.compile(BEFORE_TRIMER_REGEX);
+		AFTER_TRIMMER_PATTERN = Pattern.compile(AFTER_TRIMER_REGEX);
 		METHOD_CALL_PATTERN = Pattern.compile(METHOD_CALL_REGEX);
 		METHOD_CALL_SPLITTER_PATTERN = Pattern.compile(METHOD_CALL_SPLITTER_REGEX);
 		PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
-		VARIABELS_PATTERN = Pattern.compile(VARIABELS_REGEX);
+		VARIABLES_PATTERN = Pattern.compile(VARIABLES_REGEX);
 	}
 }
