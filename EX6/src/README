@@ -60,10 +60,11 @@ IllegalSyntaxException can be thrown, otherwise the file is legal.
 Our programs reads the file, and creates a list
 (ArrayList) of all the lines of the file. It is done while deleting all the unnecessary white spaces to make
 the strings easier to work with. After that we pass the lines to the root scope. Scopes are objects that
-generally define the name space of variables; Each scope has a collection of all the variables method that his
-father scope has (except for root that has only it's own variables). After passing the lines to root scope,
+generally define the name space of variables; Each scope has a collection of all the variables that are declared
+specifically in that scope. Each scope is connected to his parent scope and throw that connection can check and access
+parent methods (in case of root) or variables in case of all other scopes. After passing the lines to root scope,
 it scans the lines, creating methods and variables (without scanning the lines of the methods). Then there is
-a second scan, for each of the methods. in each method the scan scans the line and if there is another scope
+a second scan, for each of the methods. in each method the parser scans the line and if there is another scope
 block (if/while) it opens a new scope and scans it's lines, so if another scope (if/while) is declared inside,
 it the program will create new scope for it, and scan it's lines before going back to the outer one.
 
@@ -72,6 +73,10 @@ When finished scanning, it goes  back to the outer scope. When the scanning of t
 returns a result of a valid file: Anywhere in the code the IllegalSyntaxException can be thrown, with
 informative message. The exception is caught then the program knows the code is illegal according the sJava
 language specifications.
+
+On validating the correctness of a line there are classes all implementing the checker interface. Those classes have
+each a type of line they know to validate its correctness. The parser goal is to send each one the
+correct type of lines.
 
 
                                             _                                _   _
