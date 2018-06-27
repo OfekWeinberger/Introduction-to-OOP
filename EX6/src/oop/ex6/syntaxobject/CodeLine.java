@@ -59,7 +59,8 @@ public class CodeLine {
 		}
 
 		// check for variable declaration
-		if (Type.getType(line.substring(0, line.indexOf(SPACE_CHARACTER))) != null) {
+		if (line.contains(SPACE_CHARACTER) &&
+				Type.getType(line.substring(0, line.indexOf(SPACE_CHARACTER))) !=	null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
 			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
