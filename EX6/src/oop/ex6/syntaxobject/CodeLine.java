@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CodeLine {
 
-	// these are strings that hold the exception messages
+	// these are strings that hold the exception messages, and other characters or phrases we use inside.
 	private static final String ILLEGAL_START_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_EXCEPTION;
 	private static final String ILLEGAL_VARIABLE_NAME_EXCEPTION;
@@ -17,6 +17,12 @@ public class CodeLine {
 	private static final String METHOD_NOT_DECLARED_EXCEPTION;
 	private static final String RETURN_IN_ROOT_EXCEPTION;
 	private static final String FINAL_MODIFIER;
+	private static final String SPACE_CHARACTER;
+	private static final String COMMA_CHARACTER;
+	private static final String EQUALITY_CHARACTER;
+	private static final String COMMENT_PREFIX;
+	private static final String RETURN_STATEMENT;
+
 
 	static {
 		ILLEGAL_START_EXCEPTION = "The line starts with illegal word or expression";
@@ -27,6 +33,11 @@ public class CodeLine {
 		METHOD_NOT_DECLARED_EXCEPTION = " method is not declared";
 		RETURN_IN_ROOT_EXCEPTION = "return can be only in methods";
 		FINAL_MODIFIER = "final";
+		SPACE_CHARACTER = " ";
+		COMMA_CHARACTER = ",";
+		COMMENT_PREFIX = "//";
+		RETURN_STATEMENT = "return";
+		EQUALITY_CHARACTER = "=";
 	}
 
 	/**
@@ -47,7 +58,7 @@ public class CodeLine {
 		}
 
 		// check for variable declaration
-		if (Type.getType(line.substring(0, line.indexOf(' '))) != null) {
+		if (Type.getType(line.substring(0, line.indexOf(SPACE_CHARACTER))) != null) {
 
 			// check if the variable declaration is in the pattern we expect in s-Java
 			if (!RegularExpressions.VARIABELS_PATTERN.matcher(line).matches()) {
@@ -55,19 +66,19 @@ public class CodeLine {
 			}
 
 			// split the line using comma, get the type of the declared variable
-			String[] lineContent = line.split("(,)");
-			Type varType = Type.getType(lineContent[0].substring(0, lineContent[0].indexOf(" ")));
-			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(" ") + 1);
+			String[] lineContent = line.split(COMMA_CHARACTER);
+			Type varType = Type.getType(lineContent[0].substring(0, lineContent[0].indexOf(SPACE_CHARACTER)));
+			lineContent[0] = lineContent[0].substring(lineContent[0].indexOf(SPACE_CHARACTER) + 1);
 
 			// for each of the declarations - declare a variable (declaration are separated with comma)
 			for (String rawDeclaration : lineContent)
 				declareVariable(isFinal, rawDeclaration, varType, scope, line);
 
-		} else if (!line.equals("return")) {
+		} else if (!line.equals(RETURN_STATEMENT)) {
 			// if line doesn't accept the method call pattern, it is a method call
 			if (RegularExpressions.METHOD_CALL_PATTERN.matcher(line).matches()) {
 				methodCallHandler(line, scope);
-			} else if (!line.startsWith("//"))
+			} else if (!line.startsWith(COMMENT_PREFIX))
 				// else, we are talking about a variable assignment
 				assignmentHandler(line, scope);
 		} else if (scope.isRoot()) {
@@ -82,7 +93,7 @@ public class CodeLine {
 	private static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
 										String
 												line) throws IllegalSyntaxException {
-		String[] varDeclaration = rawDeclaration.split("=");
+		String[] varDeclaration = rawDeclaration.split(EQUALITY_CHARACTER);
 		String varName = varDeclaration[0];
 		if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches())
 			throw new IllegalSyntaxException(ILLEGAL_VARIABLE_NAME_EXCEPTION + ": " + line);
@@ -104,7 +115,8 @@ public class CodeLine {
 	// This method is responsible for handling assignment.
 	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
 		// check for variable assignment
-		String[] lineContent = line.split("=");
+		String[] lineContent = line.split(EQUALITY_CHARACTER);
+		// check if the variable declared legally (by measuring )
 		if (lineContent.length == 2) {
 			String varName = lineContent[0];
 			String varAssignment = lineContent[1];
