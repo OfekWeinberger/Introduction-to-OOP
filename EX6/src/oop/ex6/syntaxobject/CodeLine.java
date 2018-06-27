@@ -43,10 +43,11 @@ public class CodeLine {
 	/**
 	 * This method gets a line, without the ';', and checks whether it is legal or not, except for method
 	 * declaration that is handled by another class (MethodDeclaration).
-	 * @param line The line, without semicolon in the end.
+	 *
+	 * @param line  The line, without semicolon in the end.
 	 * @param scope The scope where the line lies.
 	 * @throws IllegalSyntaxException If the line is illegal according to s-Java specifications, throws an
-	 * exception with informative message.
+	 *                                exception with informative message.
 	 */
 	public static void check(String line, Scope scope) throws IllegalSyntaxException {
 
@@ -116,7 +117,8 @@ public class CodeLine {
 	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
 		// check for variable assignment
 		String[] lineContent = line.split(EQUALITY_CHARACTER);
-		// check if the variable declared legally (by measuring )
+		// check if the variable declared legally (by measuring the length of the array and comparing it to
+		// the size we expect from legal declaration)
 		if (lineContent.length == 2) {
 			String varName = lineContent[0];
 			String varAssignment = lineContent[1];
@@ -129,7 +131,7 @@ public class CodeLine {
 				}
 				if (var.isFinal() && var.isAssigned())
 					throw new IllegalSyntaxException(FINAL_VARIABLE_ASSIGNMENT_EXCEPTION + ": " + line);
-				if(scope.getVarByName(varName,false)!=null) {
+				if (scope.getVarByName(varName, false) != null) {
 					var.setAssigned();
 				}
 			} else
