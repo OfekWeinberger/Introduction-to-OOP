@@ -52,13 +52,12 @@ public abstract class Scope {
 		return lines;
 	}
 
-	protected void resetScope(ArrayList<String> lines){
+	protected void resetScope(ArrayList<String> lines) {
 		this.parent = null;
 		this.variables = new HashMap<>();
-		if(lines!=null){
+		if (lines != null) {
 			this.lines = lines;
-		}
-		else {
+		} else {
 			this.lines = new ArrayList<>();
 		}
 	}

@@ -6,7 +6,7 @@ import oop.ex6.syntaxobject.scope.Scope;
 
 import java.util.ArrayList;
 
-public class CodeLine implements Checker{
+public class CodeLine implements Checker {
 
 	// these are strings that hold the exception messages, and other characters or phrases we use inside.
 	private static final String ILLEGAL_START_EXCEPTION;
@@ -90,8 +90,8 @@ public class CodeLine implements Checker{
 
 	// This method is responsible on the declaration of a variable
 	private void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
-										String
-												line) throws IllegalSyntaxException {
+								 String
+										 line) throws IllegalSyntaxException {
 		String[] varDeclaration = rawDeclaration.split(EQUALITY_CHARACTER);
 		String varName = varDeclaration[0];
 		if (!RegularExpressions.NAME_PATTERN.matcher(varName).matches())

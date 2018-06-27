@@ -18,7 +18,7 @@ public class Method extends Scope {
 	 * @param params the parameters a method should get when called upon.
 	 * @param lines  the lines inside the method scope.
 	 * @throws IllegalSyntaxException If, anywhere the method or the method it calls, find a syntax error -
-	 * an IllegalSyntaxException will be thrown.
+	 *                                an IllegalSyntaxException will be thrown.
 	 */
 	public Method(String name, ArrayList<Variable> params, ArrayList<String> lines) throws IllegalSyntaxException {
 		super(Root.instance(), null, lines);

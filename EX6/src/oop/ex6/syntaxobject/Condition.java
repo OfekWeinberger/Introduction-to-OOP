@@ -3,8 +3,6 @@ package oop.ex6.syntaxobject;
 import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.scope.Scope;
 
-import java.util.ArrayList;
-
 public class Condition implements Checker {
 
 	// these are some stings that we will use later, they are error messages and some are part of the
@@ -33,10 +31,11 @@ public class Condition implements Checker {
 
 	/**
 	 * This method is responsible for checking whether the given String is a legal condition.
-	 * @param s The condition string we want to check.
+	 *
+	 * @param s     The condition string we want to check.
 	 * @param scope The scope where the statement lies.
 	 * @throws IllegalSyntaxException If the method finds an error in the code (illegal code), it will
-	 * throw an IllegalSyntaxException.
+	 *                                throw an IllegalSyntaxException.
 	 */
 	public void check(String s, Scope scope) throws IllegalSyntaxException {
 		if (s == null || s.equals(Type.EMPTY_STRING))

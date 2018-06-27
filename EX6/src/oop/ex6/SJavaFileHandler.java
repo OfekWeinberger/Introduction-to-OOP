@@ -45,6 +45,7 @@ public class SJavaFileHandler {
 
 	/**
 	 * split the line text acurding to the rules (for now by /n chars)
+	 *
 	 * @return an array list of lines
 	 */
 	public ArrayList<String> splitCodeFileToLines() {
@@ -52,7 +53,7 @@ public class SJavaFileHandler {
 		ArrayList<String> linesArray = new ArrayList<String>();
 		for (int i = 0; i < lines.length; i++) {
 			//clean empty lines
-			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches()&&(!lines[i].isEmpty())) {
+			if (!RegularExpressions.SPACES_PATTERN.matcher(lines[i]).matches() && (!lines[i].isEmpty())) {
 				linesArray.add(lines[i]);
 			}
 		}
@@ -61,19 +62,18 @@ public class SJavaFileHandler {
 	}
 
 	// clean code from empty lines and not nececery spaces. format the code lins so it will be easy to work with
-	private ArrayList<String> cleanCode(ArrayList<String> lines){
+	private ArrayList<String> cleanCode(ArrayList<String> lines) {
 		ArrayList<String> cleanLines = new ArrayList<String>();
-		for (String line:lines) {
+		for (String line : lines) {
 			String trimedLine;
-			if(line.contains("//")) {
+			if (line.contains("//")) {
 				trimedLine = line;
-			}
-			else {
+			} else {
 				trimedLine = line.replaceAll(RegularExpressions.START_TRIMER_REGEX, "");
 			}
-			String beforeCleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX,"");
-			String cleanSpaced = beforeCleanSpaced.replaceAll(RegularExpressions.AFTER_TRIMER_REGEX,"");
-			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX," ");
+			String beforeCleanSpaced = trimedLine.replaceAll(RegularExpressions.BEFORE_TRIMER_REGEX, "");
+			String cleanSpaced = beforeCleanSpaced.replaceAll(RegularExpressions.AFTER_TRIMER_REGEX, "");
+			String noDouble = cleanSpaced.replaceAll(RegularExpressions.SPACES_REGEX, " ");
 			cleanLines.add(noDouble);
 		}
 		return cleanLines;

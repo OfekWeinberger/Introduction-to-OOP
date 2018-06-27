@@ -4,50 +4,14 @@ import java.util.regex.Pattern;
 
 public class RegularExpressions {
 
-	//check if a stain String is a valid int value according to sjava specification
-	private static final String INTEGER_REGEX;
-	//check if a stain String is a valid double value according to sjava specification
-	private static final String DOUBLE_REGEX;
-	//check if a stain String is a valid variable name according to sjava specification
-	private static final String NAME_REGEX;
-	//check if a stain String is a valid method name according to sjava specification
-	private static final String METHOD_NAME_REGEX;
-	//check if a stain String is a valid String value according to sjava specification
-	private static final String STRING_REGEX;
-	//the chars that canot be in string or char values
-	private static final String FORBIDDEN_CHARS;
-	//check if a stain String is a valid char value according to sjava specification
-	private static final String CHARACTER_REGEX;
-	//check if a stain String is a valid boolean value according to sjava specification
-	private static final String BOOLEAN_REGEX;
-	//find the /n in the text code and tell where to split the code
-	static final String SPLITTER_REGEX;
-	//all spaces types one or more times
-	static final String SPACES_REGEX;
-	//return all the spaces in the start of a line
-	static final String START_TRIMER_REGEX;
-	//mach all the spaces that appear before '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
-	//to make it possible to delete them
-	static final String BEFORE_TRIMER_REGEX;
-	//mach all the spaces that appear after '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
-	//to make it possible to delete them
-	static final String AFTER_TRIMER_REGEX;
-	//check if a stain String is a valid method call line according to sjava specification
-	private static final String METHOD_CALL_REGEX;
 	/**
 	 * check if a stain String is a valid method call line according to sjava specification
 	 */
 	public static final String METHOD_CALL_SPLITTER_REGEX;
-	//check if a stain String matches a method (params...) part in
-	//the method deceleration according to sjava specification
-	private static final String PARAMS_REGEX;
-	//check if a stain String matches a variables deceleration according to sjava specification
-	private static final String VARIABLES_REGEX;
 	/**
 	 * a regex that split over circle brackets '(' ')'
 	 */
 	public static final String BRACKETS_SPLITER;
-
 	/**
 	 * check if a stain String is a valid int value according to sjava specification
 	 */
@@ -77,10 +41,6 @@ public class RegularExpressions {
 	 */
 	public static final Pattern BOOLEAN_PATTERN;
 	/**
-	 * all spaces types one or more times
-	 */
-	static final Pattern SPACES_PATTERN;
-	/**
 	 * check if a stain String is a valid method call line according to sjava specification
 	 */
 	public static final Pattern METHOD_CALL_PATTERN;
@@ -93,22 +53,60 @@ public class RegularExpressions {
 	 * check if a stain String matches a variables deceleration according to sjava specification
 	 */
 	public static final Pattern VARIABLES_PATTERN;
-
+	//find the /n in the text code and tell where to split the code
+	static final String SPLITTER_REGEX;
+	//all spaces types one or more times
+	static final String SPACES_REGEX;
+	//return all the spaces in the start of a line
+	static final String START_TRIMER_REGEX;
+	//mach all the spaces that appear before '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
+	//to make it possible to delete them
+	static final String BEFORE_TRIMER_REGEX;
+	//mach all the spaces that appear after '(' ')' '{' '}' '=' ',' ';' '&&' or '||'
+	//to make it possible to delete them
+	static final String AFTER_TRIMER_REGEX;
+	/**
+	 * all spaces types one or more times
+	 */
+	static final Pattern SPACES_PATTERN;
+	//check if a stain String is a valid int value according to sjava specification
+	private static final String INTEGER_REGEX;
+	//check if a stain String is a valid double value according to sjava specification
+	private static final String DOUBLE_REGEX;
+	//check if a stain String is a valid variable name according to sjava specification
+	private static final String NAME_REGEX;
+	//check if a stain String is a valid method name according to sjava specification
+	private static final String METHOD_NAME_REGEX;
+	//check if a stain String is a valid String value according to sjava specification
+	private static final String STRING_REGEX;
+	//the chars that canot be in string or char values
+	private static final String FORBIDDEN_CHARS;
+	//check if a stain String is a valid char value according to sjava specification
+	private static final String CHARACTER_REGEX;
+	//check if a stain String is a valid boolean value according to sjava specification
+	private static final String BOOLEAN_REGEX;
+	//check if a stain String is a valid method call line according to sjava specification
+	private static final String METHOD_CALL_REGEX;
+	//check if a stain String matches a method (params...) part in
+	//the method deceleration according to sjava specification
+	private static final String PARAMS_REGEX;
+	//check if a stain String matches a variables deceleration according to sjava specification
+	private static final String VARIABLES_REGEX;
 
 	static {
 		INTEGER_REGEX = "([-]?[1-9]+[0-9]*)|(0)";
-		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|"+INTEGER_REGEX;
+		DOUBLE_REGEX = "([-]?[0-9]+\\.[0-9]+)|" + INTEGER_REGEX;
 		NAME_REGEX = "([a-zA-Z]\\w*)|(_\\w+)";
 		METHOD_NAME_REGEX = "([a-zA-Z]\\w*)";
 		FORBIDDEN_CHARS = "[^,`\\\"]*";
-		STRING_REGEX = "\\\""+ FORBIDDEN_CHARS +"\\\"";
-		CHARACTER_REGEX = "\\\'"+ FORBIDDEN_CHARS +"\\\'";
-		BOOLEAN_REGEX = "(true)|(false)|"+DOUBLE_REGEX;
+		STRING_REGEX = "\\\"" + FORBIDDEN_CHARS + "\\\"";
+		CHARACTER_REGEX = "\\\'" + FORBIDDEN_CHARS + "\\\'";
+		BOOLEAN_REGEX = "(true)|(false)|" + DOUBLE_REGEX;
 		SPLITTER_REGEX = "(?<=[\\\n])";//;\{\}
 		SPACES_REGEX = "[\\s]+";
 		START_TRIMER_REGEX = "^\\s+";
-		BEFORE_TRIMER_REGEX = SPACES_REGEX+"(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
-		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])"+SPACES_REGEX;
+		BEFORE_TRIMER_REGEX = SPACES_REGEX + "(?=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])";
+		AFTER_TRIMER_REGEX = "(?<=[\\{;\\(,=\\)\\}(\\&\\&)(\\|\\|)])" + SPACES_REGEX;
 		METHOD_CALL_REGEX = "([a-zA-Z]\\w*)[\\(][\\w,_\\\"\\\'\\-\\.\\s]*[\\)]";
 		PARAMS_REGEX = "(([\\w\\s]+,)*[\\w\\s]+)|()";
 		VARIABLES_REGEX = "((([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))[,\\=])*(([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))";

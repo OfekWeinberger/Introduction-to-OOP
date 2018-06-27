@@ -25,12 +25,13 @@ public class Variable {
 
 	/**
 	 * The constructor for the variable.
-	 * @param type The type of the variable.
-	 * @param name The name of the variable.
+	 *
+	 * @param type     The type of the variable.
+	 * @param name     The name of the variable.
 	 * @param assigned flag that holds if the variable is assigned.
-	 * @param FINAL flag that holds if the variable is final.
+	 * @param FINAL    flag that holds if the variable is final.
 	 * @throws IllegalSyntaxException if there is a final variable that is not assigned at declaration,
-	 * throw an IllegalSyntaxException, because that is illegal in the s-Java specifications.
+	 *                                throw an IllegalSyntaxException, because that is illegal in the s-Java specifications.
 	 */
 	public Variable(Type type, String name, boolean assigned, boolean FINAL) throws IllegalSyntaxException {
 		this.type = type;
@@ -44,6 +45,7 @@ public class Variable {
 
 	/**
 	 * Getter for the type.
+	 *
 	 * @return type of the variable.
 	 */
 	public Type getType() {
@@ -52,6 +54,7 @@ public class Variable {
 
 	/**
 	 * Getter for the name.
+	 *
 	 * @return name of the variable.
 	 */
 	public String getName() {
@@ -60,6 +63,7 @@ public class Variable {
 
 	/**
 	 * Getter for the FINAL.
+	 *
 	 * @return if variable is final.
 	 */
 	public boolean isFinal() {
@@ -68,6 +72,7 @@ public class Variable {
 
 	/**
 	 * Getter for the assigned.
+	 *
 	 * @return if variable is assigned.
 	 */
 	public boolean isAssigned() {

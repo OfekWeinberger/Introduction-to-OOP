@@ -29,12 +29,6 @@ public enum Type {
 	CHAR(RegularExpressions.CHARACTER_PATTERN);
 
 	/**
-	 * The pattern each type have to decide whether strings are applicable to it according to the s-Java
-	 * specifications.
-	 */
-	private Pattern pattern;
-
-	/**
 	 * The keyword for the final modifier, set public because some classes use it.
 	 */
 	public static final String FINAL_MODIFIER;
@@ -59,6 +53,12 @@ public enum Type {
 	}
 
 	/**
+	 * The pattern each type have to decide whether strings are applicable to it according to the s-Java
+	 * specifications.
+	 */
+	private Pattern pattern;
+
+	/**
 	 * The constructor for Type
 	 *
 	 * @param pattern the The pattern each type have to decide whether strings are applicable to it
@@ -70,7 +70,8 @@ public enum Type {
 
 	/**
 	 * A method used to decide if the given string matches the given type.
-	 * @param s The string to match.
+	 *
+	 * @param s    The string to match.
 	 * @param type The type we want to find if the string matches to.
 	 * @return true if the string matches, false otherwise.
 	 */
@@ -97,6 +98,7 @@ public enum Type {
 
 	/**
 	 * This method will return a typ
+	 *
 	 * @param name String representation of the type.
 	 * @return The type related to this string, null if there is no such type.
 	 */
@@ -119,6 +121,7 @@ public enum Type {
 
 	/**
 	 * A default implementation for all the types of the match
+	 *
 	 * @param s The string we want to test for a match.
 	 * @return True if matches, false else.
 	 */
@@ -128,6 +131,7 @@ public enum Type {
 
 	/**
 	 * A default implementation for equals for any of the types.
+	 *
 	 * @param other The other type we want to check if is the same (not commutative).
 	 * @return True if this variable can be assigned with the other.
 	 */

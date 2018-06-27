@@ -10,12 +10,13 @@ public class Root extends Scope {
 
 	private static final String METHOD_OVERLOAD_EXCEPTION;
 	private static Root singleton;
-	private HashMap<String, Method> methodsDeclared;
 
 	static {
 		METHOD_OVERLOAD_EXCEPTION = "Method overloading is not allowed";
 		singleton = null;
 	}
+
+	private HashMap<String, Method> methodsDeclared;
 
 	/**
 	 * a constructor for the root scope
@@ -52,7 +53,7 @@ public class Root extends Scope {
 	 *
 	 * @param method the method object to add to the list
 	 * @throws IllegalSyntaxException If in the addition of a method, a syntax error is found, the
-	 * exception with be thrown.
+	 *                                exception with be thrown.
 	 */
 	public static void addMethod(Method method) throws IllegalSyntaxException {
 		if (singleton.methodsDeclared.containsKey(method.getName())) {
@@ -62,10 +63,9 @@ public class Root extends Scope {
 	}
 
 	public static void resetRoot(ArrayList<String> lines) {
-		if(singleton==null) {
+		if (singleton == null) {
 			singleton = new Root(lines);
-		}
-		else {
+		} else {
 			singleton.methodsDeclared = new HashMap<>();
 			singleton.resetScope(lines);
 		}

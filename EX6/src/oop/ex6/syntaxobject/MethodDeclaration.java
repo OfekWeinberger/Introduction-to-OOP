@@ -53,7 +53,7 @@ public class MethodDeclaration implements Checker {
 	 */
 	public void check(String line, Scope scope) throws IllegalSyntaxException {
 		// if the scope given is not root - illegal!
-		if(!scope.isRoot()){
+		if (!scope.isRoot()) {
 			throw new IllegalSyntaxException(ILLEGAL_SCOPE);
 		}
 		// make sure the line starts with a "void" keyword.
@@ -109,6 +109,7 @@ public class MethodDeclaration implements Checker {
 
 	/**
 	 * Getter for the parameter array.
+	 *
 	 * @return The parameter array that holds all the variables declared in this method declaration.
 	 */
 	public ArrayList<Variable> getParams() {
@@ -117,6 +118,7 @@ public class MethodDeclaration implements Checker {
 
 	/**
 	 * Getter for the method name.
+	 *
 	 * @return The name of the method as declared.
 	 */
 	public String getName() {
