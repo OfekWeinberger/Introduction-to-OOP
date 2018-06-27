@@ -13,17 +13,19 @@ public class Sjavac {
 	 * @param args single arg is required, the path (relative or absolute) of the sJava file.
 	 */
 	public static void main(String[] args) {
-
 		try {
 			checkArgs(args);
 			SJavaFileHandler handler = new SJavaFileHandler(args[0]);
 			Root.resetRoot(handler.splitCodeFileToLines());
 			Parser parser = new Parser(Root.instance());
 			parser.runCheck();
+			// code is legal
 			System.out.println("0");
 		} catch (IllegalSyntaxException e) {
+			// code is illegal
 			System.out.println("1");
 		} catch (IOException | IllegalArgumentException e) {
+			// there was IOException or IllegalArgumentException
 			System.err.println("2");
 		}
 	}
