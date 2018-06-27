@@ -19,9 +19,8 @@ public class Root extends Scope {
 		super(null,null,null,lines);
 		methodsDeclared = new HashMap<String, Method>();
 	}
-	
-	public void reset(ArrayList<String> lines){
-		singleton = new Root(lines);
+
+	public void reset(){
 	}
 
 	/**
@@ -35,7 +34,7 @@ public class Root extends Scope {
 	/**
 	 * search for a method by name
 	 * @param methodName - the method name
-	 * @return the method if found null else 
+	 * @return the method if found null else
 	 */
 	@Override
 	public Method getMethodByName(String methodName){
@@ -43,9 +42,9 @@ public class Root extends Scope {
 	}
 
 	/**
-	 * create an instance of the 
-	 * @param lines
-	 * @return
+	 * initialize an the single scope. if it is initialized return it
+	 * @param lines - the code lines
+	 * @return the single instance of this class
 	 */
 	public static Root instance(ArrayList<String> lines) {
 		if (singleton == null) {
@@ -54,10 +53,19 @@ public class Root extends Scope {
 		return singleton;
 	}
 
+	/**
+	 *
+	 * @return the singale instance of this class
+	 */
 	public static Root instance(){
 		return singleton;
 	}
 
+	/**
+	 * add a method
+	 * @param method - the method object to add to the list
+	 * @throws IllegalSyntaxException
+	 */
 	public static void addMethod(Method method) throws IllegalSyntaxException {
 		if (singleton.methodsDeclared.containsKey(method.getName())) {
 			throw new IllegalSyntaxException(METHOD_OVERLOAD_EXCEPTION);
@@ -65,6 +73,12 @@ public class Root extends Scope {
 		singleton.methodsDeclared.put(method.getName(), method);
 	}
 
+	/**
+	 * check if a specific method is declared in the root scope
+	 * @param methodName - the method name
+	 * @param params - the method signitur (params)
+	 * @return true if the method is found else false
+	 */
 	@Override
 	public boolean isDecleared(String methodName, ArrayList<Type> params) {
 		if (methodsDeclared.containsKey(methodName)) {
