@@ -1,5 +1,6 @@
 package oop.ex6.main;
 
+import oop.ex6.RegularExpressions;
 import oop.ex6.syntaxobject.CodeLine;
 import oop.ex6.syntaxobject.Condition;
 import oop.ex6.syntaxobject.IllegalSyntaxException;
@@ -77,7 +78,7 @@ public class Parser {
             if(lines.get(i).endsWith("{")){
                 if (lines.get(i).startsWith("if") || lines.get(i).startsWith("while")) {
                     Condition condition = new Condition();
-                    String[] condtionStr = lines.get(i).split("[\\(\\)]");
+                    String[] condtionStr = lines.get(i).split(RegularExpressions.BRACKETS_SPLITER);
                     if(condtionStr.length!=3){
                         throw new IllegalSyntaxException(CONDITION_ERROR_EXCEPTION);
                     }
@@ -117,13 +118,13 @@ public class Parser {
 
     //get the lines that a scope sould contain from the scope code lines
     private ArrayList<String> getScopeLines(int scopeStartIndex,Scope parentScope) throws IllegalSyntaxException{
-        ArrayList<String> scopeLines = new ArrayList<String>();
+        ArrayList<String> scopeLines = new ArrayList<>();
         int runerIndex  = scopeStartIndex;
         int counter = 1;
         while (counter != 0) {
             runerIndex++;
             if(runerIndex == parentScope.getLines().size()){
-                throw new IllegalSyntaxException(SCOPE_OPEN_EXCEPTION);
+                throw new IllegalSyntaxException(SCOPE_NOT_CLOSING_EXCEPTION);
             }
             if (parentScope.getLines().get(runerIndex).endsWith("{")) {
                 counter++;

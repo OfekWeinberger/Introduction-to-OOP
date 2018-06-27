@@ -34,13 +34,19 @@ public class RegularExpressions {
 	static final String AFTER_TRIMER_REGEX;
 	//check if a stain String is a valid method call line according to sjava specification
 	private static final String METHOD_CALL_REGEX;
-	//get all the '(' ')' and ',' in the line
+	/**
+	 * check if a stain String is a valid method call line according to sjava specification
+	 */
 	public static final String METHOD_CALL_SPLITTER_REGEX;
 	//check if a stain String matches a method (params...) part in
 	//the method deceleration according to sjava specification
 	private static final String PARAMS_REGEX;
 	//check if a stain String matches a variables deceleration according to sjava specification
 	private static final String VARIABLES_REGEX;
+	/**
+	 * a regex that split over circle brackets '(' ')'
+	 */
+	public static final String BRACKETS_SPLITER;
 
 	/**
 	 * check if a stain String is a valid int value according to sjava specification
@@ -107,6 +113,7 @@ public class RegularExpressions {
 		PARAMS_REGEX = "(([\\w\\s]+,)*[\\w\\s]+)|()";
 		VARIABLES_REGEX = "((([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))[,\\=])*(([\\w\\s\\.\\-_]+)|(\\'[^,`\\\\\"]\\')|(\\\"[^,`\\\\\"]*\\\"))";
 		METHOD_CALL_SPLITTER_REGEX = "[,\\(\\)]";
+		BRACKETS_SPLITER = "[\\(\\)]";
 
 
 		INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);

@@ -45,7 +45,7 @@ public class CodeLine {
 	 * @throws IllegalSyntaxException If the line is illegal according to s-Java specifications, throws an
 	 *                                exception with informative message.
 	 */
-	public static void check(String line, Scope scope) throws IllegalSyntaxException {
+	public void check(String line, Scope scope) throws IllegalSyntaxException {
 
 		//check if the we are talking about a final variable
 		boolean isFinal = false;
@@ -89,7 +89,7 @@ public class CodeLine {
 	}
 
 	// This method is responsible on the declaration of a variable
-	private static void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
+	private void declareVariable(boolean isFinal, String rawDeclaration, Type varType, Scope scope,
 										String
 												line) throws IllegalSyntaxException {
 		String[] varDeclaration = rawDeclaration.split(EQUALITY_CHARACTER);
@@ -112,7 +112,7 @@ public class CodeLine {
 	}
 
 	// This method is responsible for handling assignment.
-	private static void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
+	private void assignmentHandler(String line, Scope scope) throws IllegalSyntaxException {
 		// check for variable assignment
 		String[] lineContent = line.split(EQUALITY_CHARACTER);
 		// check if the variable declared legally (by measuring the length of the array and comparing it to
@@ -139,7 +139,7 @@ public class CodeLine {
 	}
 
 	// This method is responsible for checking a method call is legal
-	private static void methodCallHandler(String line, Scope scope) throws IllegalSyntaxException {
+	private void methodCallHandler(String line, Scope scope) throws IllegalSyntaxException {
 		line = line.substring(0, line.length() - 1);
 		String[] lineContent = line.split(RegularExpressions.METHOD_CALL_SPLITTER_REGEX);
 		Method method = scope.getMethodByName(lineContent[0]);
