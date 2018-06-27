@@ -20,7 +20,8 @@ public class Root extends Scope {
 		methodsDeclared = new HashMap<String, Method>();
 	}
 
-	public void reset(){
+	public void reset(ArrayList<String> lines){
+		singleton = new Root(lines);
 	}
 
 	/**
